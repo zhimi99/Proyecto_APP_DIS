@@ -3,11 +3,14 @@ package app.proyecto.SistemaBancario.Entidades;
 import java.util.Date;
 
 public class Transaccion {
+	
 	private int id;
 	private Date fechaRegistro;
 	private String tipo;
 	private Double monto;
 	private int cuentaDestino;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -38,7 +41,11 @@ public class Transaccion {
 	public void setCuentaDestino(int cuentaDestino) {
 		this.cuentaDestino = cuentaDestino;
 	}
-	
+	@Override
+	public String toString() {
+		return "Transaccion [id=" + id + ", fechaRegistro=" + fechaRegistro + ", tipo=" + tipo + ", monto=" + monto
+				+ ", cuentaDestino=" + cuentaDestino + "]";
+	}
 	
 	
 }
