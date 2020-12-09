@@ -1,10 +1,13 @@
 package app.proyecto.SistemaBancario.Entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
+@Entity
 public class Usuario {
 	
+	@Id
 	private int id;
 	private String cedulaU;
 	private String nombresU;

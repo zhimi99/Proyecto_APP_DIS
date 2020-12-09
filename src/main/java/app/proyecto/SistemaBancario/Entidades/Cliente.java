@@ -1,15 +1,24 @@
 package app.proyecto.SistemaBancario.Entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
-public class Cliente {
+@Entity
+public class Cliente implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private int id;
+	
+	@Column(length = 10)
 	private String cedula;
+	
 	private String nombres;
 	private String apellidos;
 	private String telefono;

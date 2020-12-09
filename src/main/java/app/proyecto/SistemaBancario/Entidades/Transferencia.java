@@ -2,7 +2,13 @@ package app.proyecto.SistemaBancario.Entidades;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Transferencia {
+	
+	@Id
 	private int id;
 	private Date fechaRegistro;
 	private Double monto;
@@ -13,6 +19,8 @@ public class Transferencia {
 	private String numeroCuentaDestino;
 	private String nombresClienteDestino;
 	private String emailDestino;
+	
+	
 	public int getId() {
 		return id;
 	}

@@ -2,8 +2,13 @@ package app.proyecto.SistemaBancario.Entidades;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Poliza {
 	
+	@Id
 	private int id;
 	private int plazo;
 	private Double monto;

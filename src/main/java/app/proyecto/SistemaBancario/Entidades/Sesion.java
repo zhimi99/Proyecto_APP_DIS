@@ -2,7 +2,13 @@ package app.proyecto.SistemaBancario.Entidades;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Sesion {
+	
+	@Id
 	private int id;
 	private Date fecha;
 	private int intentos;
