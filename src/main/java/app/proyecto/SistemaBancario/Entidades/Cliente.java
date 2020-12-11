@@ -29,7 +29,21 @@ public class Cliente implements Serializable{
 	private String clave;
 	
 	
-
+	
+	public Cliente() {
+		super();
+		this.id = id;
+		this.cedula = cedula;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.telefono = telefono;
+		this.fechaRegistro = fechaRegistro;
+		this.saldo = saldo;
+		this.estado = estado;
+		this.email = email;
+		this.clave = clave;
+	}
+	
 	public int getId() {
 		return id;
 	}
