@@ -8,7 +8,7 @@ import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 
 @Stateless
-public class gestionCuentaON {
+public class gestionCuentaON  {
 	
 	@Inject
 	private clienteDAO daoCliente;
@@ -18,7 +18,7 @@ public class gestionCuentaON {
 	
 	
 	public boolean registrarCuenta(Cuenta cuenta) {
-		//Cliente cliente = cuenta .ge 
+		
 		
 		return true;
 	}

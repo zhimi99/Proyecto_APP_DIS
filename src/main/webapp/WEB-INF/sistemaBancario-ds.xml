@@ -25,12 +25,13 @@
         this in META-INF/persistence.xml -->
     
    <datasource jta="true" jndi-name="java:jboss/datasources/sistemaBancarioDS" pool-name="sistemaBancarioDS" enabled="true" use-java-context="true" use-ccm="true">
-                    <connection-url>jdbc:postgresql://localhost:5432/sistemaBancarioDB</connection-url>
+                    <connection-url>jdbc:postgresql://localhost:5543/sistemaBancarioDB</connection-url>
                     <driver>postgresql-driver</driver>
                     <security>
-                        <user-name>bancario</user-name>
-                        <password>bancario</password>
+                        <user-name>banco</user-name>
+                        <password>banco</password>
                     </security>
                 </datasource>
 </datasources>
+ 
  
