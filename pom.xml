@@ -147,6 +147,19 @@
             <artifactId>jakarta.persistence-api</artifactId>
             <scope>provided</scope>
         </dependency>
+        
+        
+        <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+		<dependency>
+		    <groupId>postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>9.1-901-1.jdbc4</version>
+		</dependency>
+
+        
+        
+        
+        
 
         <!-- Import the JSF API, we use provided scope as the API is included in WildFly / JBoss EAP -->
         <dependency>
