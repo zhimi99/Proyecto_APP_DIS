@@ -2,10 +2,14 @@ package app.proyecto.SistemaBancario.Entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -27,6 +31,9 @@ public class Cliente implements Serializable{
 	private Boolean estado;
 	private String email;
 	private String clave;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
+	private List<Cuenta> listCuenta;
 	
 	
 	
@@ -92,6 +99,37 @@ public class Cliente implements Serializable{
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
+	
+	
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
+	public List<Cuenta> getListCuenta() {
+		return listCuenta;
+	}
+
+	public void setListCuenta(List<Cuenta> listCuenta) {
+		this.listCuenta = listCuenta;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "Clientes [id=" + id + ", saldo=" + saldo + ", fechaRegistro=" + fechaRegistro + ", telefono=" + telefono

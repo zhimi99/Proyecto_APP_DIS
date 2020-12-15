@@ -17,15 +17,23 @@ public class gestionCuentaON  {
 	private cuentaDAO  daoCuenta;
 	
 	
-	public boolean registrarCuenta(Cuenta cuenta) {
+	public boolean registrarCuenta(Cuenta cuenta, int idCliente) {
+		Cliente cliente = daoCliente.read(idCliente);
 		
+		if(cliente != null) {
+			
+			//daoCuenta.insert(cuenta);
+			
+			
+		}else {
+			
+			
+			
+		}
 		
-		return true;
+	
+	return true;
+	
 	}
-	
-	
-	
-	
-	
 	
 }

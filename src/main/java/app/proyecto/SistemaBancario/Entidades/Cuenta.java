@@ -3,10 +3,15 @@ package app.proyecto.SistemaBancario.Entidades;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 
 @Entity
 public class Cuenta {
+	
 	
 	@Id
 	private int id;
@@ -15,6 +20,10 @@ public class Cuenta {
 	private String tipoCuenta;
 	private Date fechaRegistro;
 	private Boolean estado;
+	
+	//@OneToMany(fetch = FetchType.EAGER )
+	private Cliente cliente;
+												//sigue completando jajaja ya regreso
 	public int getId() {
 		return id;
 	}
