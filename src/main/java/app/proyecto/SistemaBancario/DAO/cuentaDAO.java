@@ -1,61 +1,38 @@
 package app.proyecto.SistemaBancario.DAO;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 
 @Stateless
-public class cuentaDAO {
-
-	@Inject
-	private Connection con;
+public class CuentaDAO {
 	
-	@Inject
+	@PersistenceContext
 	private EntityManager em;
 	
-	public boolean insert(Cuenta entity) throws SQLException{
-		em.persist(entity);
-		return true;
-			
-	}
-	
-	
-	public boolean update(Cuenta entity) {
-		em.merge(entity);
-		return true;
+	public void crearCuenta(Cuenta cuenta) {
+		this.em.persist(cuenta);
 		
 	}
 	
+	/*public Cuenta buscarCuenta(String nombres) {
+		String jpql = "SELECT a FROM Autor a JOIN FETCH a where a.nombres = :nombres";
+		Query query = em.createQuery(jpql, Autor.class);
+		query.setParameter("nombres", nombres);
+		Autor autor = (Autor) query.getSingleResult();
+		return autor;
+	}*/
 	
-	public Cuenta read(int id) {
-		Cuenta cuenta = em.find(Cuenta.class, id);
-		return cuenta;
+	public List<Cuenta> mostrarCuentas() {
+		String jpql = "SELECT a FROM Cuenta a";
+		Query query = em.createQuery(jpql, Cuenta.class);
+		List<Cuenta> cuentas = query.getResultList();
+		
+		return cuentas;
 	}
-	
-	
-	public boolean delete(int id) {
-		Cuenta cuenta = this.read(id);
-		em.remove(cuenta);
-		return true;
-	}
-	
-	//revisarrrr la forma de buscar
-	public List<Cliente> getClientes() {
-			
-		String jpql = "SELECT c FROM cliente c WHERE tipoDocumento = ?1 ";
-		Query q = em.createQuery(jpql, Cliente.class);
-		q.setParameter(1, 1);
-		return (List<Cliente>) q.getResultList();	
-	}
-	
-	
-	
+
 }

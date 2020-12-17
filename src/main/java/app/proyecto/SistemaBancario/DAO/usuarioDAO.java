@@ -1,63 +1,52 @@
 package app.proyecto.SistemaBancario.DAO;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
+
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import app.proyecto.SistemaBancario.Entidades.Usuario;
 
 @Stateless
-public class usuarioDAO {
-	
-	@Inject
-	private Connection con;
-	
-	@Inject
+public class UsuarioDAO {
+
+	@PersistenceContext
 	private EntityManager em;
-	
 
-	//gracias a JPA podemos hacer la insercion con el persist
-	public boolean insert(Usuario entity) throws SQLException{
-		
-		em.persist(entity);
-		return true;
-	}
-
-	
-	public boolean update(Usuario entity){
-		
-		em.merge(entity);
-		return true;
-	}
-
-	
-	public Usuario read(int id) {
-		
-		Usuario usuario = em.find(Usuario.class, id);
-		return usuario;
-	}
-
-
-	public boolean delete(int id) {
-	
-		Usuario usuario = this.read(id);
-		em.remove(usuario);
-		
-		return true;
+	public void crearUsuario(Usuario usuario){
+		System.out.println("en dao" + usuario.toString());
+		this.em.persist(usuario);
 	}
 	
-	//revisarrrr la forma de buscar
-	public List<Usuario> getUsuarios(){
-		
-		String jpql = "SELECT u FROM usuario u WHERE tipoDocumento = ?1 ";
-		
-		Query q = em.createQuery(jpql, Usuario.class);
-		q.setParameter(1, 1);
-		
-		return (List<Usuario>) q.getResultList();
+	public void crearUsuario1(Usuario usuario){
+		Query query = em.createNativeQuery("INSERT INTO Usuario (cedula, apellidos, "
+				+ "nombres, telefono, rol, correo, clave) VALUES (?,?,?,?,?,?,?);");
+		em.getTransaction().begin();
+		query.setParameter(1, usuario.getCedula());
+		query.setParameter(2, usuario.getApellidos());
+		query.setParameter(3, usuario.getNombres());
+		query.setParameter(4, usuario.getTelefono());
+		query.setParameter(5, usuario.getRol());
+		query.setParameter(6, usuario.getCorreo());
+		query.setParameter(7, usuario.getClave());
+		query.executeUpdate();
+		em.getTransaction().commit();
+	}
+
+	/*
+	 * public Cuenta buscarCuenta(String nombres) { String jpql =
+	 * "SELECT a FROM Autor a JOIN FETCH a where a.nombres = :nombres"; Query query
+	 * = em.createQuery(jpql, Autor.class); query.setParameter("nombres", nombres);
+	 * Autor autor = (Autor) query.getSingleResult(); return autor; }
+	 */
+
+	public List<Usuario> mostrarUsuarios() {
+		String jpql = "SELECT a FROM Usuario a";
+		Query query = em.createQuery(jpql, Usuario.class);
+		List<Usuario> usuarios = query.getResultList();
+
+		return usuarios;
 	}
 
 }

@@ -9,19 +9,17 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
-import app.proyecto.SistemaBancario.Entidades.Cliente;
+import app.proyecto.SistemaBancario.Entidades.Sesion;
 
 @Stateless
-public class ClienteDAO {
+public class SesionDAO {
 
 	@PersistenceContext
 	private EntityManager em;
 
-	public void crearCliente(Cliente cliente){
-		System.out.println("en dao" + cliente.toString());
-
-		this.em.persist(cliente);
-
+	public void crearSesion(Sesion sesion){
+		System.out.println("en dao" + sesion.toString());
+		this.em.persist(sesion);
 	}
 
 	/*
@@ -31,12 +29,12 @@ public class ClienteDAO {
 	 * Autor autor = (Autor) query.getSingleResult(); return autor; }
 	 */
 
-	public List<Cliente> mostrarClientes() {
-		String jpql = "SELECT a FROM Cliente a";
-		Query query = em.createQuery(jpql, Cliente.class);
-		List<Cliente> clientes = query.getResultList();
+	public List<Sesion> mostrarSesiones() {
+		String jpql = "SELECT a FROM Sesion a";
+		Query query = em.createQuery(jpql, Sesion.class);
+		List<Sesion> sesiones = query.getResultList();
 
-		return clientes;
+		return sesiones;
 	}
 
 }

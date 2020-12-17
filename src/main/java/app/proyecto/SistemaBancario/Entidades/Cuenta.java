@@ -1,12 +1,15 @@
 package app.proyecto.SistemaBancario.Entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Cuenta {
+public class Cuenta implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private int id;
@@ -15,6 +18,8 @@ public class Cuenta {
 	private String tipoCuenta;
 	private Date fechaRegistro;
 	private Boolean estado;
+	//private Cliente unCliente;
+
 	public int getId() {
 		return id;
 	}
@@ -51,10 +56,12 @@ public class Cuenta {
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
+
 	@Override
 	public String toString() {
 		return "Cuenta [id=" + id + ", numeroCuenta=" + numeroCuenta + ", saldo=" + saldo + ", tipoCuenta=" + tipoCuenta
-				+ ", fechaRegistro=" + fechaRegistro + ", estado=" + estado + "]";
+				+ ", fechaRegistro=" + fechaRegistro + ", estado=" + estado +  "]";
 	}
+	
 
 }

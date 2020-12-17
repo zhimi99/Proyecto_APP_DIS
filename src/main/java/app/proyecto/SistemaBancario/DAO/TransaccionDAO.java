@@ -1,27 +1,21 @@
 package app.proyecto.SistemaBancario.DAO;
 
 import java.util.List;
-
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
-
-import app.proyecto.SistemaBancario.Entidades.Cliente;
+import app.proyecto.SistemaBancario.Entidades.Transaccion;
 
 @Stateless
-public class ClienteDAO {
+public class TransaccionDAO {
 
 	@PersistenceContext
 	private EntityManager em;
 
-	public void crearCliente(Cliente cliente){
-		System.out.println("en dao" + cliente.toString());
-
-		this.em.persist(cliente);
-
+	public void crearTransaccion(Transaccion transaccion){
+		System.out.println("en dao" + transaccion.toString());
+		this.em.persist(transaccion);
 	}
 
 	/*
@@ -31,12 +25,12 @@ public class ClienteDAO {
 	 * Autor autor = (Autor) query.getSingleResult(); return autor; }
 	 */
 
-	public List<Cliente> mostrarClientes() {
-		String jpql = "SELECT a FROM Cliente a";
-		Query query = em.createQuery(jpql, Cliente.class);
-		List<Cliente> clientes = query.getResultList();
+	public List<Transaccion> mostrarTransacciones() {
+		String jpql = "SELECT a FROM Transaccion a";
+		Query query = em.createQuery(jpql, Transaccion.class);
+		List<Transaccion> transacciones = query.getResultList();
 
-		return clientes;
+		return transacciones;
 	}
 
 }
