@@ -1,16 +1,23 @@
 package app.proyecto.SistemaBancario.view;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.ConversationScoped;
+//import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.negocio.CuentaON;
 
-@ManagedBean
-public class CuentaMB {
+//@ManagedBean
+@Named
+@ConversationScoped
+public class CuentaMB implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	@Inject
 	CuentaON cuentaon;
 	

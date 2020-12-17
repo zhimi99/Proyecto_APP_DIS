@@ -1,5 +1,6 @@
 package app.proyecto.SistemaBancario.view;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +14,7 @@ import app.proyecto.SistemaBancario.negocio.ClienteON;
 @Named
 @ConversationScoped
 //@ManagedBean
-public class ClienteMB {
+public class ClienteMB implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
