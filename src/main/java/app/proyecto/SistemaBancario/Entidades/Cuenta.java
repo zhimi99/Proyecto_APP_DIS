@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Cuenta implements Serializable{
@@ -16,7 +18,9 @@ public class Cuenta implements Serializable{
 	private int id;
 	private Double saldo;
 	private String tipoCuenta;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaRegistro;
+	
 	private Boolean estado;
 	//private Cliente unCliente;
 

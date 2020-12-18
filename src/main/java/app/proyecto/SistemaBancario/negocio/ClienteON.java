@@ -25,7 +25,8 @@ public class ClienteON {
 	}
 	
 	public Cliente buscarClienteCedula(String cedula) {
-		return this.clientedao.buscarClienteCedula(cedula);
+		Cliente cli=clientedao.buscarClienteCedula(cedula);
+		return cli;
 	}
 	
 	public void actualizarCliente(Cliente cliente) {

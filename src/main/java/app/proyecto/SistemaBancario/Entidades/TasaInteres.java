@@ -17,7 +17,41 @@ public class TasaInteres implements Serializable {
     private int maxDias;
 	private Double tasaInteresPorcentaje;
     private Double interesGanadoValor;
-	
-
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getMinDias() {
+		return minDias;
+	}
+	public void setMinDias(int minDias) {
+		this.minDias = minDias;
+	}
+	public int getMaxDias() {
+		return maxDias;
+	}
+	public void setMaxDias(int maxDias) {
+		this.maxDias = maxDias;
+	}
+	public Double getTasaInteresPorcentaje() {
+		return tasaInteresPorcentaje;
+	}
+	public void setTasaInteresPorcentaje(Double tasaInteresPorcentaje) {
+		this.tasaInteresPorcentaje = tasaInteresPorcentaje;
+	}
+	public Double getInteresGanadoValor() {
+		return interesGanadoValor;
+	}
+	public void setInteresGanadoValor(Double interesGanadoValor) {
+		this.interesGanadoValor = interesGanadoValor;
+	}
+	@Override
+	public String toString() {
+		return "TasaInteres [id=" + id + ", minDias=" + minDias + ", maxDias=" + maxDias + ", tasaInteresPorcentaje="
+				+ tasaInteresPorcentaje + ", interesGanadoValor=" + interesGanadoValor + "]";
+	}
+    
 	
 }

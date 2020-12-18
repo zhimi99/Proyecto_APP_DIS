@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Transaccion implements Serializable {
@@ -13,7 +15,9 @@ public class Transaccion implements Serializable {
 	
 	@Id
 	private int id;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaRegistro;
+	
 	private String tipo;
 	private Double monto;
 	private int cuentaDestino;

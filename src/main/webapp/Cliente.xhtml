@@ -9,59 +9,72 @@
 
 	<div>
 		<div class="container">
-			<h:form>
-				<div class="form-row">
-
-
-					<h:outputLabel value="Cedula: " for="cedula" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.cedula}" id="cedula" />
-					<h:message for="cedula" />
-
+			<h:form class ="form-horizontal form material">
+				<div class="form-group">
+					<label for="txtcedula" class="col-md-12">Cedula:</label>
+					<div class="col-md-10">
+					<h:inputText id="txtcedula" value="#{clienteMB.cliente.cedula}"
+					 class="form-control form-control-line" />
+					<h:message for="txtcedula" />
+					</div>
+					<div class="col-md-2">
+					<h:commandButton value="Buscar"
+					action="#{clienteMB.buscarClienteCedula()}" />
+					</div>
 				</div>
 				
-				<div>
-				<h:commandButton value="Buscar Cliente"
-					action="#{clienteMB.buscarCliente(cedula)}" />
+				<div class="form-group">
+					<label for="txtapellidos" class="col-md-12">Apellidos:</label>
+					<div class="col-md-12">
+					<h:inputText id="txtapellidos" value="#{clienteMB.cliente.apellidos}"
+					 class="form-control form-control-line" />
+					<h:message for="txtapellidos" />
+					</div>
 				</div>
 				
+				<div class="form-group">
+					<label for="txtnombres" class="col-md-12">Nombres:</label>
+					<div class="col-md-12">
+					<h:inputText id="txtnombres" value="#{clienteMB.cliente.nombres}"
+					 class="form-control form-control-line" />
+					<h:message for="txtnombres" />
+					</div>
+				</div>
 				
-				<div class="form-row">
-
-					<h:outputLabel value="Apellidos: " for="apellidos" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.apellidos}" id="apellidos" />
-					<h:message for="apellidos" />
+				<div class="form-group">
+					<label for="txttelefono" class="col-md-12">Telefono:</label>
+					<div class="col-md-12">
+					<h:inputText id="txttelefono" value="#{clienteMB.cliente.telefono}"
+					 class="form-control form-control-line" />
+					<h:message for="txttelefono" />
+					</div>
 				</div>
-				<div class="form-row">
-
-					<h:outputLabel value="Nombres: " for="nombres" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.nombres}" id="nombres" />
-					<h:message for="nombres" />
-
+				
+				<div class="form-group">
+					<label for="txtcorreo" class="col-md-12">Correo:</label>
+					<div class="col-md-12">
+					<h:inputText id="txtcorreo" value="#{clienteMB.cliente.correo}"
+					 class="form-control form-control-line" />
+					<h:message for="txtcorreo" />
+					</div>
 				</div>
-				<div class="form-row">
-
-					<h:outputLabel value="Telefono: " for="telefono" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.telefono}" id="telefono" />
-					<h:message for="telefono" />
-
+				<div class="form-group">
+					<label for="txtclave" class="col-md-12">Clave:</label>
+					<div class="col-md-12">
+					<h:inputText id="txtclave" value="#{clienteMB.cliente.clave}"
+					 class="form-control form-control-line" />
+					<h:message for="txtclave" />
+					</div>
 				</div>
-		
-				<div class="form-row">
-
-					<h:outputLabel value="Correo: " for="correo" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.correo}" id="correo" />
-					<h:message for="correo" />
-
-				</div>
-
-
-				<h:commandButton value="Registar Cliente"
+				
+				<div class="form-group">
+					
+					<div class="col-sm-12">
+					<h:commandButton value="Registar Cliente"
 					action="#{clienteMB.agregarCliente()}" />
+					</div>
+				</div>
+				
 
 			</h:form>
 		</div>

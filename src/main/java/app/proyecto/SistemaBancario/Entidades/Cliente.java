@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,14 +33,16 @@ public class Cliente implements Serializable {
 	private String apellidos;
 	private String nombres;
 	private String telefono;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaRegistro;
+	
 	private double saldo;
 	private Boolean estado;
 	private String correo;
 	private String clave;
 
 	@JsonIgnore
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_cuenta")
 	private List<Cuenta> cuentas;
 
@@ -150,5 +154,14 @@ public class Cliente implements Serializable {
 	public void setCuentas(List<Cuenta> cuentas) {
 		this.cuentas = cuentas;
 	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", cedula=" + cedula + ", apellidos=" + apellidos + ", nombres=" + nombres
+				+ ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", saldo=" + saldo + ", estado="
+				+ estado + ", correo=" + correo + ", clave=" + clave + ", cuentas=" + cuentas + "]";
+	}
+	
+	
 
 }

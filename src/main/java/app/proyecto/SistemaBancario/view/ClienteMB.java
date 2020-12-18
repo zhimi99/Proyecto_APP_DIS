@@ -22,13 +22,16 @@ public class ClienteMB implements Serializable {
 	ClienteON clienteon;
 
 	private Cliente cliente;
+
+	private String cedulaCliente;
 	private List<Cliente> clientes;
 
 	@PostConstruct
 	public void init() {
-		this.cliente = new Cliente();
+		cliente = new Cliente();
 		String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
 		cliente.setClave(contrasena);
+
 		listarClientes();
 	}
 
@@ -37,22 +40,23 @@ public class ClienteMB implements Serializable {
 		this.cliente = null;
 		return null;
 	}
-	
+
 	public String eliminarCliente(String cedula) {
 		this.clienteon.eliminarCliente(cedula);
 		return null;
 	}
-	
+
 	public String buscarCliente(String cedula) {
 		this.clienteon.buscarCliente(cedula);
 		return null;
 	}
-	
-	public String buscarClienteCedula(String cedula) {
-		this.clienteon.buscarClienteCedula(cedula);
+
+	public String buscarClienteCedula() {
+		cliente = this.clienteon.buscarClienteCedula(cliente.getCedula());
+		System.out.println(cliente.toString());
 		return null;
 	}
-	
+
 	public String acutalizarCliente(Cliente cliente) {
 		this.clienteon.actualizarCliente(cliente);
 		return null;
@@ -62,10 +66,11 @@ public class ClienteMB implements Serializable {
 		this.clientes = this.clienteon.mostrarClientes();
 
 	}
-	
 
 	public String addCuenta() {
-		cliente.addCuenta(new Cuenta());
+
+		cliente.getCuentas().add(new Cuenta());
+		//cliente.addCuenta(new Cuenta());
 		return null;
 	}
 
@@ -83,6 +88,22 @@ public class ClienteMB implements Serializable {
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
+	}
+
+	public ClienteON getClienteon() {
+		return clienteon;
+	}
+
+	public void setClienteon(ClienteON clienteon) {
+		this.clienteon = clienteon;
+	}
+
+	public String getCedulaCliente() {
+		return cedulaCliente;
+	}
+
+	public void setCedulaCliente(String cedulaCliente) {
+		this.cedulaCliente = cedulaCliente;
 	}
 
 }

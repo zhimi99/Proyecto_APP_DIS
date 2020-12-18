@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Poliza implements Serializable {
@@ -15,8 +17,11 @@ public class Poliza implements Serializable {
 	private int id;
 	private int plazo;
 	private Double monto;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaInicio;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaFin;
+	
 	private Double porcentajePoliza;
 	private Double estadoVigencia;
 	public int getId() {
@@ -61,6 +66,14 @@ public class Poliza implements Serializable {
 	public void setEstadoVigencia(Double estadoVigencia) {
 		this.estadoVigencia = estadoVigencia;
 	}
+	@Override
+	public String toString() {
+		return "Poliza [id=" + id + ", plazo=" + plazo + ", monto=" + monto + ", fechaInicio=" + fechaInicio
+				+ ", fechaFin=" + fechaFin + ", porcentajePoliza=" + porcentajePoliza + ", estadoVigencia="
+				+ estadoVigencia + "]";
+	}
+	
+	
 
 	
 }

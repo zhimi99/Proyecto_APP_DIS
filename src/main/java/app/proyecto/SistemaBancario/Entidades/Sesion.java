@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Sesion implements Serializable{
@@ -13,7 +15,9 @@ public class Sesion implements Serializable{
 	
 	@Id
 	private int id;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
+	
 	private int intentos;
 	private Double estado;
 	public int getId() {
@@ -39,6 +43,10 @@ public class Sesion implements Serializable{
 	}
 	public void setEstado(Double estado) {
 		this.estado = estado;
+	}
+	@Override
+	public String toString() {
+		return "Sesion [id=" + id + ", fecha=" + fecha + ", intentos=" + intentos + ", estado=" + estado + "]";
 	}
 
 	
