@@ -1,10 +1,8 @@
 package app.proyecto.SistemaBancario.negocio;
 
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-
 import app.proyecto.SistemaBancario.DAO.UsuarioDAO;
 import app.proyecto.SistemaBancario.Entidades.Usuario;
 
@@ -18,6 +16,17 @@ public class UsuarioON {
 		this.usuariodao.crearUsuario(usuario);
 	}
 	
+	public void eliminarUsuario(String cedula) {
+		usuariodao.eliminarUsuario(cedula);
+	}
+	
+	public Usuario buscarUsuario(String cedula) {
+		return usuariodao.buscarUsuario(cedula);
+	}
+	
+	public void actualizarUsuaurio(Usuario usuario) {
+		usuariodao.actualizarUsuaurio(usuario);
+	}
 	
 	public List<Usuario>mostrarUsuarios() {
 		return this.usuariodao.mostrarUsuarios();

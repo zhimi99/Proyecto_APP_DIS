@@ -6,7 +6,6 @@
 
 <h:head></h:head>
 <body>
-
 	<div>
 		<div class="container">
 			<h:form>
@@ -15,29 +14,22 @@
 
 					<h:outputLabel value="Cedula: " for="cedula" />
 					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.cedula}" id="cedula" />
+						value="#{usuarioMB.usuario.cedula}" id="cedula" />
 					<h:message for="cedula" />
 
 				</div>
-				
-				<div>
-				<h:commandButton value="Buscar Cliente"
-					action="#{clienteMB.buscarCliente(cedula)}" />
-				</div>
-				
-				
 				<div class="form-row">
 
 					<h:outputLabel value="Apellidos: " for="apellidos" />
 					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.apellidos}" id="apellidos" />
+						value="#{usuarioMB.usuario.apellidos}" id="apellidos" />
 					<h:message for="apellidos" />
 				</div>
 				<div class="form-row">
 
 					<h:outputLabel value="Nombres: " for="nombres" />
 					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.nombres}" id="nombres" />
+						value="#{usuarioMB.usuario.nombres}" id="nombres" />
 					<h:message for="nombres" />
 
 				</div>
@@ -45,64 +37,76 @@
 
 					<h:outputLabel value="Telefono: " for="telefono" />
 					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.telefono}" id="telefono" />
+						value="#{usuarioMB.usuario.telefono}" id="telefono" />
 					<h:message for="telefono" />
 
 				</div>
-		
+				<div class="form-row">
+					<h:outputLabel for="Rol" value="Rol" />
+					<h:selectOneMenu id="Rol" value="#{usuarioMB.usuario.rol}"
+						required="true" label="Rol" class="form-control select2">
+						<f:selectItem itemLabel="Seleccione" itemValue="Selecione" />
+						<f:selectItem itemLabel="Administrador" itemValue="Administrador" />
+						<f:selectItem itemLabel="Cajero" itemValue="Cajero" />
+						<f:selectItem itemLabel="Asistente de captaciones"
+							itemValue="Asistente de captaciones" />
+					</h:selectOneMenu>
+					<h:message for="Rol" />
+
+				</div>
 				<div class="form-row">
 
 					<h:outputLabel value="Correo: " for="correo" />
 					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.correo}" id="correo" />
+						value="#{usuarioMB.usuario.correo}" id="correo" />
 					<h:message for="correo" />
 
 				</div>
 
 
-				<h:commandButton value="Registar Cliente"
-					action="#{clienteMB.agregarCliente()}" />
+				<h:commandButton value="Guardar"
+					action="#{usuarioMB.agregarUsuario()}" />
 
 			</h:form>
 		</div>
+
 		<div>
-		<h:form>
-					<h:dataTable class="table table-striped"
-						value="#{clienteMB.clientes}" var="cliente">
-						
-						<h:column>
+			<h:form>
+				<h:dataTable class="table table-striped"
+					value="#{usuarioMB.usuarios}" var="usuario">
+
+					<h:column>
 						<f:facet name="header">Id</f:facet>
-						#{cliente.id}
+						#{usuario.id}
 					</h:column>
 
 					<h:column>
 						<f:facet name="header">Cedula</f:facet>
-						#{cliente.cedula}
+						#{usuario.cedula}
 					</h:column>
 					<h:column>
 						<f:facet name="header">Apellidos</f:facet>
-						#{cliente.apellidos}
+						#{usuario.apellidos}
 					</h:column>
 					<h:column>
 						<f:facet name="header">Nombres:</f:facet>
-						#{cliente.nombres}
+						#{usuario.nombres}
 					</h:column>
 					<h:column>
 						<f:facet name="header">Telefono</f:facet>
-						#{cliente.telefono}
+						#{usuario.telefono}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Rol</f:facet>
+						#{usuario.rol}
 					</h:column>
 					<h:column>
 						<f:facet name="header">Correo</f:facet>
-						#{cliente.correo}
+						#{usuario.correo}
 					</h:column>
-					<!-- <h:column>
-						<f:facet name="header">Cuentas</f:facet>
-						#{cliente.cuentas.size()}
-					</h:column> -->
 
-					</h:dataTable>
-				</h:form>
-		
+				</h:dataTable>
+			</h:form>
 		</div>
 	</div>
 

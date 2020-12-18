@@ -1,10 +1,8 @@
 package app.proyecto.SistemaBancario.negocio;
 
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-
 import app.proyecto.SistemaBancario.DAO.CuentaDAO;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 

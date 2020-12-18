@@ -2,18 +2,18 @@ package app.proyecto.SistemaBancario.Entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Cuenta implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int numeroCuenta;
 	private Double saldo;
 	private String tipoCuenta;
 	private Date fechaRegistro;
@@ -25,12 +25,6 @@ public class Cuenta implements Serializable{
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public int getNumeroCuenta() {
-		return numeroCuenta;
-	}
-	public void setNumeroCuenta(int numeroCuenta) {
-		this.numeroCuenta = numeroCuenta;
 	}
 	public Double getSaldo() {
 		return saldo;
@@ -59,7 +53,7 @@ public class Cuenta implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Cuenta [id=" + id + ", numeroCuenta=" + numeroCuenta + ", saldo=" + saldo + ", tipoCuenta=" + tipoCuenta
+		return "Cuenta [id=" + id + ", saldo=" + saldo + ", tipoCuenta=" + tipoCuenta
 				+ ", fechaRegistro=" + fechaRegistro + ", estado=" + estado +  "]";
 	}
 	

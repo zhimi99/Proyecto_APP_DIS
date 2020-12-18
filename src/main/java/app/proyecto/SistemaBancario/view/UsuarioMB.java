@@ -2,45 +2,64 @@ package app.proyecto.SistemaBancario.view;
 
 import java.io.Serializable;
 import java.util.List;
-
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
-//import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import app.proyecto.SistemaBancario.Entidades.Usuario;
 import app.proyecto.SistemaBancario.negocio.UsuarioON;
 
 @Named
 @ConversationScoped
-//@ManagedBean
 public class UsuarioMB implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	UsuarioON usuarioon;
-	
+
 	private Usuario usuario;
 	private List<Usuario> usuarios;
-	
+
 	@PostConstruct
 	public void init() {
 		this.usuario = new Usuario();
+		String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
+		usuario.setClave(contrasena);
 		listarUsuarios();
+		System.out.println("Hola mundo");
 	}
 
 	public void agregarUsuario() {
-		System.out.println("bean "+usuario.toString());
+		System.out.println("bean " + usuario.toString());
 		this.usuarioon.crearUsuario(usuario);
 
 	}
-	
+
 	public void listarUsuarios() {
-		this.usuarios =  this.usuarioon.mostrarUsuarios();
+		this.usuarios = this.usuarioon.mostrarUsuarios();
 
 	}
+
+	public void eliminarUsuario(String cedula) {
+		usuarioon.eliminarUsuario(cedula);
+	}
+
+	public void buscarUsuario(String cedula) {
+		if (cedula != null) {
+			usuario = usuarioon.buscarUsuario(cedula);
+		} else {
+			return;
+		}
+	}
+
+	/*
+	 * public Usuario buscar(String cedula) { usuarioon.buscarUsuario(cedula); }
+	 * 
+	 * public void actualizarUsuaurio(Usuario usuario) {
+	 * usuariodao.actualizarUsuaurio(usuario); }
+	 */
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -57,7 +76,5 @@ public class UsuarioMB implements Serializable {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
-	
 
 }

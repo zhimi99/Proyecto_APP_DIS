@@ -1,14 +1,10 @@
 package app.proyecto.SistemaBancario.DAO;
 
 import java.util.List;
-
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
-
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 
 @Stateless
@@ -24,12 +20,17 @@ public class ClienteDAO {
 
 	}
 
-	/*
-	 * public Cuenta buscarCuenta(String nombres) { String jpql =
-	 * "SELECT a FROM Autor a JOIN FETCH a where a.nombres = :nombres"; Query query
-	 * = em.createQuery(jpql, Autor.class); query.setParameter("nombres", nombres);
-	 * Autor autor = (Autor) query.getSingleResult(); return autor; }
-	 */
+	public void eliminarCliente(String cedula) {
+		em.remove(buscarCliente(cedula));
+	}
+	
+	public Cliente buscarCliente(String cedula) {
+		return em.find(Cliente.class, cedula);
+	}
+	
+	public void actualizarUsuaurio(Cliente cliente) {
+		em.merge(cliente);
+	}
 
 	public List<Cliente> mostrarClientes() {
 		String jpql = "SELECT a FROM Cliente a";
@@ -38,5 +39,15 @@ public class ClienteDAO {
 
 		return clientes;
 	}
+	
+	public Cliente buscarClienteCedula(String cedula) {
+		String jpql = "SELECT l FROM Cliente l where l.cedula = :cedula";
+		Query query = em.createQuery(jpql, Cliente.class);
+		query.setParameter("cedula", cedula);
+		Cliente cliente = (Cliente) query.getSingleResult();
+		return cliente;
+	}
+
+
 
 }

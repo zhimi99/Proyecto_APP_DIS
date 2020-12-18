@@ -1,6 +1,7 @@
 package app.proyecto.SistemaBancario.Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -15,32 +18,30 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Cliente implements Serializable{
-	
+public class Cliente implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(length = 10)
 	private String cedula;
-	
-	private String nombres;
 	private String apellidos;
+	private String nombres;
 	private String telefono;
 	private Date fechaRegistro;
 	private double saldo;
 	private Boolean estado;
-	
-	private String email;
+	private String correo;
 	private String clave;
 
 	@JsonIgnore
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_cuenta")
-    private List<Cuenta> ListaCuentas;
+	private List<Cuenta> cuentas;
 
-	
 	public Cliente() {
 		super();
 		this.id = id;
@@ -51,65 +52,87 @@ public class Cliente implements Serializable{
 		this.fechaRegistro = fechaRegistro;
 		this.saldo = saldo;
 		this.estado = estado;
-		this.email = email;
+		this.correo = correo;
 		this.clave = clave;
 	}
-	
+
+	public void addCuenta(Cuenta cuenta) {
+		if (cuentas == null) {
+			cuentas = new ArrayList<Cuenta>();
+		}
+		cuentas.add(cuenta);
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public double getSaldo() {
-		return saldo;
-	}
-	public void setSaldo(double saldo) {
-		this.saldo = saldo;
-	}
-	public Date getFechaRegistro() {
-		return fechaRegistro;
-	}
-	public void setFechaRegistro(Date fechaRegistro) {
-		this.fechaRegistro = fechaRegistro;
-	}
-	public String getTelefono() {
-		return telefono;
-	}
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-	public String getApellidos() {
-		return apellidos;
-	}
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
-	public String getNombres() {
-		return nombres;
-	}
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
-	}
+
 	public String getCedula() {
 		return cedula;
 	}
+
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public String getNombres() {
+		return nombres;
+	}
+
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
+
 	public Boolean getEstado() {
 		return estado;
 	}
+
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCorreo() {
+		return correo;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 
 	public String getClave() {
@@ -120,20 +143,12 @@ public class Cliente implements Serializable{
 		this.clave = clave;
 	}
 
-	public List<Cuenta> getListaCuentas() {
-		return ListaCuentas;
+	public List<Cuenta> getCuentas() {
+		return cuentas;
 	}
 
-	public void setListaCuentas(List<Cuenta> listaCuentas) {
-		ListaCuentas = listaCuentas;
+	public void setCuentas(List<Cuenta> cuentas) {
+		this.cuentas = cuentas;
 	}
-
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos
-				+ ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", saldo=" + saldo + ", estado="
-				+ estado + ", email=" + email + ", clave=" + clave + ", ListaCuentas=" + ListaCuentas + "]";
-	}
-		
 
 }

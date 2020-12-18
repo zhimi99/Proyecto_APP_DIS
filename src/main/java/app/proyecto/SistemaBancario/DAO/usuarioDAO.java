@@ -1,7 +1,6 @@
 package app.proyecto.SistemaBancario.DAO;
 
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,27 +18,17 @@ public class UsuarioDAO {
 		this.em.persist(usuario);
 	}
 	
-	public void crearUsuario1(Usuario usuario){
-		Query query = em.createNativeQuery("INSERT INTO Usuario (cedula, apellidos, "
-				+ "nombres, telefono, rol, correo, clave) VALUES (?,?,?,?,?,?,?);");
-		em.getTransaction().begin();
-		query.setParameter(1, usuario.getCedula());
-		query.setParameter(2, usuario.getApellidos());
-		query.setParameter(3, usuario.getNombres());
-		query.setParameter(4, usuario.getTelefono());
-		query.setParameter(5, usuario.getRol());
-		query.setParameter(6, usuario.getCorreo());
-		query.setParameter(7, usuario.getClave());
-		query.executeUpdate();
-		em.getTransaction().commit();
+	public void eliminarUsuario(String cedula) {
+		em.remove(buscarUsuario(cedula));
 	}
-
-	/*
-	 * public Cuenta buscarCuenta(String nombres) { String jpql =
-	 * "SELECT a FROM Autor a JOIN FETCH a where a.nombres = :nombres"; Query query
-	 * = em.createQuery(jpql, Autor.class); query.setParameter("nombres", nombres);
-	 * Autor autor = (Autor) query.getSingleResult(); return autor; }
-	 */
+	
+	public Usuario buscarUsuario(String cedula) {
+		return em.find(Usuario.class, cedula);
+	}
+	
+	public void actualizarUsuaurio(Usuario usuario) {
+		em.merge(usuario);
+	}
 
 	public List<Usuario> mostrarUsuarios() {
 		String jpql = "SELECT a FROM Usuario a";

@@ -1,12 +1,11 @@
 package app.proyecto.SistemaBancario.negocio;
 
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-
 import app.proyecto.SistemaBancario.DAO.ClienteDAO;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
+import app.proyecto.SistemaBancario.Entidades.Usuario;
 
 @Stateless
 public class ClienteON {
@@ -17,6 +16,21 @@ public class ClienteON {
 		this.clientedao.crearCliente(cliente);
 	}
 	
+	public void eliminarCliente(String cedula) {
+		this.clientedao.eliminarCliente(cedula);
+	}
+	
+	public Cliente buscarCliente(String cedula) {
+		return this.clientedao.buscarCliente(cedula);
+	}
+	
+	public Cliente buscarClienteCedula(String cedula) {
+		return this.clientedao.buscarClienteCedula(cedula);
+	}
+	
+	public void actualizarCliente(Cliente cliente) {
+		this.clientedao.actualizarUsuaurio(cliente);
+	}
 	
 	public List<Cliente>mostrarClientes() {
 		System.out.println(this.clientedao.mostrarClientes());
