@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 
 @Stateless
-public class CuentaDAO {
+public class cuentaDAO {
 	
 	@PersistenceContext
 	private EntityManager em;

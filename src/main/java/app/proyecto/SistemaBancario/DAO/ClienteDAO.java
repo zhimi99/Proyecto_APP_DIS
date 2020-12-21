@@ -11,7 +11,7 @@ import javax.sound.midi.MidiSystem;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 
 @Stateless
-public class ClienteDAO {
+public class clienteDAO {
 
 	@Inject
 	private EntityManager em;
