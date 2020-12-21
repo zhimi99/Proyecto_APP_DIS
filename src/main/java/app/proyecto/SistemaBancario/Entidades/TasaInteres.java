@@ -16,6 +16,8 @@ public class TasaInteres implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	
     private int minDias;
     private int maxDias;
 	private Double tasaInteresPorcentaje;

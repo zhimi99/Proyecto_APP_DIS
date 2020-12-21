@@ -28,12 +28,12 @@ public class UsuarioMB implements Serializable {
 		String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
 		usuario.setClave(contrasena);
 		listarUsuarios();
-		System.out.println("Hola mundo");
 	}
 
 	public void agregarUsuario() {
-		System.out.println("bean " + usuario.toString());
+
 		this.usuarioon.crearUsuario(usuario);
+		listarUsuarios();
 
 	}
 

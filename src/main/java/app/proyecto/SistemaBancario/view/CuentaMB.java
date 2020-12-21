@@ -30,6 +30,7 @@ public class CuentaMB implements Serializable{
 	public String agregarCuenta() {
 		this.cuentaon.crearCuenta(cuenta);
 		this.cuenta = null;
+		
 		return null;
 	}
 	

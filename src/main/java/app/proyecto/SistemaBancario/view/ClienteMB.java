@@ -22,10 +22,9 @@ import app.proyecto.SistemaBancario.negocio.CuentaON;
 public class ClienteMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private FacesContext facesContext;
-
 
 	@Inject
 	private ClienteON clienteon;
@@ -35,7 +34,7 @@ public class ClienteMB implements Serializable {
 	private boolean editing;
 
 	private List<Cliente> clientes;
-	
+
 	private String Cedulabusqueda;
 
 	@PostConstruct
@@ -50,18 +49,25 @@ public class ClienteMB implements Serializable {
 	}
 
 	public String updateCliente() {
-		editing=true;
+		editing = true;
 		return null;
 	}
+
 	public String agregarCliente() {
 		try {
-			if (editing) 
+			if (editing) {
 				clienteon.actualizarCliente(newcliente);
-			else
-
-				System.out.println( ">en Beab>>>>>  "+newcliente.toString());
+				listarClientes();
+			}
+				
+				
+			else {
 				clienteon.crearCliente(newcliente);
-				init();
+				listarClientes();
+			}
+
+				
+				
 			
 		} catch (Exception e) {
 			System.out.println("Error al guardar");
@@ -85,12 +91,12 @@ public class ClienteMB implements Serializable {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		return null;
 	}
 
 	public String buscarCliente(String cedula) {
-		System.out.println("Buscar "+cedula);
+		System.out.println("Buscar " + cedula);
 		this.clienteon.buscarCliente(cedula);
 		return null;
 	}
@@ -102,18 +108,18 @@ public class ClienteMB implements Serializable {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		return null;
 	}
 
 	public String acutalizarCliente(Cliente cliente) {
-		System.out.println("upadte>>>>>> "+cliente.toString());
+		System.out.println("upadte>>>>>> " + cliente.toString());
 		try {
 			this.clienteon.actualizarCliente(cliente);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		return null;
 	}
 
@@ -127,26 +133,23 @@ public class ClienteMB implements Serializable {
 		newcliente.addCuenta(new Cuenta());
 		return null;
 	}
-	
-	
-public void loadData() {
-		
+
+	public void loadData() {
+
 		System.out.println("load data " + Cedulabusqueda);
-		if(Cedulabusqueda==null)
+		if (Cedulabusqueda == null)
 			return;
 		try {
-			newcliente= clienteon.buscarClienteCedula(Cedulabusqueda);
+			newcliente = clienteon.buscarClienteCedula(Cedulabusqueda);
 			editing = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-					e.getMessage(), "Error");
-            facesContext.addMessage(null, m);
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "Error");
+			facesContext.addMessage(null, m);
 		}
 	}
 
-	
 	/**
 	 * Getteres ansd setters
 	 */

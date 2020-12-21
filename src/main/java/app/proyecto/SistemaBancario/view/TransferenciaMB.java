@@ -34,6 +34,7 @@ public class TransferenciaMB implements Serializable {
 	public String agregarTransferencia() {
 		this.transferenciaon.crearTransferencia(transferencia);
 		this.transferencia = null;
+		listarTransferencias();
 		return null;
 	}
 	

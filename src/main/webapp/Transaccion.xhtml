@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<div class="container">
+		<h:form class="form-horizontal form material">
+
+			<div class="form-group">
+				<label for="txtcuentaid" class="col-md-12">Numero de cuenta:</label>
+				<div class="col-md-12">
+					<h:inputText id="txtcuentaid"
+						value="#{transaccionB.numeroCuenta}"
+						class="form-control form-control-line" />
+					<h:message for="txtcuentaid" />
+				</div>
+			</div>
+
+			<div class="form-group">
+					<label class="col-md-12">Tipo de Transaccion</label>
+					<div class="col-md-12">
+						<h:outputLabel for="Tipo" value="Tipo" />
+					<h:selectOneMenu id="Tipo" value="#{transaccionB.transaccion.tipo}"
+						required="true" label="Rol" class="form-control select2">
+						<f:selectItem itemLabel="Seleccione" itemValue="Selecione" />
+						<f:selectItem itemLabel="Deposito" itemValue="Deposito" />
+						<f:selectItem itemLabel="Retiro" itemValue="Retiro" />
+					</h:selectOneMenu>
+					<h:message for="Tipo" />
+					</div>
+				</div>
+
+
+			<div class="form-group">
+				<label for="txtmonto" class="col-md-12">Monto:</label>
+				<div class="col-md-12">
+					<h:inputText id="txtmonto"
+						value="#{transaccionB.transaccion.monto}"
+						class="form-control form-control-line" />
+					<h:message for="txtmonto" />
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<div class="col-sm-6">
+					<h:commandButton
+					
+						action="#{transaccionB.guardarTransaccion() }"
+						value="Realizar transaccion" class="btn btn-success" onclick="alerta()">
+						
+						<!-- <f:ajax render="transaccion" execute="transaccion"  /> -->
+					</h:commandButton>
+
+				</div>
+
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-md-10">Transacciones</label>
+				<div class="col-md-12">
+					<h:dataTable class="table" value="#{transaccionB.transacciones}"
+						var="transaccion" id="tablaTransacciones">
+
+						<h:column>
+							<f:facet name="header">ID</f:facet>
+							#{transaccion.id}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Cuenta</f:facet>
+							#{transaccion.cuenta.id}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Fecha</f:facet>
+							#{transaccion.fechaRegistro}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Monto</f:facet>
+							#{transaccion.monto}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Tipo</f:facet>
+							#{transaccion.tipo}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Saldo</f:facet>
+							#{transaccion.cuenta.saldo}
+						</h:column>
+						
+					</h:dataTable>
+				</div>
+			</div>
+		</h:form>
+	</div>
+
+</body>
+</html>

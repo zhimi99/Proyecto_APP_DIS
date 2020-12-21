@@ -17,6 +17,7 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	@Column(length = 10)
 	private String cedula;
 	private String nombres;
@@ -25,6 +26,7 @@ public class Usuario implements Serializable {
 	private String rol;
 	private String correo;
 	private String clave;
+	
 	public int getId() {
 		return id;
 	}

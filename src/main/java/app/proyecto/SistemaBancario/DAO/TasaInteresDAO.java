@@ -13,20 +13,20 @@ public class TasaInteresDAO {
 	@Inject
 	private EntityManager em;
 
-	public void crearTasaInteres(TasaInteres tasaInteres){
-			em.persist(tasaInteres);
+	public void crearTasaInteres(TasaInteres tasaInteres) {
+		em.persist(tasaInteres);
 	}
 
 	public void eliminarTasaInteres(int id) {
 		em.remove(buscarTasaInteres(id));
 	}
-	
+
 	public TasaInteres buscarTasaInteres(int id) {
-		//Cliente cli =em.find(Cliente.class, cedula);
-		//System.out.println(cli.getCedula());
+		// Cliente cli =em.find(Cliente.class, cedula);
+		// System.out.println(cli.getCedula());
 		return em.find(TasaInteres.class, id);
 	}
-	
+
 	public void actualizarTasaInteres(TasaInteres tasaInteres) {
 		em.merge(tasaInteres);
 	}
@@ -38,22 +38,20 @@ public class TasaInteresDAO {
 
 		return tasaIntereses;
 	}
-	
+
 	public TasaInteres buscarTasaInteresId(int id) {
-		TasaInteres  cli= new TasaInteres();
+		TasaInteres cli = new TasaInteres();
 		try {
 			String jpql = "SELECT l FROM TasaInteres l where l.id = :id";
 			Query query = em.createQuery(jpql, TasaInteres.class);
 			query.setParameter("id", id);
 			cli = (TasaInteres) query.getSingleResult();
-			System.out.println("Dao test >>>>>>>   "+cli.getId());
+			System.out.println("Dao test >>>>>>>   " + cli.getId());
 		} catch (Exception e) {
-			cli=null;
+			cli = null;
 		}
-		
+
 		return cli;
 	}
-
-
 
 }

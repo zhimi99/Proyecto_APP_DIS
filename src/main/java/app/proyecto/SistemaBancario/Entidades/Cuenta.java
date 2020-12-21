@@ -2,12 +2,20 @@ package app.proyecto.SistemaBancario.Entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cuenta implements Serializable{
@@ -22,7 +30,14 @@ public class Cuenta implements Serializable{
 	private Date fechaRegistro;
 	
 	private Boolean estado;
-	//private Cliente unCliente;
+
+
+	
+	@JsonIgnore
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cuenta_numeroCuenta")
+    private List<Transaccion> listaTra;
+
 
 	public int getId() {
 		return id;
@@ -54,12 +69,17 @@ public class Cuenta implements Serializable{
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
-
+	public List<Transaccion> getListaTra() {
+		return listaTra;
+	}
+	public void setListaTra(List<Transaccion> listaTra) {
+		this.listaTra = listaTra;
+	}
 	@Override
 	public String toString() {
-		return "Cuenta [id=" + id + ", saldo=" + saldo + ", tipoCuenta=" + tipoCuenta
-				+ ", fechaRegistro=" + fechaRegistro + ", estado=" + estado +  "]";
+		return "Cuenta [id=" + id + ", saldo=" + saldo + ", tipoCuenta=" + tipoCuenta + ", fechaRegistro="
+				+ fechaRegistro + ", estado=" + estado + ", listaTra=" + listaTra + "]";
 	}
-	
+
 
 }

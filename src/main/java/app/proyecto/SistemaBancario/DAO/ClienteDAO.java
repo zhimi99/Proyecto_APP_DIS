@@ -11,7 +11,7 @@ import javax.sound.midi.MidiSystem;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 
 @Stateless
-public class clienteDAO {
+public class ClienteDAO {
 
 	@Inject
 	private EntityManager em;
@@ -49,7 +49,6 @@ public class clienteDAO {
 			Query query = em.createQuery(jpql, Cliente.class);
 			query.setParameter("cedula", cedula);
 			cli = (Cliente) query.getSingleResult();
-			System.out.println("Dao test >>>>>>>   "+cli.getId());
 		} catch (Exception e) {
 			cli=null;
 		}
