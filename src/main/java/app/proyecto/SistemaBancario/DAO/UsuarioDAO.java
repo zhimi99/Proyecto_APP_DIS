@@ -5,6 +5,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Usuario;
 
 /**
@@ -63,5 +65,24 @@ public class UsuarioDAO {
 
 		return usuarios;
 	}
+	
+	
+	public Usuario buscarCorreo(String correo, String clave) {
+		
+			Usuario usu = new Usuario();
+			try {
+				String jpql = "SELECT l FROM Usuario l where l.correo = :correo and l.clave  =:clave";
+				Query query = em.createQuery(jpql, Usuario.class);
+				query.setParameter("correo", correo);
+				query.setParameter("clave", clave);
+				usu = (Usuario) query.getSingleResult();
+			} catch (Exception e) {
+				usu = null;
+			}
 
+			return usu;
+		}
+	
+		
 }
+	

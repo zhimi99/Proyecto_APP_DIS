@@ -62,31 +62,19 @@ public class UsuarioMB implements Serializable {
 			return;
 		}
 	}
-
-	/*
-	 * public Usuario buscar(String cedula) { usuarioon.buscarUsuario(cedula); }
-	 * 
-	 * public void actualizarUsuaurio(Usuario usuario) {
-	 * usuariodao.actualizarUsuaurio(usuario); }
-	 */
+	
+	
+	
+	public void login(String correo, String clave) {
+		usuarioon.verificarUsuario(correo, clave);
+		
+	}
+	
+	
 	
 
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
+	
 	
 	public static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
 	    // Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el remitente también.
@@ -117,5 +105,21 @@ public class UsuarioMB implements Serializable {
 	        me.printStackTrace();   //Si se produce un error
 	    }
 	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
 }
