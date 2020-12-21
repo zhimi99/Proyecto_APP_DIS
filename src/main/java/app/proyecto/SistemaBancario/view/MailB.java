@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import app.proyecto.SistemaBancario.Entidades.Mail;
 
 @Named
 @ViewScoped
@@ -35,16 +34,6 @@ public class MailB implements Serializable{
 		this.cuerpo = cuerpo;
 	}
 
-	public void send() {
-		try {
-			
-			Mail mail = new Mail();
-			mail.enviarMail(destinatario, asunto, cuerpo);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
 
 
 }

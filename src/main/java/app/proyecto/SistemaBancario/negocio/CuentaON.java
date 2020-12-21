@@ -1,5 +1,6 @@
 package app.proyecto.SistemaBancario.negocio;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ public class CuentaON {
 	CuentaDAO cuentadao;
 	
 	public void crearCuenta(Cuenta cuenta) {
+		cuenta.setFechaRegistro(new Date());
 		this.cuentadao.crearCuenta(cuenta);
 	}
 	

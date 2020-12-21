@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"app.proyecto.SistemaBancario.DAO"},{"l":"app.proyecto.SistemaBancario.Entidades"},{"l":"app.proyecto.SistemaBancario.negocio"},{"l":"app.proyecto.SistemaBancario.test"},{"l":"app.proyecto.SistemaBancario.Utils"},{"l":"app.proyecto.SistemaBancario.view"}]

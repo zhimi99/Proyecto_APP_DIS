@@ -4,17 +4,28 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * 
+ * @author andres Clase java encargada de la creacion de la tabla a nivel
+ *         de Base de datos mediante la persistencia, asi mismo definr los
+ *         atributos necesarios que estos requieran
+ * 
+ */
 @Entity
 public class Transferencia implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaRegistro;
 	
@@ -27,7 +38,16 @@ public class Transferencia implements Serializable {
 	private String nombresClienteDestino;
 	private String emailDestino;
 	
-	
+	/**
+	 * Getters and setters: Metodos encargados del acceso a datos declarados
+	 * públicos,los setters nos sirven para asignar un valor inicial a un atributo,
+	 * pero de forma explícita, además el Setter nunca retorna nada (Siempre es
+	 * void), y solo nos permite dar acceso público a ciertos atributos que deseemos
+	 * el usuario pueda modificar, miestras que los getters nos sirven para obtener
+	 * (recuperar o acceder) el valor ya asignado a un atributo y utilizarlo para
+	 * cierto método.
+	 * 
+	 */
 	public int getId() {
 		return id;
 	}

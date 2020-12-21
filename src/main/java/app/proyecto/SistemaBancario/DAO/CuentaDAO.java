@@ -8,13 +8,23 @@ import javax.persistence.Query;
 
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
-
+/**
+ * 
+ * @author andres Clase java encargada del manejo de opraciones sobre la base de
+ *         datos, tendremos operaciones CRUD si los requerimientos nos lo pide
+ * 
+ */
 @Stateless
 public class CuentaDAO {
 	
 	@PersistenceContext
 	private EntityManager em;
 	
+	/**
+	 * Metodo que permite crear un objeto mediante la persitencia
+	 * 
+	 * @param cuenta pide el objeto que va a ser insertado en nuestra DB
+	 */
 	public void crearCuenta(Cuenta cuenta) {
 		this.em.persist(cuenta);
 		
@@ -28,10 +38,23 @@ public class CuentaDAO {
 		return autor;
 	}*/
 	
+	/**
+	 * Metodo que permite actualizar la información de una cuenta mediante un merge
+	 * de la persistencia
+	 * 
+	 * @param cuenta mediante una actualizara la cuenta
+	 */
+	
 	public void actualizarCuenta(Cuenta cuenta ) {
 		em.merge(cuenta);
 	}
-	
+
+	/**
+	 * Metodo que permite tener un arreglo de todas las cuentas, esto lo realizamos
+	 * mediante jpql
+	 * 
+	 * @return arreglo de cuentas
+	 */
 	public List<Cuenta> mostrarCuentas() {
 		String jpql = "SELECT a FROM Cuenta a";
 		Query query = em.createQuery(jpql, Cuenta.class);
@@ -39,7 +62,13 @@ public class CuentaDAO {
 		
 		return cuentas;
 	}
-	
+	/**
+	 * Metodo para buscar una cuenta, mediante la persistencia realizará un find de la
+	 * cuenta mediante el id, permitiendonos tener un objeto de retorno
+	 * 
+	 * @param id parametro unico que buscará un id una cuenta dependiendo su id
+	 * @return un objeto de tipo Cuenta
+	 */
 	public Cuenta buscarCuentaID(int id) {
 		Cuenta cli= new Cuenta();
 		try {

@@ -19,9 +19,23 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * 
+ * @author andres Clase java encargada de la creacion de la tabla a nivel
+ *         de Base de datos mediante la persistencia, asi mismo definr los
+ *         atributos necesarios que estos requieran
+ * 
+ */
 @Entity
 public class Cliente implements Serializable {
+	/**
+	 * Implementaci[on de la variable de serializacion
+	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Implementación de la variable Id, este atributo será el encargado de ser la
+	 * primary key en nuestra base de datos
+	 */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +48,7 @@ public class Cliente implements Serializable {
 	private String telefono;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaRegistro;
-	
+
 	private double saldo;
 	private Boolean estado;
 	private String correo;
@@ -45,20 +59,12 @@ public class Cliente implements Serializable {
 	@JoinColumn(name = "cliente_cuenta")
 	private List<Cuenta> cuentas;
 
-	/*public Cliente() {
-		super();
-		this.id = id;
-		this.cedula = cedula;
-		this.nombres = nombres;
-		this.apellidos = apellidos;
-		this.telefono = telefono;
-		this.fechaRegistro = fechaRegistro;
-		this.saldo = saldo;
-		this.estado = estado;
-		this.correo = correo;
-		this.clave = clave;
-	}
-*/
+	/*
+	 * public Cliente() { super(); this.id = id; this.cedula = cedula; this.nombres
+	 * = nombres; this.apellidos = apellidos; this.telefono = telefono;
+	 * this.fechaRegistro = fechaRegistro; this.saldo = saldo; this.estado = estado;
+	 * this.correo = correo; this.clave = clave; }
+	 */
 	public void addCuenta(Cuenta cuenta) {
 		if (cuentas == null) {
 			cuentas = new ArrayList<Cuenta>();
@@ -66,6 +72,16 @@ public class Cliente implements Serializable {
 		cuentas.add(cuenta);
 	}
 
+	/**
+	 * Getters and setters: Metodos encargados del acceso a datos declarados
+	 * públicos,los setters nos sirven para asignar un valor inicial a un atributo,
+	 * pero de forma explícita, además el Setter nunca retorna nada (Siempre es
+	 * void), y solo nos permite dar acceso público a ciertos atributos que deseemos
+	 * el usuario pueda modificar, miestras que los getters nos sirven para obtener
+	 * (recuperar o acceder) el valor ya asignado a un atributo y utilizarlo para
+	 * cierto método.
+	 * 
+	 */
 	public int getId() {
 		return id;
 	}
@@ -160,7 +176,5 @@ public class Cliente implements Serializable {
 				+ ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", saldo=" + saldo + ", estado="
 				+ estado + ", correo=" + correo + ", clave=" + clave + ", cuentas=" + cuentas + "]";
 	}
-	
-	
 
 }

@@ -7,13 +7,23 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import app.proyecto.SistemaBancario.Entidades.Transferencia;
-
+/**
+ * 
+ * @author andres Clase java encargada del manejo de opraciones sobre la base de
+ *         datos, tendremos operaciones CRUD si los requerimientos nos lo pide
+ * 
+ */
 @Stateless
 public class TransferenciaDAO {
 
 	@PersistenceContext
 	private EntityManager em;
 
+	/**
+	 * Metodo que permite crear un objeto mediante la persitencia
+	 * 
+	 * @param transferecnia pide el objeto que va a ser insertado en nuestra DB
+	 */
 	public void crearTransferencia(Transferencia transferencia){
 		System.out.println("en dao" + transferencia.toString());
 		this.em.persist(transferencia);
@@ -26,6 +36,10 @@ public class TransferenciaDAO {
 	 * Autor autor = (Autor) query.getSingleResult(); return autor; }
 	 */
 
+	/**
+	 * Metodo que permite mostrar un arreglo de transferencias
+	 * @return arreglo de transaferencias
+	 */
 	public List<Transferencia> mostrarTransferencias() {
 		String jpql = "SELECT a FROM Transferencia a";
 		Query query = em.createQuery(jpql, Transferencia.class);

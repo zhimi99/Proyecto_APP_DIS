@@ -8,6 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * 
+ * @author andres Clase java encargada de la creacion de la tabla a nivel
+ *         de Base de datos mediante la persistencia, asi mismo definr los
+ *         atributos necesarios que estos requieran
+ * 
+ */
 @Entity
 public class TasaInteres implements Serializable {
 	
@@ -16,7 +23,6 @@ public class TasaInteres implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
 	
     private int minDias;
     private int maxDias;

@@ -10,13 +10,24 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import app.proyecto.SistemaBancario.Entidades.Poliza;
-
+/**
+ * 
+ * @author andres Clase java encargada del manejo de opraciones sobre la base de
+ *         datos, tendremos operaciones CRUD si los requerimientos nos lo pide
+ * 
+ */
 @Stateless
 public class PolizaDAO {
 
 	@PersistenceContext
 	private EntityManager em;
 
+
+	/**
+	 * Metodo que permite crear un objeto mediante la persitencia
+	 * 
+	 * @param poliza pide el objeto que va a ser insertado en nuestra DB
+	 */
 	public void crearPoliza(Poliza poliza){
 		System.out.println("en dao" + poliza.toString());
 		this.em.persist(poliza);
@@ -29,6 +40,12 @@ public class PolizaDAO {
 	 * Autor autor = (Autor) query.getSingleResult(); return autor; }
 	 */
 
+	/**
+	 * Metodo que permite tener un arreglo de todas las polizas, esto lo realizamos
+	 * mediante jpql
+	 * 
+	 * @return arreglo de polizas
+	 */
 	public List<Poliza> mostrarPolizas() {
 		String jpql = "SELECT a FROM Poliza a";
 		Query query = em.createQuery(jpql, Poliza.class);

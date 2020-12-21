@@ -15,7 +15,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import app.proyecto.SistemaBancario.Entidades.Mail;
 import app.proyecto.SistemaBancario.Entidades.Usuario;
 import app.proyecto.SistemaBancario.negocio.UsuarioON;
 
@@ -43,7 +42,6 @@ public class UsuarioMB implements Serializable {
 
 		this.usuarioon.crearUsuario(usuario);
 		enviarConGMail( usuario.getCorreo(), "Usuario Creado con exito", "Usuario: "+usuario.getCorreo()+"\nPassword: "+usuario.getClave());
-		sendEmail();
 		listarUsuarios();
 
 	}
@@ -72,17 +70,6 @@ public class UsuarioMB implements Serializable {
 	 * usuariodao.actualizarUsuaurio(usuario); }
 	 */
 	
-	
-	public void sendEmail() {
-		try {
-			
-			Mail mail = new Mail();
-			
-			mail.enviarMail(usuario.getCorreo(), "Creacion de Cuenta","DATOS>>>>>>> "+usuario.toString());
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
 
 
 	public Usuario getUsuario() {

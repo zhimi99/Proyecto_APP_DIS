@@ -1,5 +1,6 @@
 package app.proyecto.SistemaBancario.negocio;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -23,6 +24,7 @@ public class ClienteON {
 
 			throw new Exception("Cliente ya existe");
 		else
+			cliente.setFechaRegistro(new Date());
 			clientedao.crearCliente(cliente);
 		
 		return true;
@@ -63,7 +65,7 @@ public class ClienteON {
 			throw new Exception("Cliente no existe");
 
 		else
-			clientedao.actualizarUsuaurio(cliente);
+			clientedao.actualizarCliente(cliente);
 	}
 
 	public List<Cliente> mostrarClientes() {

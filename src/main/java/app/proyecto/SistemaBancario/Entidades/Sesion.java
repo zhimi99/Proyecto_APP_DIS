@@ -4,17 +4,28 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * 
+ * @author andres Clase java encargada de la creacion de la tabla a nivel
+ *         de Base de datos mediante la persistencia, asi mismo definr los
+ *         atributos necesarios que estos requieran
+ * 
+ */
 @Entity
 public class Sesion implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 	
