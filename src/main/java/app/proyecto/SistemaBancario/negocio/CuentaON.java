@@ -20,4 +20,14 @@ public class CuentaON {
 	public List<Cuenta>mostrarCuentas() {
 		return this.cuentadao.mostrarCuentas();
 	}
+	
+	
+	public boolean validarIngresoNumeros(String datos) {
+		if (datos.matches("[0-9]*"))
+			System.out.println("Es un número");
+		else
+			System.out.println("No es un número");
+		return true;
+
+	}
 }

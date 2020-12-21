@@ -31,12 +31,15 @@ public class UsuarioMB implements Serializable {
 		System.out.println("Hola mundo");
 	}
 
-	public void agregarUsuario() {
+	public boolean agregarUsuario() {
 		System.out.println("bean " + usuario.toString());
 		this.usuarioon.crearUsuario(usuario);
+		
+		return true;
 
 	}
-
+	
+	
 	public void listarUsuarios() {
 		this.usuarios = this.usuarioon.mostrarUsuarios();
 
@@ -57,13 +60,27 @@ public class UsuarioMB implements Serializable {
 		
 	}
 
-	/*
-	 * public Usuario buscar(String cedula) { usuarioon.buscarUsuario(cedula); }
-	 * 
-	 * public void actualizarUsuaurio(Usuario usuario) {
-	 * usuariodao.actualizarUsuaurio(usuario); }
-	 */
 
+	
+	
+	public Usuario verificarLogin(String correo, String clave) {
+		
+		return this.usuarioon.obtenerCredenciales(correo, clave);
+		
+	
+		
+	}
+	
+	
+	public  boolean verificarCedula(String ced) {
+		
+		
+		return this.usuarioon.validarCedula(ced);
+		
+		
+	}
+	
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -79,19 +96,6 @@ public class UsuarioMB implements Serializable {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
-	
-	
-	
-	public Usuario verificarLogin(String correo, String clave) {
 		
-		return this.usuarioon.obtenerCredenciales(correo, clave);
-		
-	
-		
-	}
-		
-			
-		
-	}
+}
 	
