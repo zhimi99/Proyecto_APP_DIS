@@ -65,9 +65,13 @@ public class UsuarioMB implements Serializable {
 	
 	
 	
-	public void login(String correo, String clave) {
-		usuarioon.verificarUsuario(correo, clave);
+	public String login(String correo, String clave) {
 		
+		if(usuarioon.verificarUsuario(correo, clave)) {
+			return "Cliente";
+		}
+		
+		return null;
 	}
 	
 	
