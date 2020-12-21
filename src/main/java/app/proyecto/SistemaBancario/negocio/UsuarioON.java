@@ -31,6 +31,21 @@ public class UsuarioON {
 	public List<Usuario>mostrarUsuarios() {
 		return this.usuariodao.mostrarUsuarios();
 	}
+	
+	
+	
+	public Usuario obtenerCredenciales(String correo, String clave) {
+		
+		Usuario usu  = this.usuariodao.mostrarUsuarioCorreo(correo, clave);
+	
+		if(usu.equals(usu)) {
+			
+			return usu;
+			
+		}else {
+			
+			return null;
+		}
 
-
+	}
 }

@@ -37,5 +37,16 @@ public class usuarioDAO {
 
 		return usuarios;
 	}
+	
+	
+	
+	public Usuario mostrarUsuarioCorreo(String correo, String clave) {
+		String jpql = "SELECT a FROM Usuario where correo="+correo + "and clave="+clave;
+		Query query = em.createQuery(jpql, Usuario.class);
+		Usuario usuario = (Usuario) query.getResultList();
+
+		return usuario;
+	}
+	
 
 }

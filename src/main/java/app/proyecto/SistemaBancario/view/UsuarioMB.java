@@ -52,6 +52,9 @@ public class UsuarioMB implements Serializable {
 		} else {
 			return;
 		}
+		
+		
+		
 	}
 
 	/*
@@ -76,5 +79,19 @@ public class UsuarioMB implements Serializable {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-
-}
+	
+	
+	
+	
+	public Usuario verificarLogin(String correo, String clave) {
+		
+		return this.usuarioon.obtenerCredenciales(correo, clave);
+		
+	
+		
+	}
+		
+			
+		
+	}
+	
