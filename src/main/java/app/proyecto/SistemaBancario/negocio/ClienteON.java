@@ -5,7 +5,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import app.proyecto.SistemaBancario.DAO.ClienteDAO;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
-import app.proyecto.SistemaBancario.Entidades.Usuario;
+
 
 @Stateless
 public class ClienteON {
