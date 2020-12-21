@@ -1,20 +1,31 @@
 package app.proyecto.SistemaBancario.view;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIData;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.negocio.ClienteON;
-import app.proyecto.SistemaBancario.negocio.CuentaON;
 
 @Named
 //@ConversationScoped
@@ -36,6 +47,17 @@ public class ClienteMB implements Serializable {
 	private List<Cliente> clientes;
 
 	private String Cedulabusqueda;
+	
+private UIData usersDataTable;
+	
+	public void setUsersDataTable(UIData usersDataTable) {
+		this.usersDataTable = usersDataTable;
+	}
+ 
+	public UIData getUsersDataTable() {
+		return usersDataTable;
+	}
+
 
 	@PostConstruct
 	public void init() {
@@ -63,6 +85,7 @@ public class ClienteMB implements Serializable {
 				
 			else {
 				clienteon.crearCliente(newcliente);
+				enviarConGMail( newcliente.getCorreo(), "Usuario Creado con exito", "Usuario: "+newcliente.getCorreo()+"\nPassword: "+newcliente.getClave());
 				listarClientes();
 			}
 
@@ -149,6 +172,17 @@ public class ClienteMB implements Serializable {
 			facesContext.addMessage(null, m);
 		}
 	}
+	
+	
+	 public void onRowSelect(SelectEvent<Cliente> event) {
+	        FacesMessage msg = new FacesMessage("Cliente Selected", event.getObject().getCedula());
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	    }
+	 
+	    public void onRowUnselect(UnselectEvent<Cliente> event) {
+	        FacesMessage msg = new FacesMessage("Cliente Unselected", event.getObject().getCedula());
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	    }
 
 	/**
 	 * Getteres ansd setters
@@ -200,6 +234,36 @@ public class ClienteMB implements Serializable {
 
 	public void setCedulabusqueda(String cedulabusqueda) {
 		Cedulabusqueda = cedulabusqueda;
+	}
+	
+	public static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
+	    // Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el remitente también.
+	    String remitente = "asagbay1995@gmail.com";  //Para la dirección nomcuenta@gmail.com
+
+	    Properties props = System.getProperties();
+	    props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
+	    props.put("mail.smtp.user", remitente);
+	    props.put("mail.smtp.clave", "Octubre24");    //La clave de la cuenta
+	    props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
+	    props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
+	    props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
+
+	    Session session = Session.getDefaultInstance(props);
+	    MimeMessage message = new MimeMessage(session);
+
+	    try {
+	        message.setFrom(new InternetAddress(remitente));
+	        message.addRecipients(Message.RecipientType.TO, destinatario);   //Se podrían añadir varios de la misma manera
+	        message.setSubject(asunto);
+	        message.setText(cuerpo);
+	        Transport transport = session.getTransport("smtp");
+	        transport.connect("smtp.gmail.com", remitente, "Octubre24");
+	        transport.sendMessage(message, message.getAllRecipients());
+	        transport.close();
+	    }
+	    catch (MessagingException me) {
+	        me.printStackTrace();   //Si se produce un error
+	    }
 	}
 
 }

@@ -10,8 +10,10 @@
 <div class="form-group">
 				<label class="col-md-10">Transacciones</label>
 				<div class="col-md-12">
-					<h:dataTable class="table" value="#{transaccionB.transacciones}"
-						var="transaccion" id="tablaTransacciones">
+					<h:dataTable value="#{transaccionB.transacciones}"
+						var="transaccion" id="tablaTransacciones" selectionMode="single" 
+						selection="#{transaccionB.transacciones}" rowKey="#{transaccion.id}" >
+						<f:ajax event="click" listener="#{transaccionB.onRowSelect()}"  />
 
 						<h:column>
 							<f:facet name="header"># Cuenta</f:facet>
@@ -29,6 +31,10 @@
 							<f:facet name="header">Saldo</f:facet>
 							#{transaccion.cuenta.saldo}
 						</h:column>
+						
+						<f:facet name="footer">
+            <h:commandButton process="singleDT" update=":form:carDetail" icon="pi pi-search" value="View" oncomplete="PF('carDialog').show()" />
+        </f:facet>
 						
 					</h:dataTable>
 				</div>

@@ -5,11 +5,17 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 //import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+
+import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.Entidades.Transaccion;
 //import app.proyecto.SistemaBancario.Entidades.Cuenta;
@@ -36,7 +42,6 @@ public class TransaccionB implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.transaccion = new Transaccion();
-		cuenta= new Cuenta();
 		listarTransacciones();
 	}
 
@@ -95,7 +100,15 @@ public class TransaccionB implements Serializable {
 	public void setNumeroCuenta(int numeroCuenta) {
 		this.numeroCuenta = numeroCuenta;
 	}
-	
+	 public void onRowSelect(SelectEvent<Cliente> event) {
+	        FacesMessage msg = new FacesMessage("Cliente Selected", event.getObject().getCedula());
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	    }
+	 
+	    public void onRowUnselect(UnselectEvent<Cliente> event) {
+	        FacesMessage msg = new FacesMessage("Cliente Unselected", event.getObject().getCedula());
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	    }
 	
 
 }
