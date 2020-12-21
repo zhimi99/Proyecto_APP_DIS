@@ -3,14 +3,13 @@ package app.proyecto.SistemaBancario.negocio;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import app.proyecto.SistemaBancario.DAO.ClienteDAO;
+import app.proyecto.SistemaBancario.DAO.clienteDAO;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
-import app.proyecto.SistemaBancario.Entidades.Usuario;
 
 @Stateless
 public class ClienteON {
 	@Inject
-	ClienteDAO clientedao;
+	clienteDAO clientedao;
 	
 	public void crearCliente(Cliente cliente) {
 		this.clientedao.crearCliente(cliente);
