@@ -6,97 +6,47 @@
 
 <h:head></h:head> 
 <body> 
-<div>
-		<div class="container">
-			<h:form>
-				<div class="form-row">
-
-
-					<h:outputLabel value="Cliente: " for="cliente" />
-					<h:inputText class="form-control"
-						value="#{cuentaMB.cuenta.}" id="cedula" />
-					<h:message for="cedula" />
-
-				</div>
-				<div class="form-row">
-
-					<h:outputLabel value="Apellidos: " for="apellidos" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.apellidos}" id="apellidos" />
-					<h:message for="apellidos" />
-				</div>
-				<div class="form-row">
-
-					<h:outputLabel value="Nombres: " for="nombres" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.nombres}" id="nombres" />
-					<h:message for="nombres" />
-
-				</div>
-				<div class="form-row">
-
-					<h:outputLabel value="Telefono: " for="telefono" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.telefono}" id="telefono" />
-					<h:message for="telefono" />
-
-				</div>
+<h:form>
+	<h:panelGrid columns="3">
+		<h:outputLabel value="Cedula" />
+		<h:inputText value="#{clienteMB.newcliente.cedula}" id="txtcedula" />
+		<h:message for="txtcedula"/>
 		
-				<div class="form-row">
-
-					<h:outputLabel value="Correo: " for="correo" />
-					<h:inputText class="form-control"
-						value="#{clienteMB.cliente.correo}" id="correo" />
-					<h:message for="correo" />
-
-				</div>
-
-
-				<h:commandButton value="Registar Cliente"
-					action="#{clienteMB.agregarCliente()}" />
-
-			</h:form>
-		</div>
-		<div>
-		<h:form>
-					<h:dataTable class="table table-striped"
-						value="#{clienteMB.clientes}" var="cliente">
-						
-						<h:column>
-						<f:facet name="header">Id</f:facet>
-						#{cliente.id}
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">Cedula</f:facet>
-						#{cliente.cedula}
-					</h:column>
-					<h:column>
-						<f:facet name="header">Apellidos</f:facet>
-						#{cliente.apellidos}
-					</h:column>
-					<h:column>
-						<f:facet name="header">Nombres:</f:facet>
-						#{cliente.nombres}
-					</h:column>
-					<h:column>
-						<f:facet name="header">Telefono</f:facet>
-						#{cliente.telefono}
-					</h:column>
-					<h:column>
-						<f:facet name="header">Correo</f:facet>
-						#{cliente.correo}
-					</h:column>
-					<!-- <h:column>
-						<f:facet name="header">Cuentas</f:facet>
-						#{cliente.cuentas.size()}
-					</h:column> -->
-
-					</h:dataTable>
-				</h:form>
+		<h:outputLabel value="Apellidos" />
+		<h:inputText value="#{clienteMB.newcliente.apellidos}" id="txtapellidos" />
+		<h:message for="txtapellidos"/>
 		
-		</div>
-	</div>
+		<h:outputLabel value="Nombres" />
+		<h:inputText value="#{clienteMB.newcliente.nombres}" id="txtnombres"/>
+		<h:message for="txtnombres"/>
+	
+		<h:commandButton value="Guardar" 
+			action="#{clienteMB.agregarCliente()}"/>
+		
+	</h:panelGrid>
+	
+	<h:dataTable var="cuenta" value="#{clienteMB.newcliente.cuentas}"
+            
+            styleClass="simpletablestyle">
+            <h:column>
+                <f:facet name="header">Saldo</f:facet>
+                <h:inputText value="#{cuenta.saldo}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tipo</f:facet>
+                <h:inputText value="#{cuenta.tipoCuenta}"/>
+            </h:column>
+            
+            <f:facet name="footer">
+            	<h:commandButton action="#{clienteMB.addCuenta()}" value="Agregar Cuenta" >
+            		<f:ajax render="@form" execute="@form"/>
+            	</h:commandButton>
+            </f:facet>
+     </h:dataTable>
+
+	<h:messages globalOnly="true"/>
+
+</h:form>
 
 </body> 
 </html>

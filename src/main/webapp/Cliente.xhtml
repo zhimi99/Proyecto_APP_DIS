@@ -4,119 +4,136 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head>
+<h:head>
+
+<f:metadata>
+        <f:viewParam id="cedulabusqueda" name="cedulabusqueda" value="#{clienteMB.cedulabusqueda}"/>
+        <f:viewAction action="#{clienteMB.loadData()}" />
+ 	</f:metadata>
+</h:head>
 <body>
 
-	<div>
-		<div class="container">
-			<h:form class ="form-horizontal form material">
-				<div class="form-group">
-					<label for="txtcedula" class="col-md-12">Cedula:</label>
-					<div class="col-md-10">
-					<h:inputText id="txtcedula" value="#{clienteMB.cliente.cedula}"
-					 class="form-control form-control-line" />
+	<div class="container">
+		<h:form class="form-horizontal form material">
+			<div class="form-group">
+				<label for="txtcedula" class="col-md-12">Cedula:</label>
+				<div class="col-md-10">
+					<h:inputText id="txtcedula" value="#{clienteMB.newcliente.cedula}"
+						class="form-control form-control-line" />
 					<h:message for="txtcedula" />
-					</div>
-					<div class="col-md-2">
+				</div>
+				<div class="col-md-2">
 					<h:commandButton value="Buscar"
-					action="#{clienteMB.buscarClienteCedula()}" />
-					</div>
+						action="#{clienteMB.buscarClienteCedula()}">
+						<f:ajax render="@form" execute="@form"/>
+						</h:commandButton>
 				</div>
-				
-				<div class="form-group">
-					<label for="txtapellidos" class="col-md-12">Apellidos:</label>
-					<div class="col-md-12">
-					<h:inputText id="txtapellidos" value="#{clienteMB.cliente.apellidos}"
-					 class="form-control form-control-line" />
-					<h:message for="txtapellidos" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="txtnombres" class="col-md-12">Nombres:</label>
-					<div class="col-md-12">
-					<h:inputText id="txtnombres" value="#{clienteMB.cliente.nombres}"
-					 class="form-control form-control-line" />
-					<h:message for="txtnombres" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="txttelefono" class="col-md-12">Telefono:</label>
-					<div class="col-md-12">
-					<h:inputText id="txttelefono" value="#{clienteMB.cliente.telefono}"
-					 class="form-control form-control-line" />
-					<h:message for="txttelefono" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="txtcorreo" class="col-md-12">Correo:</label>
-					<div class="col-md-12">
-					<h:inputText id="txtcorreo" value="#{clienteMB.cliente.correo}"
-					 class="form-control form-control-line" />
-					<h:message for="txtcorreo" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="txtclave" class="col-md-12">Clave:</label>
-					<div class="col-md-12">
-					<h:inputText id="txtclave" value="#{clienteMB.cliente.clave}"
-					 class="form-control form-control-line" />
-					<h:message for="txtclave" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					
-					<div class="col-sm-12">
-					<h:commandButton value="Registar Cliente"
-					action="#{clienteMB.agregarCliente()}" />
-					</div>
-				</div>
-				
+			</div>
 
-			</h:form>
-		</div>
-		<div>
-		<h:form>
-					<h:dataTable class="table table-striped"
-						value="#{clienteMB.clientes}" var="cliente">
+			<div class="form-group">
+				<label for="txtapellidos" class="col-md-12">Apellidos:</label>
+				<div class="col-md-12">
+					<h:inputText id="txtapellidos"
+						value="#{clienteMB.newcliente.apellidos}"
+						class="form-control form-control-line" />
+					<h:message for="txtapellidos" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="txtnombres" class="col-md-12">Nombres:</label>
+				<div class="col-md-12">
+					<h:inputText id="txtnombres" value="#{clienteMB.newcliente.nombres}"
+						class="form-control form-control-line" />
+					<h:message for="txtnombres" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="txttelefono" class="col-md-12">Telefono:</label>
+				<div class="col-md-12">
+					<h:inputText id="txttelefono" value="#{clienteMB.newcliente.telefono}"
+						class="form-control form-control-line" />
+					<h:message for="txttelefono" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="txtcorreo" class="col-md-12">Correo:</label>
+				<div class="col-md-12">
+					<h:inputText id="txtcorreo" value="#{clienteMB.newcliente.correo}"
+						class="form-control form-control-line" />
+					<h:message for="txtcorreo" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="txtclave" class="col-md-12">Clave:</label>
+				<div class="col-md-12">
+					<h:inputText id="txtclave" value="#{clienteMB.newcliente.clave}"
+						class="form-control form-control-line" />
+					<h:message for="txtclave" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-6">
+				
+					<h:commandButton value="Registar Cliente"
+						action="#{clienteMB.agregarCliente()}" >
+
+						</h:commandButton>
+				</div>
+				<div class="col-sm-6">
+				
+					<h:commandButton value="Editar Cliente"
+						action="#{clienteMB.updateCliente()}" >
+
+						</h:commandButton>
+				</div>
+			</div>
+
+			
+			<div class="form-group">
+				<label class="col-md-10">Cuentas </label>
+				<div class="col-md-2">
+					<h:commandButton action="#{clienteMB.addCuenta()}"
+						value="+ Agregar" class="btn btn-default">
+						<f:ajax render="@form" execute="@form"/>
+					</h:commandButton>
+				</div>
+
+				<div class="col-md-12">
+					<h:dataTable class="table" value="#{clienteMB.newcliente.cuentas}"
+						var="cuenta" id="tablaCuentas">
+
+						<h:column>
+							<f:facet name="header"># Cuenta</f:facet>
+							#{cuenta.id}
+						</h:column>
 						
 						<h:column>
-						<f:facet name="header">Id</f:facet>
-						#{cliente.id}
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">Cedula</f:facet>
-						#{cliente.cedula}
-					</h:column>
-					<h:column>
-						<f:facet name="header">Apellidos</f:facet>
-						#{cliente.apellidos}
-					</h:column>
-					<h:column>
-						<f:facet name="header">Nombres:</f:facet>
-						#{cliente.nombres}
-					</h:column>
-					<h:column>
-						<f:facet name="header">Telefono</f:facet>
-						#{cliente.telefono}
-					</h:column>
-					<h:column>
-						<f:facet name="header">Correo</f:facet>
-						#{cliente.correo}
-					</h:column>
-					<!-- <h:column>
-						<f:facet name="header">Cuentas</f:facet>
-						#{cliente.cuentas.size()}
-					</h:column> -->
-
+							<f:facet name="header">Saldo</f:facet>
+							<h:inputText id="txtCuentaSaldo" value="#{cuenta.saldo}"
+								class="form-control form-control-line" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Tipo de Cuenta</f:facet>
+							<h:selectOneMenu id="txtTipoCuenta" value="#{cuenta.tipoCuenta}"
+								required="true" label="txtTipoCuenta"
+								class="form-control select2">
+								<f:selectItem itemLabel="Seleccione" itemValue="Selecione" />
+								<f:selectItem itemLabel="Ahorro" itemValue="Ahorro" />
+								<f:selectItem itemLabel="Corriente" itemValue="Corriente" />
+							</h:selectOneMenu>
+						</h:column>
 					</h:dataTable>
-				</h:form>
-		
-		</div>
+
+
+				</div>
+
+
+			</div>
+		</h:form>
 	</div>
 
 </body>

@@ -13,13 +13,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
+import app.proyecto.SistemaBancario.Entidades.TasaInteres;
 import app.proyecto.SistemaBancario.negocio.ClienteON;
 import app.proyecto.SistemaBancario.negocio.CuentaON;
+import app.proyecto.SistemaBancario.negocio.TasaInteresON;
 
 @Named
 //@ConversationScoped
 @ViewScoped
-public class ClienteMB implements Serializable {
+public class TasaInteresB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -28,42 +30,38 @@ public class ClienteMB implements Serializable {
 
 
 	@Inject
-	private ClienteON clienteon;
+	private TasaInteresON tasaIntereson;
 
-	private Cliente newcliente;
+	private TasaInteres newtasaInteres;
 
 	private boolean editing;
 
-	private List<Cliente> clientes;
+	private List<TasaInteres> tasaIntereses;
 	
 	private String Cedulabusqueda;
 
 	@PostConstruct
 	public void init() {
-		newcliente = new Cliente();
-		newcliente.addCuenta(new Cuenta());
-		String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
-		newcliente.setClave(contrasena);
-		editing = false;
+		newtasaInteres = new TasaInteres();
 
-		listarClientes();
+		listarTasaInteres();
 	}
 
-	public String updateCliente() {
+	/*public String updateCliente() {
 		editing=true;
 		return null;
-	}
-	public String agregarCliente() {
-		try {
+	}*/
+	public String agregarTasaInteres() {
+		/*try {
 			if (editing) 
-				clienteon.actualizarCliente(newcliente);
+				tasaIntereson.actualizarCliente(newtasaInteres);
 			else
 
-				System.out.println( ">en Beab>>>>>  "+newcliente.toString());
-				clienteon.crearCliente(newcliente);
+				System.out.println( ">en Beab>>>>>  "+newtasaInteres.toString());*/
+				tasaIntereson.crearTasaInteres(newtasaInteres);
 				init();
 			
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			System.out.println("Error al guardar");
 			e.printStackTrace();
 						
@@ -73,15 +71,15 @@ public class ClienteMB implements Serializable {
 
 		}
 		
-		editing=false;
+		editing=false;*/
 
-		return "Clientes";
+		return null;
 		
 	}
 
-	public String eliminarCliente(String cedula) {
+	/*public String eliminarCliente(String cedula) {
 		try {
-			clienteon.eliminarCliente(cedula);
+			tasaIntereson.eliminarCliente(cedula);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -91,14 +89,14 @@ public class ClienteMB implements Serializable {
 
 	public String buscarCliente(String cedula) {
 		System.out.println("Buscar "+cedula);
-		this.clienteon.buscarCliente(cedula);
+		this.tasaIntereson.buscarCliente(cedula);
 		return null;
 	}
 
 	public String buscarClienteCedula() {
 		try {
-			newcliente = this.clienteon.buscarClienteCedula(newcliente.getCedula());
-			System.out.println(newcliente.toString());
+			newtasaInteres = this.tasaIntereson.buscarClienteCedula(newtasaInteres.getCedula());
+			System.out.println(newtasaInteres.toString());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -109,33 +107,28 @@ public class ClienteMB implements Serializable {
 	public String acutalizarCliente(Cliente cliente) {
 		System.out.println("upadte>>>>>> "+cliente.toString());
 		try {
-			this.clienteon.actualizarCliente(cliente);
+			this.tasaIntereson.actualizarCliente(cliente);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		
 		return null;
-	}
+	}*/
 
-	public void listarClientes() {
-		this.clientes = this.clienteon.mostrarClientes();
+	public void listarTasaInteres() {
+		
+		this.tasaIntereses = this.tasaIntereson.mostrarTasaInteres();
 
-	}
-
-	public String addCuenta() {
-
-		newcliente.addCuenta(new Cuenta());
-		return null;
 	}
 	
-	
+	/*
 public void loadData() {
 		
 		System.out.println("load data " + Cedulabusqueda);
 		if(Cedulabusqueda==null)
 			return;
 		try {
-			newcliente= clienteon.buscarClienteCedula(Cedulabusqueda);
+			newtasaInteres= tasaIntereson.bu tasaIntereson.buscarClienteCedula(Cedulabusqueda);
 			editing = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -144,7 +137,7 @@ public void loadData() {
 					e.getMessage(), "Error");
             facesContext.addMessage(null, m);
 		}
-	}
+	}*/
 
 	
 	/**
@@ -159,20 +152,20 @@ public void loadData() {
 		this.facesContext = facesContext;
 	}
 
-	public ClienteON getClienteon() {
-		return clienteon;
+	public TasaInteresON getTasaIntereson() {
+		return tasaIntereson;
 	}
 
-	public void setClienteon(ClienteON clienteon) {
-		this.clienteon = clienteon;
+	public void setTasaIntereson(TasaInteresON tasaIntereson) {
+		this.tasaIntereson = tasaIntereson;
 	}
 
-	public Cliente getNewcliente() {
-		return newcliente;
+	public TasaInteres getNewtasaInteres() {
+		return newtasaInteres;
 	}
 
-	public void setNewcliente(Cliente newcliente) {
-		this.newcliente = newcliente;
+	public void setNewtasaInteres(TasaInteres newtasaInteres) {
+		this.newtasaInteres = newtasaInteres;
 	}
 
 	public boolean isEditing() {
@@ -183,12 +176,12 @@ public void loadData() {
 		this.editing = editing;
 	}
 
-	public List<Cliente> getClientes() {
-		return clientes;
+	public List<TasaInteres> getTasaIntereses() {
+		return tasaIntereses;
 	}
 
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
+	public void setTasaIntereses(List<TasaInteres> tasaIntereses) {
+		this.tasaIntereses = tasaIntereses;
 	}
 
 	public String getCedulabusqueda() {
@@ -198,5 +191,7 @@ public void loadData() {
 	public void setCedulabusqueda(String cedulabusqueda) {
 		Cedulabusqueda = cedulabusqueda;
 	}
+
+	
 
 }

@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cliente implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -46,7 +45,7 @@ public class Cliente implements Serializable {
 	@JoinColumn(name = "cliente_cuenta")
 	private List<Cuenta> cuentas;
 
-	public Cliente() {
+	/*public Cliente() {
 		super();
 		this.id = id;
 		this.cedula = cedula;
@@ -59,7 +58,7 @@ public class Cliente implements Serializable {
 		this.correo = correo;
 		this.clave = clave;
 	}
-
+*/
 	public void addCuenta(Cuenta cuenta) {
 		if (cuentas == null) {
 			cuentas = new ArrayList<Cuenta>();

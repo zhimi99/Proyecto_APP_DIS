@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+
+
+	<div class="container">
+		<h:form class="form-horizontal form material">
+			<div class="form-group">
+				<label for="txtminDias" class="col-md-12">Días Mínimos:</label>
+								<div class="col-md-12">
+				<h:inputText id="txtminDias"
+					value="#{tasaInteresB.newtasaInteres.minDias}"
+					class="form-control form-control-line" />
+				<h:message for="txtminDias" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="txtmaxDias" class="col-md-12">Días Máximos:</label>
+				<div class="col-md-12">
+					<h:inputText id="txtmaxDias"
+						value="#{tasaInteresB.newtasaInteres.maxDias}"
+						class="form-control form-control-line" />
+					<h:message for="txtmaxDias" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="txttasaInteresPorcentaje" class="col-md-12">Monto:</label>
+				<div class="col-md-12">
+					<h:inputText id="txttasaInteresPorcentaje"
+						value="#{tasaInteresB.newtasaInteres.tasaInteresPorcentaje}"
+						class="form-control form-control-line" />
+					<h:message for="txttasaInteresPorcentaje" />
+				</div>
+			</div>
+
+
+
+
+			<div class="form-group">
+				<div class="col-sm-6">
+
+					<h:commandButton value="Nueva Tasa de interes"
+						action="#{tasaInteresB.agregarTasaInteres()}">
+
+					</h:commandButton>
+				</div>
+
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-md-10">Tasa de interes</label>
+
+
+				<div class="col-md-12">
+					<h:dataTable class="table" value="#{tasaInteresB.tasaIntereses}"
+						var="interes" id="tablaIntereses">
+
+						<h:column>
+							<f:facet name="header">ID</f:facet>
+							#{interes.id}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Dias Minimos</f:facet>
+							#{interes.minDias}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Dias Maximos</f:facet>
+							#{interes.maxDias}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Interés</f:facet>
+							#{interes.tasaInteresPorcentaje}
+						</h:column>
+					</h:dataTable>
+
+
+				</div>
+
+
+			</div>
+		</h:form>
+	</div>
+
+</body>
+</html>

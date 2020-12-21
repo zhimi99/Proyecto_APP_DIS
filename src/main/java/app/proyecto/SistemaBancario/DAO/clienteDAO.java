@@ -2,29 +2,31 @@ package app.proyecto.SistemaBancario.DAO;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.sound.midi.MidiSystem;
+
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 
 @Stateless
 public class ClienteDAO {
 
-	@PersistenceContext
+	@Inject
 	private EntityManager em;
 
 	public void crearCliente(Cliente cliente){
-		System.out.println("en dao" + cliente.toString());
-
-		this.em.persist(cliente);
-
+			em.persist(cliente);
 	}
 
 	public void eliminarCliente(String cedula) {
-		em.remove(buscarCliente(cedula));
+		em.remove(buscarClienteCedula(cedula));
 	}
 	
 	public Cliente buscarCliente(String cedula) {
+		Cliente cli =em.find(Cliente.class, cedula);
+		System.out.println(cli.getCedula());
 		return em.find(Cliente.class, cedula);
 	}
 	
@@ -41,11 +43,18 @@ public class ClienteDAO {
 	}
 	
 	public Cliente buscarClienteCedula(String cedula) {
-		String jpql = "SELECT l FROM Cliente l where l.cedula = :cedula";
-		Query query = em.createQuery(jpql, Cliente.class);
-		query.setParameter("cedula", cedula);
-		Cliente cliente = (Cliente) query.getSingleResult();
-		return cliente;
+		Cliente cli= new Cliente();
+		try {
+			String jpql = "SELECT l FROM Cliente l where l.cedula = :cedula";
+			Query query = em.createQuery(jpql, Cliente.class);
+			query.setParameter("cedula", cedula);
+			cli = (Cliente) query.getSingleResult();
+			System.out.println("Dao test >>>>>>>   "+cli.getId());
+		} catch (Exception e) {
+			cli=null;
+		}
+		
+		return cli;
 	}
 
 

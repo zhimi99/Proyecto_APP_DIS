@@ -9,8 +9,8 @@ import javax.inject.Named;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.negocio.CuentaON;
 
-@Named
-@ConversationScoped
+//@Named
+//@ConversationScoped
 public class CuentaMB implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
