@@ -42,6 +42,11 @@ public class SesionMB implements Serializable {
 		this.sesiones =this.sesionon.mostrarSesiones();
 	}
 
+	public void verificarSesion() {
+		
+		
+		
+	}
 	
 	
 	public Sesion getSesion() {
