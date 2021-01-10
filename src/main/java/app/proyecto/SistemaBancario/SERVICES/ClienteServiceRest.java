@@ -24,8 +24,6 @@ public class ClienteServiceRest {
 		Respuesta r = new Respuesta();
 		try {
 			r = on.transferenciainterna(trx);
-			r.setCodigo(1);
-			r.setMensaje("Registro satisfactorio");
 		} catch (Exception e) {
 			e.printStackTrace();
 			r.setCodigo(99);

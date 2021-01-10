@@ -63,7 +63,7 @@ public class UsuarioMB implements Serializable {
 		}
 	}
 	
-	
+	/*
 	
 	public String login(String correo, String clave) {
 		
@@ -75,7 +75,7 @@ public class UsuarioMB implements Serializable {
 	}
 	
 	
-	
+	*/
 
 
 	

@@ -107,5 +107,4 @@ public class Transaccion implements Serializable {
 				+ ", cuenta=" + cuenta + "]";
 	}
 	
-	
 }

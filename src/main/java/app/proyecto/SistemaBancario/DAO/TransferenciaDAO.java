@@ -25,7 +25,6 @@ public class TransferenciaDAO {
 	 * @param transferecnia pide el objeto que va a ser insertado en nuestra DB
 	 */
 	public void crearTransferencia(Transferencia transferencia){
-		System.out.println("en dao" + transferencia.toString());
 		this.em.persist(transferencia);
 	}
 
