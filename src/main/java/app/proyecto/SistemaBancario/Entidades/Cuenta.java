@@ -1,6 +1,7 @@
 package app.proyecto.SistemaBancario.Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,6 +94,14 @@ public class Cuenta implements Serializable{
 	public void setListaTra(List<Transaccion> listaTra) {
 		this.listaTra = listaTra;
 	}
+	
+	public void addTransaccion(Transaccion t) {
+		if(listaTra==null) {
+			listaTra= new ArrayList<>();
+	}
+		this.listaTra.add(t);
+	}
+	
 	@Override
 	public String toString() {
 		return "Cuenta [id=" + id + ", saldo=" + saldo + ", tipoCuenta=" + tipoCuenta + ", fechaRegistro="

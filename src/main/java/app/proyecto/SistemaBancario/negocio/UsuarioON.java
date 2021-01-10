@@ -31,6 +31,19 @@ public class UsuarioON {
 	public List<Usuario>mostrarUsuarios() {
 		return this.usuariodao.mostrarUsuarios();
 	}
+	
+	/*
+	public boolean verificarUsuario(String  correo, String clave) {
+		
+		if(usuariodao.buscarCorreo(correo, clave) !=null) {
+			
+			return true;
+			
+		}
+		
+		return false;
+		
+	}*/
 
 
 }

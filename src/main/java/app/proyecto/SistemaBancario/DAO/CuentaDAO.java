@@ -82,5 +82,17 @@ public class CuentaDAO {
 		
 		return cli;
 	}
+	
+	/**
+	 * Metodo para buscar un  Cuentae, mediante la persistencia realizará un find del
+	 *  Cuenta mediante el numero de tipo entero, permitiendonos tener un objeto de retorno
+	 * 
+	 * @param numero parametro unico que buscará un a cuenta dentro del Cuenta
+	 * @return un objeto de tipo  Cuenta
+	 */
+	public Cuenta buscarCuenta(int id) {
+		 Cuenta cuenta = em.find( Cuenta.class, id);
+		return em.find( Cuenta.class, id);
+	}
 
 }
