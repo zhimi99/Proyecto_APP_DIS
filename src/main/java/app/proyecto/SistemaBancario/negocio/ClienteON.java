@@ -32,6 +32,7 @@ public class ClienteON {
 	
 	/*public void crearCliente(Cliente cliente) {
 		this.clientedao.crearCliente(cliente);
+
 	}*/
 
 	public void eliminarCliente(String cedula) throws Exception {
@@ -74,4 +75,3 @@ public class ClienteON {
 	}
 
 }
-
