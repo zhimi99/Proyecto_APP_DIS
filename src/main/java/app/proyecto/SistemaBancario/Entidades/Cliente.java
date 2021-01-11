@@ -1,6 +1,7 @@
 package app.proyecto.SistemaBancario.Entidades;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,9 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
- * @author andres Clase java encargada de la creacion de la tabla a nivel
- *         de Base de datos mediante la persistencia, asi mismo definr los
- *         atributos necesarios que estos requieran
+ * 
  * 
  */
 @Entity

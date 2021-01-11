@@ -19,11 +19,8 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * 
- * @author andres Clase java encargada de la creacion de la tabla a nivel
- *         de Base de datos mediante la persistencia, asi mismo definr los
- *         atributos necesarios que estos requieran
- * 
  */
+
 @Entity
 public class Cuenta implements Serializable{
 	private static final long serialVersionUID = 1L;
