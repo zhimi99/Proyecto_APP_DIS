@@ -58,11 +58,10 @@ private UIData usersDataTable;
 		return usersDataTable;
 	}
 
-
 	@PostConstruct
 	public void init() {
 		newcliente = new Cliente();
-		newcliente.addCuenta(new Cuenta());
+		//newcliente.addCuenta(new Cuenta());
 		String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
 		newcliente.setClave(contrasena);
 		editing = false;
@@ -81,30 +80,22 @@ private UIData usersDataTable;
 				clienteon.actualizarCliente(newcliente);
 				listarClientes();
 			}
-				
-				
+					
 			else {
 				clienteon.crearCliente(newcliente);
 				enviarConGMail( newcliente.getCorreo(), "Usuario Creado con exito", "Usuario: "+newcliente.getCorreo()+"\nPassword: "+newcliente.getClave());
 				listarClientes();
-			}
-
+			}	
 				
-				
-			
 		} catch (Exception e) {
 			System.out.println("Error al guardar");
-			e.printStackTrace();
-						
+			e.printStackTrace();			
 			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 					e.getMessage(), "Error");
             facesContext.addMessage(null, m);
-
 		}
-		
 		editing=false;
-
-		return "Clientes";
+		return null;
 		
 	}
 
@@ -152,7 +143,6 @@ private UIData usersDataTable;
 	}
 
 	public String addCuenta() {
-
 		newcliente.addCuenta(new Cuenta());
 		return null;
 	}

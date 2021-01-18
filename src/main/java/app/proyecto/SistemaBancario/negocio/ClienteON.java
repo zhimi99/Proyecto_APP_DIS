@@ -7,21 +7,19 @@ import javax.inject.Inject;
 
 import app.proyecto.SistemaBancario.DAO.ClienteDAO;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
+import app.proyecto.SistemaBancario.Entidades.Sesion;
+import app.proyecto.SistemaBancario.SERVICES.Respuesta;
+import app.proyecto.SistemaBancario.Utils.UsuarioTemp;
 
 
 @Stateless
 public class ClienteON {
 	@Inject
-
 	ClienteDAO clientedao;
 
 	public boolean crearCliente(Cliente cliente) throws Exception {
-		//boolean retorno;
-		// System.out.println("En dao"+cliente.getCedula());
-		Cliente cli = clientedao.buscarClienteCedula(cliente.getCedula());
-		//System.out.println("en dao after: " + cli.getCedula());
+		Cliente cli = clientedao.buscarClienteCedula(cliente.getCedula());		
 		if (cli != null)
-
 			throw new Exception("Cliente ya existe");
 		else
 			cliente.setFechaRegistro(new Date());
@@ -54,7 +52,15 @@ public class ClienteON {
 		Cliente cli = clientedao.buscarClienteCedula(cedula);
 		if (cli == null)
 			throw new Exception("Cliente no existe");
+		else
+			return cli;
 
+	}
+	
+	public Cliente buscarClienteCedulaP(String cedula) throws Exception {
+		Cliente cli = clientedao.buscarClienteCedulaP(cedula);
+		if (cli == null)
+			throw new Exception("Cliente no existe");
 		else
 			return cli;
 
@@ -70,8 +76,28 @@ public class ClienteON {
 	}
 
 	public List<Cliente> mostrarClientes() {
-		System.out.println(this.clientedao.mostrarClientes());
+		
 		return this.clientedao.mostrarClientes();
 	}
+	
+	public Cliente login(Sesion sesion) throws Exception {
+
+		//return uDAO.getUserbyEmailAndPassword(sesion);
+		return clientedao.getUserbyEmailAndPassword(sesion);
+	}
+	public Cliente login(UsuarioTemp sesion) throws Exception {
+		//return uDAO.getUserbyEmailAndPassword2(sesion);
+		return clientedao.getUserbyEmailAndPassword2(sesion);
+	}
+
+	public Respuesta cambioContrasenia(UsuarioTemp sesion) throws Exception {
+		Respuesta respuesta = new Respuesta();
+	    //uDAO.cambioContrasenia(sesion);
+	    clientedao.cambioContrasena(sesion);
+	    respuesta.setCodigo(1);
+	    respuesta.setMensaje("Ok");	
+	    return respuesta;
+	}
+
 
 }

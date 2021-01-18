@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -56,8 +57,20 @@ public class Cliente implements Serializable {
 
 	@JsonIgnore
 	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "cliente_cuenta")
+	@JoinColumn(name = "cliente_cuenta_id")
 	private List<Cuenta> cuentas;
+
+	
+	@JsonIgnore
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_cedula")
+    private List<Sesion> listaSesiones;
+
+	/*
+	@OneToOne( mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Cuenta cuenta;
+*/
+	
 
 	/*
 	 * public Cliente() { super(); this.id = id; this.cedula = cedula; this.nombres
@@ -67,8 +80,9 @@ public class Cliente implements Serializable {
 	 */
 	public void addCuenta(Cuenta cuenta) {
 		if (cuentas == null) {
-			cuentas = new ArrayList<Cuenta>();
+			cuentas = new ArrayList<>();
 		}
+		cuenta.setFechaRegistro(new Date());
 		cuentas.add(cuenta);
 	}
 
@@ -162,6 +176,7 @@ public class Cliente implements Serializable {
 		this.clave = clave;
 	}
 
+
 	public List<Cuenta> getCuentas() {
 		return cuentas;
 	}
@@ -170,11 +185,21 @@ public class Cliente implements Serializable {
 		this.cuentas = cuentas;
 	}
 
+	public List<Sesion> getListaSesiones() {
+		return listaSesiones;
+	}
+
+	public void setListaSesiones(List<Sesion> listaSesiones) {
+		this.listaSesiones = listaSesiones;
+	}
+
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", cedula=" + cedula + ", apellidos=" + apellidos + ", nombres=" + nombres
 				+ ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", saldo=" + saldo + ", estado="
-				+ estado + ", correo=" + correo + ", clave=" + clave + ", cuentas=" + cuentas + "]";
+				+ estado + ", correo=" + correo + ", clave=" + clave + ", cuentas=" + cuentas + ", listaSesiones="
+				+ listaSesiones + "]";
 	}
 
+	
 }

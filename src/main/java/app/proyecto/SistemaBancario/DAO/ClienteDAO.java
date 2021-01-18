@@ -1,5 +1,6 @@
 package app.proyecto.SistemaBancario.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -9,6 +10,8 @@ import javax.persistence.Query;
 import javax.sound.midi.MidiSystem;
 
 import app.proyecto.SistemaBancario.Entidades.Cliente;
+import app.proyecto.SistemaBancario.Entidades.Sesion;
+import app.proyecto.SistemaBancario.Utils.UsuarioTemp;
 
 /**
  * 
@@ -51,7 +54,7 @@ public class ClienteDAO {
 	 * @param cedula parametro unico que buscará una cedula dentro del cliente
 	 * @return un objeto de tipo Cliente
 	 */
-	public Cliente buscarCliente(String cedula) {
+	public Cliente buscarClienteCedulaP(String cedula) {
 		Cliente cli = em.find(Cliente.class, cedula);
 		System.out.println(cli.getCedula());
 		return em.find(Cliente.class, cedula);
@@ -77,7 +80,6 @@ public class ClienteDAO {
 		String jpql = "SELECT a FROM Cliente a";
 		Query query = em.createQuery(jpql, Cliente.class);
 		List<Cliente> clientes = query.getResultList();
-
 		return clientes;
 	}
 
@@ -92,7 +94,7 @@ public class ClienteDAO {
 	public Cliente buscarClienteCedula(String cedula) {
 		Cliente cli = new Cliente();
 		try {
-			String jpql = "SELECT l FROM Cliente l where l.cedula = :cedula";
+			String jpql = "SELECT c FROM Cliente c where c.cedula = :cedula";
 			Query query = em.createQuery(jpql, Cliente.class);
 			query.setParameter("cedula", cedula);
 			cli = (Cliente) query.getSingleResult();
@@ -102,5 +104,78 @@ public class ClienteDAO {
 
 		return cli;
 	}
+	
+	
+	public Cliente getUserbyEmailAndPassword(Sesion sesion) {
+		Cliente cl;
+		try {
+			String jpql = "SELECT c FROM Cliente c WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
+			System.out.println("jpqlllll"+jpql);
+			Query q = em.createQuery(jpql, Cliente.class);
+			q.setParameter("correo", sesion.getCorreo());
+			q.setParameter("clave", sesion.getPassword());
+			cl = (Cliente) q.getSingleResult();
+			System.out.println("Cliente ======>>>>>> "+cl.toString());
+			
+		} catch (Exception e) {
+			System.out.println("<========ERROR  ClienteDAO getUserbyEmailAndPassword  ======>>>>>>");
+			cl = null;
+		}
+		return cl;
+	}
+	
+	public Cliente getUserbyEmailAndPassword2(UsuarioTemp sesion) {
+		Cliente cl;
+		try {
+			String jpql = "SELECT c FROM Cliente c WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
+			System.out.println("jpqlllll"+jpql);
+			Query q = em.createQuery(jpql, Cliente.class);
+			q.setParameter("correo", sesion.getEmail());
+			q.setParameter("clave", sesion.getClave());
+			cl = (Cliente) q.getSingleResult();
+			System.out.println("Cliente >>>>>>"+cl.toString());
+			
+		} catch (Exception e) {
+			System.out.println("<========ERROR  ClienteDAO getUserbyEmailAndPassword  ======>>>>>>");
+			cl = null;
+		}
+		return cl;
+	}
+	
+	public Cliente cambioContrasena(UsuarioTemp sesion) {
+		Cliente cl;
+		try {
+			//String jpql = "UPDATE proyecto.Usuario u SET u.password =:nuevapass WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
+			String jpql = "UPDATE Cliente c SET c.clave =:nuevaclave WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
+			System.out.println("jpqlllll"+jpql);
+			Query q = em.createQuery(jpql, Cliente.class);
+			q.setParameter("correo", sesion.getEmail());
+			q.setParameter("clave", sesion.getClave());
+			q.setParameter("nuevaclave", sesion.getNuevaClave());
+			cl = (Cliente) q.getSingleResult();
+			System.out.println("Cliente"+cl.toString());
+			
+		} catch (Exception e) {
+			System.out.println("<<<<<<<<<<<<Error cliente>>>>>>>>>>>");
+			cl = null;
+		}
+		return cl;
+	}
+	
+
+	
+		public List<Sesion> clienteSesiones(String cedula) {
+		String jqpl = "SELECT c FROM Cliente c JOIN FETCH c.listaSesiones where c.cedula = :cedula";
+		Query query = em.createQuery(jqpl, Cliente.class);
+		query.setParameter("cedula", cedula);
+		 Cliente cuen = (Cliente) query.getSingleResult();
+		List<Sesion> trans = new ArrayList<>();
+		for (Sesion t : cuen.getListaSesiones()) {
+			trans.add(t);	
+		}
+		System.out.println("<<<<<<<<<<< Transaccion en cliente dao >>>>>> "+trans.toString());
+		return trans;
+		}
+
 
 }

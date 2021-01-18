@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
+import app.proyecto.SistemaBancario.Entidades.Transaccion;
 /**
  * 
  * @author andres Clase java encargada del manejo de opraciones sobre la base de
@@ -62,6 +63,8 @@ public class CuentaDAO {
 		
 		return cuentas;
 	}
+	
+	
 	/**
 	 * Metodo para buscar una cuenta, mediante la persistencia realizará un find de la
 	 * cuenta mediante el id, permitiendonos tener un objeto de retorno
@@ -91,8 +94,20 @@ public class CuentaDAO {
 	 * @return un objeto de tipo  Cuenta
 	 */
 	public Cuenta buscarCuenta(int id) {
-		 Cuenta cuenta = em.find( Cuenta.class, id);
+		 //Cuenta cuenta = em.find( Cuenta.class, id);
 		return em.find( Cuenta.class, id);
+	}
+	
+	public List<Cuenta> mostrarCuentasClienteID(int idCliente) {
+		String jpql = "SELECT l FROM Cuenta l where l.cliente_cuenta = :idCliente";
+		Query query = em.createQuery(jpql, Cuenta.class);
+		query.setParameter("idCliente", idCliente);
+		List<Cuenta> cuentas = query.getResultList();
+		for (int i = 0; i < cuentas.size(); i++) {
+			System.out.println(cuentas.get(i).toString());
+		}
+		
+		return cuentas;
 	}
 
 }

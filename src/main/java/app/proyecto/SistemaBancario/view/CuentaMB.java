@@ -1,6 +1,7 @@
 package app.proyecto.SistemaBancario.view;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
@@ -28,6 +29,7 @@ public class CuentaMB implements Serializable{
 	}
 
 	public String agregarCuenta() {
+		cuenta.setFechaRegistro(new Date());
 		this.cuentaon.crearCuenta(cuenta);
 		this.cuenta = null;
 		

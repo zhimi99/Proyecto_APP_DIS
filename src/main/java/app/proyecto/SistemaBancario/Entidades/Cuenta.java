@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -37,13 +38,16 @@ public class Cuenta implements Serializable{
 	private Date fechaRegistro;
 	
 	private Boolean estado;
-
-
 	
 	@JsonIgnore
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cuenta_numeroCuenta")
+    @JoinColumn(name = "cuenta_transaccion_id")
     private List<Transaccion> listaTra;
+
+	
+	@OneToOne
+	@JoinColumn(name = "cuenta_cliente_id", referencedColumnName = "id")
+	private Cliente cliente;
 
 	
 	/**
@@ -102,11 +106,20 @@ public class Cuenta implements Serializable{
 		this.listaTra.add(t);
 	}
 	
+	
+	
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 	@Override
 	public String toString() {
 		return "Cuenta [id=" + id + ", saldo=" + saldo + ", tipoCuenta=" + tipoCuenta + ", fechaRegistro="
-				+ fechaRegistro + ", estado=" + estado + ", listaTra=" + listaTra + "]";
+				+ fechaRegistro + ", estado=" + estado + ", listaTra=" + listaTra + ", cliente=" + cliente + "]";
 	}
-
+	
 
 }

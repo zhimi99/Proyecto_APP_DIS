@@ -12,14 +12,20 @@ public class CuentaON {
 
 	@Inject
 	CuentaDAO cuentadao;
-	
+
 	public void crearCuenta(Cuenta cuenta) {
 		cuenta.setFechaRegistro(new Date());
 		this.cuentadao.crearCuenta(cuenta);
 	}
-	
-	
-	public List<Cuenta>mostrarCuentas() {
+
+	public List<Cuenta> mostrarCuentas() {
 		return this.cuentadao.mostrarCuentas();
+	}
+
+	public List<Cuenta> mostrarCuentasID(int id) {
+		return this.cuentadao.mostrarCuentasClienteID(id);
+	}
+	public Cuenta mostrarCuenta(int id) {
+		return this.cuentadao.buscarCuenta(id);
 	}
 }

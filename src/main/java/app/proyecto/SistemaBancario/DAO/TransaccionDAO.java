@@ -28,7 +28,6 @@ public class TransaccionDAO {
 	 * @param transaccion pide el objeto que va a ser insertado en nuestra DB
 	 */
 	public void crearTransaccion(Transaccion transaccion){
-		System.out.println("en dao" + transaccion.toString());
 		this.em.persist(transaccion);
 	}
 
@@ -40,7 +39,6 @@ public class TransaccionDAO {
 		String jpql = "SELECT a FROM Transaccion a";
 		Query query = em.createQuery(jpql, Transaccion.class);
 		List<Transaccion> transacciones = query.getResultList();
-
 		return transacciones;
 	}
 
@@ -50,16 +48,28 @@ public class TransaccionDAO {
 	 * @param id de la cuenta
 	 * @return las transacciones de una cuenta
 	 */
-	public List<Transaccion> listaTransacionesCuenta(int id) {
+	/*public List<Transaccion> listaTransacionesCuenta(int cuenta_numeroCuenta) {
 		String jqpl = "SELECT c FROM Cuenta c JOIN FETCH c.listaTra where c.id = :id";
 		Query query = em.createQuery(jqpl, Cuenta.class);
-		query.setParameter("numeroCuenta", id);
+		query.setParameter("cuenta_numeroCuenta", cuenta_numeroCuenta);
 		 Cuenta cuenta = (Cuenta) query.getSingleResult();
 		List<Transaccion> trans = new ArrayList<>();
 		for (Transaccion t : cuenta.getListaTra()) {
+			System.out.println(t.toString());
 			trans.add(t);	
+			
 		}
 		return trans;
-		}
-
+		}*/
+	public List<Transaccion> listaTransacionesCuenta(int cuenta_numeroCuenta) {
+	String jpql = "SELECT a FROM Transaccion a where c.cuenta_numeroCuenta=cuenta_numeroCuenta ";
+	Query query = em.createQuery(jpql, Transaccion.class);
+	query.setParameter("cuenta_numeroCuenta", cuenta_numeroCuenta);
+	List<Transaccion> transacciones = query.getResultList();
+for (int i = 0; i < transacciones.size(); i++) {
+	System.out.println(transacciones.get(i));
+}
+	
+	return transacciones;
+	}
 }

@@ -55,4 +55,30 @@ public class SesionDAO {
 		return sesiones;
 	}
 
+	
+	
+	///hola mundo
+	
+
+
+	public void removeSesion(int id) throws Exception {
+		em.remove(this.buscarSesion(id));
+	}
+	
+	public void update(int id) throws Exception {
+		em.merge(id);
+	}
+
+	public Sesion buscarSesion(int id) {
+		Sesion sesion = em.find(Sesion.class,id);
+		return sesion;
+	}
+	public List<Sesion> getSesiones(String cedula){
+		String jpql = "SELECT u FROM Sesion u WHERE cliente_cedula like:cedula";
+		System.out.println("sesionsssssssssss"+jpql);
+		Query query = em.createQuery(jpql,Sesion.class);
+		List<Sesion> listado =  query.getResultList();	
+		return listado;
+	}
+
 }

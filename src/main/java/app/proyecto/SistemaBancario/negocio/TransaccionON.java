@@ -21,14 +21,13 @@ public class TransaccionON {
 
 	@Inject
 	CuentaDAO cuentaDao;
-
+	
 	public void nuevaTransaccion(Transaccion transaccion, Cuenta cuenta) {
 		if (transaccion.getTipo().equals("Deposito")) {
 			TransDeposito(transaccion, cuenta);
 		} else if (transaccion.getTipo().equals("Retiro")) {
 			TransRetiro(transaccion, cuenta);
 		}
-
 	}
 
 	public Cuenta getCuenta(int numeroCuenta) {
@@ -37,6 +36,10 @@ public class TransaccionON {
 
 	public List<Transaccion> mostrarTransacciones() {
 		return this.transacciondao.mostrarTransacciones();
+	}
+	
+	public List<Transaccion> mostrarTransaccionesCuenta(int cuenta_numeroCuenta) {
+		return this.transacciondao.listaTransacionesCuenta(cuenta_numeroCuenta);
 	}
 
 	public void TransDeposito(Transaccion transaccion, Cuenta cuenta) {

@@ -1,6 +1,7 @@
 package app.proyecto.SistemaBancario.view;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,14 +16,16 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
+import app.proyecto.SistemaBancario.DAO.CuentaDAO;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.Entidades.Transaccion;
+import app.proyecto.SistemaBancario.Utils.TransaccionFachada;
+import app.proyecto.SistemaBancario.negocio.CuentaON;
 //import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.negocio.TransaccionON;
 
 @Named
-//@ConversationScoped
 @ViewScoped
 public class TransaccionB implements Serializable {
 	
@@ -30,6 +33,11 @@ public class TransaccionB implements Serializable {
 	
 	@Inject
 	TransaccionON transaccionon;
+	
+	@Inject 
+	CuentaON cuentaon;
+	@Inject 
+	CuentaDAO cuentadao;
 	
 	private Transaccion transaccion;
 	
@@ -45,11 +53,19 @@ public class TransaccionB implements Serializable {
 		listarTransacciones();
 	}
 
-	public String guardarTransaccion(/*int numeroCuenta*/) {
-		cuenta = transaccionon.getCuenta(numeroCuenta) ;
-		transaccion.setCuenta(cuenta);
-		transaccionon.nuevaTransaccion(transaccion,cuenta);
-		this.transaccion = null;
+	public String guardarTransaccion(/*int numeroCuenta*/) throws Exception {
+
+		TransaccionFachada trx= new TransaccionFachada();
+		trx.setCuentadestino(numeroCuenta);
+		trx.setMonto(transaccion.getMonto());
+		if (transaccion.getTipo().equals("deposito")) {
+			trx.setTipo("deposito");
+			this.transaccionon.deposito(trx);
+		}else if (transaccion.getTipo().equals("retiro")) {
+			trx.setTipo("retiro");
+			this.transaccionon.retiro(trx);
+		}
+		
 		listarTransacciones();
 		return null;
 	}

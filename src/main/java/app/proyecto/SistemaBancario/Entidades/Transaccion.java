@@ -36,7 +36,7 @@ public class Transaccion implements Serializable {
 
 
 	@OneToOne
-	@JoinColumn(name = "cuenta_numeroCuenta", referencedColumnName = "id")
+	@JoinColumn(name = "transaccion_cuenta_id", referencedColumnName = "id")
 	private Cuenta cuenta;
 
 	
