@@ -4,13 +4,15 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head>
+<h:head>
+<f:event listener="#{usuarioMB.usuarioInLogin()}" type="prerenderView">
+</f:event>
+</h:head>
 <body>
 	<div>
 		<div class="container">
 			<h:form>
 				<div class="form-row">
-
 
 					<h:outputLabel value="Cedula: " for="cedula" />
 					<h:inputText class="form-control"

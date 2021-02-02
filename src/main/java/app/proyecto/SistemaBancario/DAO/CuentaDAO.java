@@ -109,5 +109,30 @@ public class CuentaDAO {
 		
 		return cuentas;
 	}
+	
+	public List<Cuenta> mostrarCuentasClientexCedula(String cedula) {
+		String jpql = "SELECT c FROM Cuenta c where c.cuenta_cliente_id = :cedula";
+		Query query = em.createQuery(jpql, Cuenta.class);
+		query.setParameter("cedula", cedula);
+		List<Cuenta> cuentas = query.getResultList();
+	
+		return cuentas;
+	}
+	public List<Cuenta> listaCuentasCliente(int id) {
+		//String jpql = "SELECT l FROM Cuenta l where l.cliente = :id";
+		//SELECT d FROM Employee e INNER JOIN e.department d
+		//String jpql = "SELECT c FROM Cuenta  JOIN FETCH c.cliente where c.id = :id";
+		//String jpql = "SELECT c FROM Cuenta c where c.Cliente.id = :id";
+		//SELECT c FROM CuentaAhorro c JOIN FETCH c.listaTra where c.numeroCuenta = :numeroCuenta";
+		//"SELECT ph FROM Employee e JOIN e.phones ph WHERE ph LIKE '1%'", Phone.class);
+		String jpql = "SELECT cu FROM Cliente cl JOIN cl.cuentas cu WHERE cl.id= :id";
+		Query query = em.createQuery(jpql, Cuenta.class);
+		query.setParameter("id", id);
+		List<Cuenta> cuentas = query.getResultList();
+		for (int i = 0; i < cuentas.size(); i++) {
+			System.out.println("Hola mundo   "+ cuentas.get(i).getCliente().getNombres());
+		}
+		return cuentas;
+		}
 
 }

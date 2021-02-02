@@ -29,6 +29,10 @@ public class TransaccionON {
 			TransRetiro(transaccion, cuenta);
 		}
 	}
+	
+	public Transaccion getTransaccion(int id) {
+		return this.transacciondao.buscarTransaccion(id);
+	}
 
 	public Cuenta getCuenta(int numeroCuenta) {
 		return cuentaDao.buscarCuentaID(numeroCuenta);
@@ -38,9 +42,9 @@ public class TransaccionON {
 		return this.transacciondao.mostrarTransacciones();
 	}
 	
-	public List<Transaccion> mostrarTransaccionesCuenta(int cuenta_numeroCuenta) {
+	/*public List<Transaccion> mostrarTransaccionesCuenta(int cuenta_numeroCuenta) {
 		return this.transacciondao.listaTransacionesCuenta(cuenta_numeroCuenta);
-	}
+	}*/
 
 	public void TransDeposito(Transaccion transaccion, Cuenta cuenta) {
 		double nuevoSaldo = cuenta.getSaldo() + transaccion.getMonto();
@@ -211,5 +215,10 @@ public class TransaccionON {
 		}
 		return respuesta;
 	}
+	public List<Transaccion> listarTransaccionesCuenta(int id) {
+		System.out.println("En capa de negoscios >>>>>"+id);
+		return this.transacciondao.listaTransaccionesCuenta(id);
+	}
+	
 
 }

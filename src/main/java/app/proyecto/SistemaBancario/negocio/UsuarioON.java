@@ -32,6 +32,10 @@ public class UsuarioON {
 		return this.usuariodao.mostrarUsuarios();
 	}
 	
+	
+	public Usuario buscarUsuarioCorreoPswrd(Usuario usuario) {
+		return usuariodao.buscarCorreoyPswrd(usuario);
+	}
 	/*
 	public boolean verificarUsuario(String  correo, String clave) {
 		

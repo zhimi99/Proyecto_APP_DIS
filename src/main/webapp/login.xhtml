@@ -2,13 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head>
+<h:head>
+<title>Banca Virtual</title>
+</h:head>
 <body>
 	<div>
 		<div class="container">
 			<h:form>
+			
+			<p:messages autoUpdate= "true" />
 			
 				<center><h1>Banca Virtual</h1></center>
 				
@@ -17,9 +22,9 @@
 					<h3>Inicio de Sesion </h3>
 					
 					<div class="form-row">
-						<h:outputLabel value="Correo: " for="correo" />
+						<h:outputLabel value="Correo: " for="correo"/>
 						<h:inputText class="form-control"
-						value="#{usuarioMB.usuario.correo}" id="correo" />
+						value="#{usuarioMB.usuario.correo}" id="correo" requiered="true"/>
 						<h:message for="correo" />
 					</div>
 					
@@ -27,12 +32,12 @@
 					<div class="form-row">
 						<h:outputLabel value="Clave: " for="null" />
 						<h:inputText class="form-control"
-						value="#{usuarioMB.usuario.clave}" id="clave" />
+						value="#{usuarioMB.usuario.clave}" id="clave" requiered="true"/>
 						<h:message for="clave" />
 						
 					</div>
 					
-					<h:commandButton value="login" action="#{usuarioMB.login()}" />
+					<h:commandButton icon ="ui-icon-key" value="login" action="#{usuarioMB.login()}" />
 				
 				
 				</div></center>

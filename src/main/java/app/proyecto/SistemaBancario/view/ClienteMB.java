@@ -143,7 +143,9 @@ private UIData usersDataTable;
 	}
 
 	public String addCuenta() {
-		newcliente.addCuenta(new Cuenta());
+		Cuenta cuenta= new Cuenta();
+		cuenta.setCliente(newcliente);
+		newcliente.addCuenta(cuenta);
 		return null;
 	}
 

@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.Entidades.Transaccion;
+import app.proyecto.SistemaBancario.Entidades.Usuario;
 
 /**
  * 
@@ -29,6 +30,10 @@ public class TransaccionDAO {
 	 */
 	public void crearTransaccion(Transaccion transaccion){
 		this.em.persist(transaccion);
+	}
+	
+	public Transaccion buscarTransaccion(int id) {
+		return em.find(Transaccion.class, id);
 	}
 
 	/**
@@ -61,7 +66,7 @@ public class TransaccionDAO {
 		}
 		return trans;
 		}*/
-	public List<Transaccion> listaTransacionesCuenta(int cuenta_numeroCuenta) {
+	/*public List<Transaccion> listaTransacionesCuenta(int cuenta_numeroCuenta) {
 	String jpql = "SELECT a FROM Transaccion a where c.cuenta_numeroCuenta=cuenta_numeroCuenta ";
 	Query query = em.createQuery(jpql, Transaccion.class);
 	query.setParameter("cuenta_numeroCuenta", cuenta_numeroCuenta);
@@ -72,4 +77,17 @@ for (int i = 0; i < transacciones.size(); i++) {
 	
 	return transacciones;
 	}
+	*/
+	public List<Transaccion> listaTransaccionesCuenta(int id) {
+		System.out.println("en dao>>> "+id);
+		//String jpql = "SELECT cu FROM Cliente cl JOIN cl.cuentas cu WHERE cl.id= :id";
+		String jpql = "SELECT cu FROM Cuenta cl JOIN cl.listaTra cu WHERE cl.id= :id";
+		Query query = em.createQuery(jpql, Transaccion.class);
+		query.setParameter("id", id);
+		List<Transaccion> transacciones = query.getResultList();
+		for (int i = 0; i < transacciones.size(); i++) {
+			System.out.println("Hola mundo   "+ transacciones.get(i).getCuenta().getTipoCuenta());
+		}
+		return transacciones;
+		}
 }

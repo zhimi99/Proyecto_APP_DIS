@@ -13,21 +13,21 @@ import javax.ws.rs.core.Response;
 
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Utils.RestFilter;
-import app.proyecto.SistemaBancario.Utils.UsuarioTemp;
+import app.proyecto.SistemaBancario.Utils.UsuarioSesion;
 import app.proyecto.SistemaBancario.negocio.ClienteON;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-@Path("/login")
+//@Path("/login")
 public class AuthWS {
-	
+	/*
 	@Inject
 	private ClienteON clienteON;
 
 	@POST
 	@Produces("application/json")
 	@Consumes("application/json")
-	public Response login(UsuarioTemp sesion) {
+	public Response login(UsuarioSesion sesion) {
 		
 		try {
 			//Usuario cliente;
@@ -48,6 +48,6 @@ public class AuthWS {
 			e.printStackTrace();
 		}
 		return Response.status(Response.Status.UNAUTHORIZED).build();
-	}
+	}*/
 
 }

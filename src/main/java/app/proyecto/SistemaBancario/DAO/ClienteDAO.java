@@ -11,7 +11,7 @@ import javax.sound.midi.MidiSystem;
 
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Sesion;
-import app.proyecto.SistemaBancario.Utils.UsuarioTemp;
+import app.proyecto.SistemaBancario.Utils.UsuarioSesion;
 
 /**
  * 
@@ -104,8 +104,41 @@ public class ClienteDAO {
 
 		return cli;
 	}
+	public Cliente buscarClienteCorreo(String correo) {
+		Cliente cli = new Cliente();
+		try {
+			String jpql = "SELECT c FROM Cliente c where c.correo = :correo";
+			Query query = em.createQuery(jpql, Cliente.class);
+			query.setParameter("correo", correo);
+			cli = (Cliente) query.getSingleResult();
+		} catch (Exception e) {
+			cli = null;
+		}
+
+		return cli;
+	}
+	
+	public Cliente clienteLogIn(UsuarioSesion usuarioSesion) {
+		System.out.println("Cliente DAO    " +usuarioSesion.toString());
+		Cliente cl= this.buscarClienteCorreo(usuarioSesion.getCorreo());
+		try {
+			String jpql = "SELECT c FROM Cliente c WHERE c.correo = :correo AND c.clave = :clave";
+			
+			Query q = em.createQuery(jpql, Cliente.class);
+			q.setParameter("correo", cl.getCorreo());
+			q.setParameter("clave", cl.getClave());
+			cl = (Cliente) q.getSingleResult();
+			System.out.println("Cliente ======>>>>>> "+cl.getCorreo());
+			
+		} catch (Exception e) {
+			System.out.println("<========ERROR  ClienteDAO  ClIENTE OGIN ======>>>>>>");
+			cl = null;
+		}
+		return cl;
+	}
 	
 	
+	/*
 	public Cliente getUserbyEmailAndPassword(Sesion sesion) {
 		Cliente cl;
 		try {
@@ -123,8 +156,7 @@ public class ClienteDAO {
 		}
 		return cl;
 	}
-	
-	public Cliente getUserbyEmailAndPassword2(UsuarioTemp sesion) {
+	public Cliente getUserbyEmailAndPassword2(UsuarioSesion sesion) {
 		Cliente cl;
 		try {
 			String jpql = "SELECT c FROM Cliente c WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
@@ -140,16 +172,16 @@ public class ClienteDAO {
 			cl = null;
 		}
 		return cl;
-	}
+	}*/
 	
-	public Cliente cambioContrasena(UsuarioTemp sesion) {
+	public Cliente cambioContrasena(UsuarioSesion sesion) {
 		Cliente cl;
 		try {
 			//String jpql = "UPDATE proyecto.Usuario u SET u.password =:nuevapass WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
 			String jpql = "UPDATE Cliente c SET c.clave =:nuevaclave WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
 			System.out.println("jpqlllll"+jpql);
 			Query q = em.createQuery(jpql, Cliente.class);
-			q.setParameter("correo", sesion.getEmail());
+			q.setParameter("correo", sesion.getCorreo());
 			q.setParameter("clave", sesion.getClave());
 			q.setParameter("nuevaclave", sesion.getNuevaClave());
 			cl = (Cliente) q.getSingleResult();

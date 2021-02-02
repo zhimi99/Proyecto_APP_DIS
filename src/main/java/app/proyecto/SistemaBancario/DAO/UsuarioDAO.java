@@ -66,15 +66,17 @@ public class UsuarioDAO {
 		return usuarios;
 	}
 	
-	
-	public Usuario buscarCorreo(String correo, String clave) {
+	/*
+	 * Metodo que busca el usuario mediante corroe y clave
+	 */
+	public Usuario buscarCorreoyPswrd(Usuario usuario/*String correo, String clave*/) {
 		
 			Usuario usu = new Usuario();
 			try {
 				String jpql = "SELECT l FROM Usuario l where l.correo = :correo and l.clave  =:clave";
 				Query query = em.createQuery(jpql, Usuario.class);
-				query.setParameter("correo", correo);
-				query.setParameter("clave", clave);
+				query.setParameter("correo", usuario.getCorreo());
+				query.setParameter("clave", usuario.getClave());
 				usu = (Usuario) query.getSingleResult();
 			} catch (Exception e) {
 				usu = null;

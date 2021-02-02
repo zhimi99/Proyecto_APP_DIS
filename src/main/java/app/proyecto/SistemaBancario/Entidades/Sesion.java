@@ -34,7 +34,7 @@ public class Sesion implements Serializable{
 	private int intentos;
 	private Double estado;
 	
-	@Transient
+	/*@Transient
 	private String correo;
 	@Transient
 	private String password;
@@ -46,7 +46,7 @@ public class Sesion implements Serializable{
 	private Cliente cliente;
 	
 	@Transient
-	private String adminEmpleadoTemp;
+	private String adminEmpleadoTemp;*/
 
 	public int getId() {
 		return id;
@@ -80,45 +80,5 @@ public class Sesion implements Serializable{
 		this.estado = estado;
 	}
 
-	public String getCorreo() {
-		return correo;
-	}
 
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public String getAdminEmpleadoTemp() {
-		return adminEmpleadoTemp;
-	}
-
-	public void setAdminEmpleadoTemp(String adminEmpleadoTemp) {
-		this.adminEmpleadoTemp = adminEmpleadoTemp;
-	}
-
-	
 }

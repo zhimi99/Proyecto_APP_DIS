@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -42,9 +43,10 @@ public class Cuenta implements Serializable{
     private List<Transaccion> listaTra;
 
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "cuenta_cliente_id", referencedColumnName = "id")
 	private Cliente cliente;
+	
 
 	
 	/**

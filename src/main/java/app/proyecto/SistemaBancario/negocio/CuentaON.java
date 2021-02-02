@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.Query;
+
 import app.proyecto.SistemaBancario.DAO.CuentaDAO;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 
@@ -27,5 +29,9 @@ public class CuentaON {
 	}
 	public Cuenta mostrarCuenta(int id) {
 		return this.cuentadao.buscarCuenta(id);
+	}
+	
+	public List<Cuenta> listarCuentasCliente(int id) {
+		return this.cuentadao.listaCuentasCliente(id);
 	}
 }

@@ -1,11 +1,13 @@
 package app.proyecto.SistemaBancario.view;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.Message;
@@ -33,15 +35,16 @@ public class UsuarioMB implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.usuario = new Usuario();
-		String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
-		usuario.setClave(contrasena);
+
 		listarUsuarios();
 	}
 
 	public void agregarUsuario() {
-
+		String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
+		this.usuario.setClave(contrasena);
 		this.usuarioon.crearUsuario(usuario);
-		enviarConGMail( usuario.getCorreo(), "Usuario Creado con exito", "Usuario: "+usuario.getCorreo()+"\nPassword: "+usuario.getClave());
+		enviarConGMail(usuario.getCorreo(), "Usuario Creado con exito",
+				"Usuario: " + usuario.getCorreo() + "\nPassword: " + usuario.getClave());
 		listarUsuarios();
 
 	}
@@ -62,54 +65,89 @@ public class UsuarioMB implements Serializable {
 			return;
 		}
 	}
-	
+
 	/*
-	
-	public String login(String correo, String clave) {
-		
-		if(usuarioon.verificarUsuario(correo, clave)) {
-			return "Cliente";
+	 * public String login(String correo, String clave) {
+	 * 
+	 * if(usuarioon.verificarUsuario(correo, clave)) { return "Cliente"; }
+	 * 
+	 * return null; }
+	 */
+	public String login() {
+		String retorno = null;
+		Usuario usuarioLogeado = usuarioon.buscarUsuarioCorreoPswrd(usuario);
+		if (usuarioon.buscarUsuarioCorreoPswrd(usuario) != null) {
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarioLogeado);
+			
+			if (usuarioLogeado.getRol().equals("Administrador")) {
+				retorno = "Usuario";
+
+			} else if (usuarioLogeado.getRol().equals("Cajero")) {
+				retorno = "login";
+
+			} else if (usuarioLogeado.getRol().equals("Asistente de captaciones")) {
+				retorno = "login";
+			}
+			//retorno = "Cliente";
+		} else {
+			retorno = "login";
+
 		}
+
+		return retorno;
+	}
+
+	public void usuarioInLogin() {
 		
-		return null;
+		
+			FacesContext fc = FacesContext.getCurrentInstance();
+			Usuario usuarioLogin = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
+			if (usuarioLogin == null) {
+				System.out.println("login no conectado falla en el path");
+			try {	
+				fc.getExternalContext().redirect("/login.xhtml");
+			
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+			}
+			
+
 	}
-	
-	
-	*/
 
-
-	
-	
 	public static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
-	    // Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el remitente también.
-	    String remitente = "asagbay1995@gmail.com";  //Para la dirección nomcuenta@gmail.com
+		// Esto es lo que va delante de @gmail.com en tu cuenta de correo. Es el
+		// remitente también.
+		String remitente = "asagbay1995@gmail.com"; // Para la dirección nomcuenta@gmail.com
 
-	    Properties props = System.getProperties();
-	    props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
-	    props.put("mail.smtp.user", remitente);
-	    props.put("mail.smtp.clave", "Octubre24");    //La clave de la cuenta
-	    props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
-	    props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
-	    props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
+		Properties props = System.getProperties();
+		props.put("mail.smtp.host", "smtp.gmail.com"); // El servidor SMTP de Google
+		props.put("mail.smtp.user", remitente);
+		props.put("mail.smtp.clave", "Octubre24"); // La clave de la cuenta
+		props.put("mail.smtp.auth", "true"); // Usar autenticación mediante usuario y clave
+		props.put("mail.smtp.starttls.enable", "true"); // Para conectar de manera segura al servidor SMTP
+		props.put("mail.smtp.port", "587"); // El puerto SMTP seguro de Google
 
-	    Session session = Session.getDefaultInstance(props);
-	    MimeMessage message = new MimeMessage(session);
+		Session session = Session.getDefaultInstance(props);
+		MimeMessage message = new MimeMessage(session);
 
-	    try {
-	        message.setFrom(new InternetAddress(remitente));
-	        message.addRecipients(Message.RecipientType.TO, destinatario);   //Se podrían añadir varios de la misma manera
-	        message.setSubject(asunto);
-	        message.setText(cuerpo);
-	        Transport transport = session.getTransport("smtp");
-	        transport.connect("smtp.gmail.com", remitente, "Octubre24");
-	        transport.sendMessage(message, message.getAllRecipients());
-	        transport.close();
-	    }
-	    catch (MessagingException me) {
-	        me.printStackTrace();   //Si se produce un error
-	    }
+		try {
+			message.setFrom(new InternetAddress(remitente));
+			message.addRecipients(Message.RecipientType.TO, destinatario); // Se podrían añadir varios de la misma
+																			// manera
+			message.setSubject(asunto);
+			message.setText(cuerpo);
+			Transport transport = session.getTransport("smtp");
+			transport.connect("smtp.gmail.com", remitente, "Octubre24");
+			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
+		} catch (MessagingException me) {
+			me.printStackTrace(); // Si se produce un error
+		}
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -125,5 +163,5 @@ public class UsuarioMB implements Serializable {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
+
 }

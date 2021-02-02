@@ -9,7 +9,7 @@ import app.proyecto.SistemaBancario.DAO.ClienteDAO;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Sesion;
 import app.proyecto.SistemaBancario.SERVICES.Respuesta;
-import app.proyecto.SistemaBancario.Utils.UsuarioTemp;
+import app.proyecto.SistemaBancario.Utils.UsuarioSesion;
 
 
 @Stateless
@@ -57,14 +57,7 @@ public class ClienteON {
 
 	}
 	
-	public Cliente buscarClienteCedulaP(String cedula) throws Exception {
-		Cliente cli = clientedao.buscarClienteCedulaP(cedula);
-		if (cli == null)
-			throw new Exception("Cliente no existe");
-		else
-			return cli;
-
-	}
+	
 
 	public void actualizarCliente(Cliente cliente) throws Exception {
 		Cliente cli = clientedao.buscarClienteCedula(cliente.getCedula());
@@ -80,17 +73,42 @@ public class ClienteON {
 		return this.clientedao.mostrarClientes();
 	}
 	
-	public Cliente login(Sesion sesion) throws Exception {
-
-		//return uDAO.getUserbyEmailAndPassword(sesion);
-		return clientedao.getUserbyEmailAndPassword(sesion);
+	public Respuesta clienteLogIn(UsuarioSesion usuarioSesion) throws Exception{
+		System.out.println("usuario sesion"+usuarioSesion.toString());
+		Respuesta respuesta= new Respuesta();
+		Cliente  cliente=this.clientedao.clienteLogIn(usuarioSesion);
+		System.out.println(cliente.getCorreo());
+		if (cliente.getCorreo()!=null) {
+			respuesta.setCodigo(200);
+			respuesta.setMensaje("ok");
+		}else  {
+			respuesta.setCodigo(500);
+			respuesta.setMensaje("Credenciales incorrectas");
+		}
+		
+		
+		return respuesta;
 	}
-	public Cliente login(UsuarioTemp sesion) throws Exception {
+	/**
+	 * Metodo que permite obtener un cliente a travez de su correo y contraseña
+	 * @param usuarioSesion es una fachada que tiene los datos necesarios de una sesison de cliente
+	 * @return Un objeto de tipo cliente 
+	 * @throws Exception
+	 */
+	public Cliente obtenerClienteLogin(String correo) throws Exception {
+		//UsuarioSesion usuarioSesion = new UsuarioSesion();
+		//Cliente cliente = this.clientedao.buscarClienteCorreo(correo);
+		//System.out.println(cliente.getCorreo()+"      "+cliente.getClave() );
+		//usuarioSesion.setCorreo(cliente.getCorreo());
+		//usuarioSesion.setClave(cliente.getClave());
+		return this.clientedao.buscarClienteCorreo(correo);//this.clientedao.clienteLogIn(usuarioSesion);
+	}
+	/*public Cliente login(UsuarioSesion sesion) throws Exception {
 		//return uDAO.getUserbyEmailAndPassword2(sesion);
 		return clientedao.getUserbyEmailAndPassword2(sesion);
-	}
+	}*/
 
-	public Respuesta cambioContrasenia(UsuarioTemp sesion) throws Exception {
+	public Respuesta cambioContrasenia(UsuarioSesion sesion) throws Exception {
 		Respuesta respuesta = new Respuesta();
 	    //uDAO.cambioContrasenia(sesion);
 	    clientedao.cambioContrasena(sesion);
