@@ -69,14 +69,14 @@ public class UsuarioDAO {
 	/*
 	 * Metodo que busca el usuario mediante corroe y clave
 	 */
-	public Usuario buscarCorreoyPswrd(Usuario usuario/*String correo, String clave*/) {
-		
+	public Usuario buscarCorreo(Usuario usuario/*String correo, String clave*/) {
 			Usuario usu = new Usuario();
 			try {
-				String jpql = "SELECT l FROM Usuario l where l.correo = :correo and l.clave  =:clave";
+				//String jpql = "SELECT l FROM Usuario l where l.correo = :correo and l.clave  =:clave";
+				String jpql = "SELECT l FROM Usuario l where l.correo = :correo";
 				Query query = em.createQuery(jpql, Usuario.class);
 				query.setParameter("correo", usuario.getCorreo());
-				query.setParameter("clave", usuario.getClave());
+				//query.setParameter("clave", usuario.getClave());
 				usu = (Usuario) query.getSingleResult();
 			} catch (Exception e) {
 				usu = null;
@@ -84,6 +84,20 @@ public class UsuarioDAO {
 
 			return usu;
 		}
+	
+	public Usuario buscarUsuarioCedula(String cedula) {
+		Usuario cli = new Usuario();
+		try {
+			String jpql = "SELECT c FROM Usuario c where c.cedula = :cedula";
+			Query query = em.createQuery(jpql, Usuario.class);
+			query.setParameter("cedula", cedula);
+			cli = (Usuario) query.getSingleResult();
+		} catch (Exception e) {
+			cli = null;
+		}
+
+		return cli;
+	}
 	
 		
 }

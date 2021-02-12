@@ -50,7 +50,7 @@ public class Cliente implements Serializable {
 	private Date fechaRegistro;
 
 	private double saldo;
-	private Boolean estado;
+	private String estado;
 	private String correo;
 	private String clave;
 
@@ -65,6 +65,9 @@ public class Cliente implements Serializable {
 	@JoinColumn(name = "cliente_cedula")
     private List<Sesion> listaSesiones;
 
+	
+	
+	
 	/*
 	@OneToOne( mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Cuenta cuenta;
@@ -151,11 +154,13 @@ public class Cliente implements Serializable {
 		this.saldo = saldo;
 	}
 
-	public Boolean getEstado() {
+	
+
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Boolean estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 

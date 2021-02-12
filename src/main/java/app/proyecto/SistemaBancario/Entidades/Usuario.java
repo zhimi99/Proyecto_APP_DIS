@@ -1,12 +1,17 @@
 package app.proyecto.SistemaBancario.Entidades;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 /**
  * 
@@ -32,6 +37,12 @@ public class Usuario implements Serializable {
 	private String rol;
 	private String correo;
 	private String clave;
+	private String estado;
+	
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_poliza")
+    private List<Poliza> listaSolicitudesPoliza;
+
 	
 	/**
 	 * Getters and setters: Metodos encargados del acceso a datos declarados
@@ -92,11 +103,21 @@ public class Usuario implements Serializable {
 	public void setClave(String clave) {
 		this.clave = clave;
 	}
+	
+	
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos
-				+ ", telefono=" + telefono + ", rol=" + rol + ", correo=" + correo + ", clave=" + clave + "]";
+				+ ", telefono=" + telefono + ", rol=" + rol + ", correo=" + correo + ", clave=" + clave + ", estado="
+				+ estado + "]";
 	}
+	
 	
 	
 }

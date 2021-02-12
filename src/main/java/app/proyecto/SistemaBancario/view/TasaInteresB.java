@@ -9,7 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import app.proyecto.SistemaBancario.Entidades.TasaInteres;
-
+import app.proyecto.SistemaBancario.Entidades.Usuario;
 import app.proyecto.SistemaBancario.negocio.TasaInteresON;
 
 @Named
@@ -33,9 +33,11 @@ public class TasaInteresB implements Serializable {
 
 	private String Cedulabusqueda;
 
+private Usuario usuarioLogin;
+	
 	@PostConstruct
 	public void init() {
-		newtasaInteres = new TasaInteres();
+		this.usuarioLogin=recuperarUsuarioLogin(); 
 
 		listarTasaInteres();
 	}
@@ -55,17 +57,6 @@ public class TasaInteresB implements Serializable {
 		this.tasaIntereses = this.tasaIntereson.mostrarTasaInteres();
 
 	}
-
-	/*
-	 * public void loadData() {
-	 * 
-	 * System.out.println("load data " + Cedulabusqueda); if(Cedulabusqueda==null)
-	 * return; try { newtasaInteres= tasaIntereson.bu
-	 * tasaIntereson.buscarClienteCedula(Cedulabusqueda); editing = true; } catch
-	 * (Exception e) { // TODO Auto-generated catch block e.printStackTrace();
-	 * FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-	 * e.getMessage(), "Error"); facesContext.addMessage(null, m); } }
-	 */
 
 	/**
 	 * Getteres ansd setters
@@ -117,6 +108,19 @@ public class TasaInteresB implements Serializable {
 
 	public void setCedulabusqueda(String cedulabusqueda) {
 		Cedulabusqueda = cedulabusqueda;
+	}
+	
+	public Usuario recuperarUsuarioLogin() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Usuario usuario = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
+		return usuario;
+	}
+	public Usuario getUsuarioLogin() {
+		return usuarioLogin;
+	}
+
+	public void setUsuarioLogin(Usuario usuarioLogin) {
+		this.usuarioLogin = usuarioLogin;
 	}
 
 }

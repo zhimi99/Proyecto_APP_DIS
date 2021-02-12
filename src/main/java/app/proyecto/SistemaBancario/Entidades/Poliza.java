@@ -3,10 +3,15 @@ package app.proyecto.SistemaBancario.Entidades;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 /**
@@ -34,6 +39,130 @@ public class Poliza implements Serializable {
 	
 	private Double porcentajePoliza;
 	private Double estadoVigencia;
+	private boolean isSolicitud;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private TasaInteres tasaItnteres;
+	
+	@Lob
+	private byte[] cedulaImagen;
+	@Lob
+	private byte[] planillaImagen;
+
+	@OneToOne
+	@JoinColumn(name = "poliza_cuenta", referencedColumnName = "id")
+	private Cuenta cuenta;
+	
+	@OneToOne
+	@JoinColumn(name = "poliza_empleado", referencedColumnName = "id")
+	private Usuario empleado;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getPlazo() {
+		return plazo;
+	}
+
+	public void setPlazo(int plazo) {
+		this.plazo = plazo;
+	}
+
+	public Double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(Double monto) {
+		this.monto = monto;
+	}
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public Double getPorcentajePoliza() {
+		return porcentajePoliza;
+	}
+
+	public void setPorcentajePoliza(Double porcentajePoliza) {
+		this.porcentajePoliza = porcentajePoliza;
+	}
+
+	public Double getEstadoVigencia() {
+		return estadoVigencia;
+	}
+
+	public void setEstadoVigencia(Double estadoVigencia) {
+		this.estadoVigencia = estadoVigencia;
+	}
+
+	public boolean isSolicitud() {
+		return isSolicitud;
+	}
+
+	public void setSolicitud(boolean isSolicitud) {
+		this.isSolicitud = isSolicitud;
+	}
+
+	public TasaInteres getTasaItnteres() {
+		return tasaItnteres;
+	}
+
+	public void setTasaItnteres(TasaInteres tasaItnteres) {
+		this.tasaItnteres = tasaItnteres;
+	}
+
+	public byte[] getCedulaImagen() {
+		return cedulaImagen;
+	}
+
+	public void setCedulaImagen(byte[] cedulaImagen) {
+		this.cedulaImagen = cedulaImagen;
+	}
+
+	public byte[] getPlanillaImagen() {
+		return planillaImagen;
+	}
+
+	public void setPlanillaImagen(byte[] planillaImagen) {
+		this.planillaImagen = planillaImagen;
+	}
+
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
+	}
+
+	public Usuario getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(Usuario empleado) {
+		this.empleado = empleado;
+	}
+
+
 	
 	/**
 	 * Getters and setters: Metodos encargados del acceso a datos declarados
@@ -45,56 +174,5 @@ public class Poliza implements Serializable {
 	 * cierto método.
 	 * 
 	 */
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getPlazo() {
-		return plazo;
-	}
-	public void setPlazo(int plazo) {
-		this.plazo = plazo;
-	}
-	public Double getMonto() {
-		return monto;
-	}
-	public void setMonto(Double monto) {
-		this.monto = monto;
-	}
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-	public Date getFechaFin() {
-		return fechaFin;
-	}
-	public void setFechaFin(Date fechaFin) {
-		this.fechaFin = fechaFin;
-	}
-	public Double getPorcentajePoliza() {
-		return porcentajePoliza;
-	}
-	public void setPorcentajePoliza(Double porcentajePoliza) {
-		this.porcentajePoliza = porcentajePoliza;
-	}
-	public Double getEstadoVigencia() {
-		return estadoVigencia;
-	}
-	public void setEstadoVigencia(Double estadoVigencia) {
-		this.estadoVigencia = estadoVigencia;
-	}
-	@Override
-	public String toString() {
-		return "Poliza [id=" + id + ", plazo=" + plazo + ", monto=" + monto + ", fechaInicio=" + fechaInicio
-				+ ", fechaFin=" + fechaFin + ", porcentajePoliza=" + porcentajePoliza + ", estadoVigencia="
-				+ estadoVigencia + "]";
-	}
-	
-	
-
 	
 }

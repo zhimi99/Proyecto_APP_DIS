@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
+import app.proyecto.SistemaBancario.Entidades.Usuario;
 import app.proyecto.SistemaBancario.negocio.CuentaON;
 
 @Named
@@ -23,8 +25,11 @@ public class CuentaMB implements Serializable{
 	private Cuenta cuenta;
 	private List<Cuenta> cuentas;
 	
+private Usuario usuarioLogin;
+	
 	@PostConstruct
 	public void init() {
+		this.usuarioLogin=recuperarUsuarioLogin(); 
 		this.cuenta= new Cuenta();
 		
 		listarCuentas();
@@ -57,5 +62,16 @@ public class CuentaMB implements Serializable{
 		this.cuentas = cuentas;
 	}
 	
+	public Usuario recuperarUsuarioLogin() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Usuario usuario = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
+		return usuario;
+	}
+	public Usuario getUsuarioLogin() {
+		return usuarioLogin;
+	}
 
+	public void setUsuarioLogin(Usuario usuarioLogin) {
+		this.usuarioLogin = usuarioLogin;
+	}
 }

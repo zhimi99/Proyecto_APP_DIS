@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import app.proyecto.SistemaBancario.DAO.ClienteDAO;
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Sesion;
+import app.proyecto.SistemaBancario.Entidades.Usuario;
 import app.proyecto.SistemaBancario.SERVICES.Respuesta;
 import app.proyecto.SistemaBancario.Utils.UsuarioSesion;
 
@@ -17,15 +18,19 @@ public class ClienteON {
 	@Inject
 	ClienteDAO clientedao;
 
-	public boolean crearCliente(Cliente cliente) throws Exception {
+	public void crearCliente(Cliente cliente) throws Exception {
 		Cliente cli = clientedao.buscarClienteCedula(cliente.getCedula());		
-		if (cli != null)
-			throw new Exception("Cliente ya existe");
-		else
+		if (cli==null) {
 			cliente.setFechaRegistro(new Date());
 			clientedao.crearCliente(cliente);
+		}
+			
+		else {
+			clientedao.actualizarCliente(cliente);
+		}
+			
 		
-		return true;
+		//return true;
 	}
 	
 	/*public void crearCliente(Cliente cliente) {
@@ -37,7 +42,7 @@ public class ClienteON {
 
 		Cliente cli = clientedao.buscarClienteCedula(cedula);
 		if (cli == null)
-			throw new Exception("Cliente no existe");
+			throw new Exception(" Eliminar Cliente no existe");
 
 		else
 
@@ -47,14 +52,14 @@ public class ClienteON {
 	public Cliente buscarCliente(String cedula) {
 		return this.clientedao.buscarClienteCedula(cedula);
 	}
+	
+	public Cliente buscarClienteID(int id) {
+		return this.clientedao.buscarClienteId(id);
+	}
 
-	public Cliente buscarClienteCedula(String cedula) throws Exception {
+	public Cliente buscarClienteCedula(String cedula)  {
 		Cliente cli = clientedao.buscarClienteCedula(cedula);
-		if (cli == null)
-			throw new Exception("Cliente no existe");
-		else
 			return cli;
-
 	}
 	
 	
@@ -115,6 +120,10 @@ public class ClienteON {
 	    respuesta.setCodigo(1);
 	    respuesta.setMensaje("Ok");	
 	    return respuesta;
+	}
+	
+	public Cliente buscarClienteCorreo(Cliente cliente) {
+		return clientedao.buscarClienteCorreo(cliente.getCorreo());
 	}
 
 

@@ -2,12 +2,14 @@ package app.proyecto.SistemaBancario.view;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.Message;
@@ -17,11 +19,14 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import app.proyecto.SistemaBancario.Entidades.Sesion;
 import app.proyecto.SistemaBancario.Entidades.Usuario;
+import app.proyecto.SistemaBancario.negocio.SesionON;
 import app.proyecto.SistemaBancario.negocio.UsuarioON;
 
 @Named
-@ConversationScoped
+//@ConversationScoped
+@ViewScoped
 public class UsuarioMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,29 +34,53 @@ public class UsuarioMB implements Serializable {
 	@Inject
 	UsuarioON usuarioon;
 
+	@Inject
+	SesionON sesionon;
+
+	@Inject
+	private FacesContext facesContext;
+
 	private Usuario usuario;
 	private List<Usuario> usuarios;
 
+	int intento = 1;
+
+private Usuario usuarioLogin;
+	
 	@PostConstruct
 	public void init() {
+		this.usuarioLogin=recuperarUsuarioLogin(); 
 		this.usuario = new Usuario();
-
 		listarUsuarios();
 	}
 
-	public void agregarUsuario() {
-		String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
-		this.usuario.setClave(contrasena);
-		this.usuarioon.crearUsuario(usuario);
-		enviarConGMail(usuario.getCorreo(), "Usuario Creado con exito",
-				"Usuario: " + usuario.getCorreo() + "\nPassword: " + usuario.getClave());
-		listarUsuarios();
+	public String agregarUsuario() {
+		Usuario user = usuarioon.buscarUsuarioCedula(usuario.getCedula());
+		if (user != null) {
+			try {
+				usuarioon.actualizarUsuario(usuario);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 
+		} else {
+			String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
+			usuario.setClave(contrasena);
+			try {
+				usuarioon.crearUsuario(usuario);
+				enviarConGMail(usuario.getCorreo(), "Usuario Creado con exito",
+						"Usuario: " + usuario.getCorreo() + "\nPassword: " + usuario.getClave());
+				listarUsuarios();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+		}
+		return null;
 	}
 
 	public void listarUsuarios() {
 		this.usuarios = this.usuarioon.mostrarUsuarios();
-
 	}
 
 	public void eliminarUsuario(String cedula) {
@@ -66,55 +95,108 @@ public class UsuarioMB implements Serializable {
 		}
 	}
 
-	/*
-	 * public String login(String correo, String clave) {
-	 * 
-	 * if(usuarioon.verificarUsuario(correo, clave)) { return "Cliente"; }
-	 * 
-	 * return null; }
-	 */
-	public String login() {
+	public String buscarUsuarioCedula() {
+		try {
+			this.usuario = this.usuarioon.buscarUsuarioCedula(usuario.getCedula());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	public String login() throws Exception {
 		String retorno = null;
-		Usuario usuarioLogeado = usuarioon.buscarUsuarioCorreoPswrd(usuario);
-		if (usuarioon.buscarUsuarioCorreoPswrd(usuario) != null) {
+		Usuario usuarioLogeado = usuarioon.buscarUsuarioCorreo(usuario);
+		Sesion sesion = new Sesion();
+
+		if (usuarioLogeado.getClave().equals(usuario.getClave()) && usuarioLogeado.getEstado().equals("Act")) {
+			setUsuarioOK(sesion, usuarioLogeado);
+			intento = 1;
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuarioLogeado);
-			
 			if (usuarioLogeado.getRol().equals("Administrador")) {
-				retorno = "Usuario";
+				retorno = "Usuario?faces-redirect=true";
 
 			} else if (usuarioLogeado.getRol().equals("Cajero")) {
-				retorno = "login";
+				retorno = "Transaccion?faces-redirect=true";
 
 			} else if (usuarioLogeado.getRol().equals("Asistente de captaciones")) {
-				retorno = "login";
+				retorno = "poliza?faces-redirect=true";
+
+			} else {
+				retorno = "login?faces-redirect=true";
 			}
-			//retorno = "Cliente";
+
 		} else {
-			retorno = "login";
+
+			sesion.setCorreo(this.usuario.getCorreo());
+			sesion.setClave(this.usuario.getClave());
+			sesion.setEstado("fallido");
+			sesion.setFecha(new Date());
+			sesion.setIntentos(intento++);
+			this.sesionon.crearSesion(sesion);
+			if (intento > 3) {
+				usuarioLogeado.setEstado("InAct");
+				this.usuarioon.actualizarUsuario(usuarioLogeado);
+
+			}
 
 		}
 
+		System.out.println("Contador >>>>>>> " + intento);
 		return retorno;
 	}
 
-	public void usuarioInLogin() {
-		
-		
-			FacesContext fc = FacesContext.getCurrentInstance();
-			Usuario usuarioLogin = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
-			if (usuarioLogin == null) {
-				System.out.println("login no conectado falla en el path");
-			try {	
-				fc.getExternalContext().redirect("/login.xhtml");
-			
+	public void setUsuarioOK(Sesion sesion, Usuario usuarioLogeado) {
+		sesion.setCorreo(usuarioLogeado.getCorreo());
+		sesion.setClave(usuarioLogeado.getClave());
+		sesion.setEstado("satisfactorio");
+		sesion.setFecha(new Date());
+		sesion.setIntentos(1);
+		this.sesionon.crearSesion(sesion);
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
+	}
+
+	public void usuarioAdminInLogin() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Usuario usuarioLogin = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
+		try {
+			if (usuarioLogin.getRol().equals("Administrador")) {
+			} else {
+				fc.getExternalContext().redirect("login.xhtml");
 			}
-			
+		} catch (IOException e) {
 
+		}
+	}
+
+	public void usuarioCajeroInLogin() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		try {
+			Usuario usuarioLogin = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
+			System.out.println(usuarioLogin.getNombres());
+			if (usuarioLogin.getRol().equals("Cajero") || usuarioLogin.getRol().equals("Administrador")) {
+			} else {
+				fc.getExternalContext().redirect("login.xhtml");
+			}
+		} catch (IOException e) {
+
+		}
+	}
+
+	public void usuarioAsistenteInLogin() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		try {
+			Usuario usuarioLogin = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
+			System.out.println(usuarioLogin.getNombres());
+			if (usuarioLogin.getRol().equals("Asistente de captaciones")
+					|| usuarioLogin.getRol().equals("Administrador")) {
+			} else {
+				fc.getExternalContext().redirect("login.xhtml");
+			}
+		} catch (IOException e) {
+
+		}
 	}
 
 	public static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
@@ -148,6 +230,8 @@ public class UsuarioMB implements Serializable {
 		}
 	}
 
+	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -162,6 +246,19 @@ public class UsuarioMB implements Serializable {
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+	
+	public Usuario recuperarUsuarioLogin() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Usuario usuario = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
+		return usuario;
+	}
+	public Usuario getUsuarioLogin() {
+		return usuarioLogin;
+	}
+
+	public void setUsuarioLogin(Usuario usuarioLogin) {
+		this.usuarioLogin = usuarioLogin;
 	}
 
 }

@@ -28,7 +28,7 @@ public class Transaccion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaRegistro;
 	
 	private String tipo;

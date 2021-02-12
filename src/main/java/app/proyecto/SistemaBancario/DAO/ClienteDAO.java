@@ -54,10 +54,10 @@ public class ClienteDAO {
 	 * @param cedula parametro unico que buscará una cedula dentro del cliente
 	 * @return un objeto de tipo Cliente
 	 */
-	public Cliente buscarClienteCedulaP(String cedula) {
-		Cliente cli = em.find(Cliente.class, cedula);
+	public Cliente buscarClienteId(int id) {
+		Cliente cli = em.find(Cliente.class, id);
 		System.out.println(cli.getCedula());
-		return em.find(Cliente.class, cedula);
+		return cli;
 	}
 
 	/**

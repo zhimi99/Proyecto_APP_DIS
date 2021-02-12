@@ -220,5 +220,9 @@ public class TransaccionON {
 		return this.transacciondao.listaTransaccionesCuenta(id);
 	}
 	
+	
+	public List<Transaccion>listaTransaccionesCuentaRangoFecha(int id, Date fecha1/*, Date fecha2*/){
+		return this.transacciondao.listaTransaccionesCuentaRangoFecha(id, fecha1/*, fecha2*/);
+	}
 
 }

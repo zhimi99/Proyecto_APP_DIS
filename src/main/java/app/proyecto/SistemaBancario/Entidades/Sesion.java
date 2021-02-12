@@ -32,13 +32,54 @@ public class Sesion implements Serializable{
 	private Date fecha;
 	
 	private int intentos;
-	private Double estado;
+	private String estado;
+	
+	
+	private String correo;
+	private String clave;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	public int getIntentos() {
+		return intentos;
+	}
+	public void setIntentos(int intentos) {
+		this.intentos = intentos;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	public String getCorreo() {
+		return correo;
+	}
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+	public String getClave() {
+		return clave;
+	}
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+	@Override
+	public String toString() {
+		return "Sesion [id=" + id + ", fecha=" + fecha + ", intentos=" + intentos + ", estado=" + estado + ", correo="
+				+ correo + ", clave=" + clave + "]";
+	}
 	
 	/*@Transient
-	private String correo;
-	@Transient
-	private String password;
-
 	@OneToOne
 	private Usuario usuario;
 	
@@ -46,39 +87,10 @@ public class Sesion implements Serializable{
 	private Cliente cliente;
 	
 	@Transient
-	private String adminEmpleadoTemp;*/
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-
-	public int getIntentos() {
-		return intentos;
-	}
-
-	public void setIntentos(int intentos) {
-		this.intentos = intentos;
-	}
-
-	public Double getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Double estado) {
-		this.estado = estado;
-	}
+	private String adminEmpleadoTemp;
+	@OneToOne
+	private Usuario usuario;*/
+	
 
 
 }

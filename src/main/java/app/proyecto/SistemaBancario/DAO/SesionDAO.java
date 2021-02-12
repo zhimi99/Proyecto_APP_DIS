@@ -9,7 +9,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Sesion;
+
 /**
  * 
  * @author andres Clase java encargada del manejo de opraciones sobre la base de
@@ -28,7 +30,7 @@ public class SesionDAO {
 	 * 
 	 * @param sesion pide el objeto que va a ser insertado en nuestra DB
 	 */
-	public void crearSesion(Sesion sesion){
+	public void crearSesion(Sesion sesion) {
 		System.out.println("en dao" + sesion.toString());
 		this.em.persist(sesion);
 	}
@@ -39,7 +41,7 @@ public class SesionDAO {
 	 * = em.createQuery(jpql, Autor.class); query.setParameter("nombres", nombres);
 	 * Autor autor = (Autor) query.getSingleResult(); return autor; }
 	 */
-	
+
 	/**
 	 * Metodo que permite tener un arreglo de todas las sesiones, esto lo realizamos
 	 * mediante jpql
@@ -55,30 +57,41 @@ public class SesionDAO {
 		return sesiones;
 	}
 
-	
-	
-	///hola mundo
-	
-
-
 	public void removeSesion(int id) throws Exception {
 		em.remove(this.buscarSesion(id));
 	}
-	
+
 	public void update(int id) throws Exception {
 		em.merge(id);
 	}
 
 	public Sesion buscarSesion(int id) {
-		Sesion sesion = em.find(Sesion.class,id);
+		Sesion sesion = em.find(Sesion.class, id);
 		return sesion;
 	}
-	public List<Sesion> getSesiones(String cedula){
-		String jpql = "SELECT u FROM Sesion u WHERE cliente_cedula like:cedula";
-		System.out.println("sesionsssssssssss"+jpql);
-		Query query = em.createQuery(jpql,Sesion.class);
-		List<Sesion> listado =  query.getResultList();	
-		return listado;
+
+	public Sesion buscarSesionCorreo(String correo) {
+		Sesion cli = new Sesion();
+		// public Cliente buscarClienteCedula(String cedula) {
+		// Cliente cli = new Cliente();
+		try {
+			String jpql = "SELECT c FROM Sesion c where c.correo = :correo";
+			Query query = em.createQuery(jpql, Cliente.class);
+			query.setParameter("correo", correo);
+			cli = (Sesion) query.getSingleResult();
+		} catch (Exception e) {
+			cli = null;
+		}
+
+		return cli;
+
 	}
+	/*
+	 * public List<Sesion> getSesiones(String cedula){ String jpql =
+	 * "SELECT u FROM Sesion u WHERE cliente_cedula like:cedula";
+	 * System.out.println("sesionsssssssssss"+jpql); Query query =
+	 * em.createQuery(jpql,Sesion.class); List<Sesion> listado =
+	 * query.getResultList(); return listado; }
+	 */
 
 }

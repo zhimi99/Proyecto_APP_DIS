@@ -1,6 +1,8 @@
 package app.proyecto.SistemaBancario.DAO;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -41,7 +43,7 @@ public class TransaccionDAO {
 	 * @return arreglo de transacciones
 	 */
 	public List<Transaccion> mostrarTransacciones() {
-		String jpql = "SELECT a FROM Transaccion a";
+		String jpql = "SELECT a FROM Transaccion a ORDER BY a.id DESC";
 		Query query = em.createQuery(jpql, Transaccion.class);
 		List<Transaccion> transacciones = query.getResultList();
 		return transacciones;
@@ -81,9 +83,25 @@ for (int i = 0; i < transacciones.size(); i++) {
 	public List<Transaccion> listaTransaccionesCuenta(int id) {
 		System.out.println("en dao>>> "+id);
 		//String jpql = "SELECT cu FROM Cliente cl JOIN cl.cuentas cu WHERE cl.id= :id";
-		String jpql = "SELECT cu FROM Cuenta cl JOIN cl.listaTra cu WHERE cl.id= :id";
+		String jpql = "SELECT cu FROM Cuenta cl JOIN cl.listaTra cu WHERE cl.id= :id ORDER BY cu.id DESC";
 		Query query = em.createQuery(jpql, Transaccion.class);
 		query.setParameter("id", id);
+		List<Transaccion> transacciones = query.getResultList();
+		for (int i = 0; i < transacciones.size(); i++) {
+			System.out.println("Hola mundo   "+ transacciones.get(i).getCuenta().getTipoCuenta());
+		}
+		return transacciones;
+		}
+	
+	public List<Transaccion> listaTransaccionesCuentaRangoFecha(int id, Date fecha1/*, Date fecha2*/) {
+		
+	//String jpql = "SELECT cu FROM Cuenta cl JOIN cl.listaTra cu WHERE (cl.id= :id) and (fecharegistro between fecha1 and fecha2) ORDER BY cu.id DESC";
+		String jpql = "SELECT cu FROM Cuenta cl JOIN cl.listaTra cu WHERE (cl.id= :id) and ( cu.fecharegistro >= :fechainicio ) ORDER BY cu.id DESC";
+		
+		Query query = em.createQuery(jpql, Transaccion.class);
+		query.setParameter("id", id);
+		query.setParameter("fechainicio", fecha1);
+		//query.setParameter("fecha2", fecha2);
 		List<Transaccion> transacciones = query.getResultList();
 		for (int i = 0; i < transacciones.size(); i++) {
 			System.out.println("Hola mundo   "+ transacciones.get(i).getCuenta().getTipoCuenta());

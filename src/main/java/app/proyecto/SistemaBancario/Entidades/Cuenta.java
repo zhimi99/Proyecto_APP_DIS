@@ -48,6 +48,9 @@ public class Cuenta implements Serializable{
 	private Cliente cliente;
 	
 
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_poliza")
+    private List<Poliza> listaPoliza;
 	
 	/**
 	 * Getters and setters: Metodos encargados del acceso a datos declarados
@@ -98,12 +101,8 @@ public class Cuenta implements Serializable{
 		this.listaTra = listaTra;
 	}
 	
-	public void addTransaccion(Transaccion t) {
-		if(listaTra==null) {
-			listaTra= new ArrayList<>();
-	}
-		this.listaTra.add(t);
-	}
+	
+
 	
 	
 	
@@ -114,11 +113,36 @@ public class Cuenta implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	public List<Poliza> getListaPoliza() {
+		return listaPoliza;
+	}
+	public void setListaPoliza(List<Poliza> listaPoliza) {
+		this.listaPoliza = listaPoliza;
+	}
+	
+	public void addTransaccion(Transaccion t) {
+		if(listaTra==null) {
+			listaTra= new ArrayList<>();
+	}
+		this.listaTra.add(t);
+	}
+	
+	public void agregarPoliza(Poliza poliza) {
+		if (listaPoliza == null) {
+			listaPoliza  = new ArrayList<Poliza>();
+		}
+		listaPoliza .add(poliza);
+		}
+	
+	
 	@Override
 	public String toString() {
 		return "Cuenta [id=" + id + ", saldo=" + saldo + ", tipoCuenta=" + tipoCuenta + ", fechaRegistro="
-				+ fechaRegistro + ", estado=" + estado + ", listaTra=" + listaTra + ", cliente=" + cliente + "]";
+				+ fechaRegistro + ", estado=" + estado + ", listaTra=" + listaTra + ", cliente=" + cliente
+				+ ", listaPoliza=" + listaPoliza + "]";
 	}
+
+	
 	
 
 }
