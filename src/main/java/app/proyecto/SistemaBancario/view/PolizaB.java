@@ -1,11 +1,13 @@
 package app.proyecto.SistemaBancario.view;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 //import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,8 +24,8 @@ import app.proyecto.SistemaBancario.negocio.CuentaON;
 import app.proyecto.SistemaBancario.negocio.PolizaON;
 
 @Named
-@ConversationScoped
-//@ManagedBean
+//@ConversationScoped
+@ViewScoped
 public class PolizaB implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -51,18 +53,31 @@ private Usuario usuarioLogin;
 		this.poliza = new Poliza();
 		listarPolizas();
 	}
+	
+	public Usuario recuperarUsuarioLogin() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Usuario usuario = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
+		return usuario;
+	}
 
 	public String agregarPoliza() {
 		/*this.polizaon.crearPoliza(poliza);
 		this.poliza = null;*/
 		FacesContext fc = FacesContext.getCurrentInstance();
-		//Cliente clienteLogin = (Cliente) fc.getExternalContext().getSessionMap().get("cliente");
+	Cliente clienteLogin = (Cliente) fc.getExternalContext().getSessionMap().get("cliente");
 		//Cuenta cuenta = (Cuenta) fc.getExternalContext().getSessionMap().get("ctatr");
 		int num= (int) fc.getExternalContext().getSessionMap().get("ctatr");
 		Cuenta cuenta=this.cuentaon.mostrarCuenta(num);
 		this.poliza.setCuenta(cuenta);
-		uploadFile();
+		this.poliza.setFechaInicio(new Date());
+	uploadFile();
+		
+		
+		
 		this.polizaon.crearPoliza(poliza);
+		for (int i = 0; i < this.cuentaon.listarCuentasCliente(clienteLogin.getId()).size(); i++) {
+			System.out.println(this.cuentaon.listarCuentasCliente(clienteLogin.getId()).get(i).getId());
+		}
 		
 		return null;
 	}
@@ -74,18 +89,18 @@ private Usuario usuarioLogin;
 
 	
 	public void uploadFile() {
-		if (fileCedula != null /*&& filep != null && filer != null */) {
+		if (fileCedula != null) {
 			byte[] contenido = fileCedula.getContent();
 			String nombre = fileCedula.getFileName();
 			poliza.setCedulaImagen(contenido);
-			System.err.println("hOLa mundo  MAGEN >> "+nombre);
+			System.out.println("hOLa mundo  iMAGEN >> "+nombre);
 			/*byte[] contenido1 = filep.getContent();
 			String nombre1 = filep.getFileName();
 			solicitud.setPlanillaImagen(contenido1);
 			
 			*/
 		}else {
-			System.out.println("Igen no entro");
+			System.out.println("Imagen no entro");
 		}
 	}
 
@@ -124,11 +139,7 @@ private Usuario usuarioLogin;
 		this.filePlanilla = filePlanilla;
 	}
 	
-	public Usuario recuperarUsuarioLogin() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Usuario usuario = (Usuario) fc.getExternalContext().getSessionMap().get("usuario");
-		return usuario;
-	}
+
 	public Usuario getUsuarioLogin() {
 		return usuarioLogin;
 	}

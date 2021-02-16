@@ -29,7 +29,7 @@ public class PolizaDAO {
 	 * @param poliza pide el objeto que va a ser insertado en nuestra DB
 	 */
 	public void crearPoliza(Poliza poliza){
-		System.out.println("en dao" + poliza.toString());
+		System.out.println("en dao " + poliza.getMonto());
 		this.em.persist(poliza);
 	}
 

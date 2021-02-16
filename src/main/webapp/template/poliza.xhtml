@@ -47,11 +47,9 @@
 			</div>
 			
 			<div class="form-group">
-			<label for="txtCedulaImg" class="col-md-12">Monto:</label>
+			<label for="txtCedulaImg" class="col-md-12">Cedula:</label>
 			<div>
-			<p:fileUpload class="etiqueta" value="#{polizaB.fileCedula}"
-					mode="simple" label="Cedula" />
-			
+			<p:fileUpload  value="#{polizaB.fileCedula}" mode="simple"/>
 			</div>
 			
 			</div>
@@ -59,55 +57,12 @@
 
 			<div class="form-group">
 				<div class="col-sm-6">
-
 					<h:commandButton value="Registar Poliza"
-						action="#{polizaB.agregarPoliza()}">
-
+						action="#{polizaB.agregarPoliza()}" ajax="false">
 					</h:commandButton>
 				</div>
-				
 			</div>
 
-
-			<div class="form-group">
-				<label class="col-md-10">Cuentas </label>
-				<div class="col-md-2">
-					<h:commandButton action="#{clienteMB.addCuenta()}"
-						value="+ Agregar" class="btn btn-default">
-						<!--  <f:ajax render="@form" execute="@form"/> -->
-						<f:ajax execute="@form" />
-					</h:commandButton>
-				</div>
-
-				<div class="col-md-12">
-					<h:dataTable class="table" value="#{clienteMB.newcliente.cuentas}"
-						var="cuenta" id="tablaCuentas">
-
-						<h:column>
-							<f:facet name="header"># Cuenta</f:facet>
-							#{cuenta.id}
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Saldo</f:facet>
-							<h:inputText id="txtCuentaSaldo" value="#{cuenta.saldo}"
-								class="form-control form-control-line" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">Tipo de Cuenta</f:facet>
-							<h:selectOneMenu id="txtTipoCuenta" value="#{cuenta.tipoCuenta}"
-								required="true" label="txtTipoCuenta"
-								class="form-control select2">
-								<f:selectItem itemLabel="Seleccione" itemValue="Selecione" />
-								<f:selectItem itemLabel="Ahorro" itemValue="Ahorro" />
-								<f:selectItem itemLabel="Corriente" itemValue="Corriente" />
-							</h:selectOneMenu>
-						</h:column>
-					</h:dataTable>
-
-				</div>
-
-			</div>
 		</h:form>
 	</div>
 
