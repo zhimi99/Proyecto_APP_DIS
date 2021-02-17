@@ -1,0 +1,147 @@
+:~$ sudo apt-get update; sudo apt-get upgrade - y; sudo apt-get install zip unzip -y
+
++--JDK--+
+:~$ sudo add-apt-repository ppa:webupd8team/java
+:~$ sudo apt-get update; sudo apt-get install oracle-java8-installer -y
+------------------------------------------------------------------------------------------------------------
+
++--NGINX--+
+:~$ sudo apt-get install nginx -y
+:~$ sudo nano /etc/nginx/sites-enabled/default
+	
+	# Comentar esta linea
+	# listen [::]:80 default_server;
+	
+:~$ sudo systemctl enable nginx
+:~$ sudo systemctl start nginx.service
+------------------------------------------------------------------------------------------------------------
+
++--POSTGRESQL--+
+:~$ sudo apt-get install postgresql postgresql-contrib -y
+:~$ sudo apt-get install postgresql-client -y
+:~$ sudo su postgres
+$ psql
+$ alter user postgres with password 'Admin@123'; 
+------------------------------------------------------------------------------------------------------------
+
++--WILDFLY--+
+:~$ sudo groupadd -r wildfly
+:~$ sudo useradd -r -g wildfly -d /opt/wildfly -s /sbin/nologin wildfly
+
+:~$ cd /opt
+:~$ sudo wget https://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.zip
+:~$ sudo unzip wildfly-14.0.1.Final.zip
+:~$ sudo mv wildfly-14.0.1.Final wildfly
+:~$ sudo rm wildfly-14.0.1.Final.zip
+
+:~$ sudo nano /etc/default/wildfly
+
+	WILDFLY_USER="wildfly"
+	STARTUP_WAIT=180
+	SHUTDOWN_WAIT=30
+	WILDFLY_CONFIG=standalone.xml
+	WILDFLY_MODE=standalone
+	WILDFLY_BIND=0.0.0.0
+
+:~$ sudo nano /opt/wildfly/bin/launch.sh
+
+	#!/bin/sh
+
+	if [ "x$WILDFLY_HOME" = "x" ]; then
+	    WILDFLY_HOME=/opt/wildfly
+	fi
+
+	if [ "x1" = "xdomain" ]; then
+	    echo 'Starting Wildfly in domain mode.'
+	    $WILDFLY_HOME/bin/domain.sh -c $2 -b $3
+	else
+	    echo 'Starting Wildfly in standalone mode.'
+	    $WILDFLY_HOME/bin/standalone.sh -c $2 -b $3
+	fi
+	
+:~$ sudo chmod 755 /opt/wildfly/bin/launch.sh
+
+:~$ sudo nano /etc/systemd/system/wildfly.service
+
+	[Unit]
+	Description=The WildFly Application Server
+	After=syslog.target network.target
+	Before=nginx.service
+
+	[Service]
+	Environment=LAUNCH_JBOSS_IN_BACKGROUND=1
+	EnvironmentFile=/etc/default/wildfly
+	User=wildfly
+	LimitNOFILE=102642
+	PIDFile=/var/run/wildfly/wildfly.pid
+	ExecStart=/opt/wildfly/bin/launch.sh $WILDFLY_MODE $WILDFLY_CONFIG $WILDFLY_BIND
+	StandardOutput=null
+
+	[Install]
+	WantedBy=multi-user.target
+
+:~$ sudo chown wildfly:wildfly -R /opt/wildfly/
+
+:~$ sudo systemctl daemon-reload
+:~$ sudo systemctl start wildfly
+:~$ sudo systemctl enable wildfly
+
+:~$ sudo bash /opt/wildfly/bin/add-user.sh
+
+What type of user do you wish to add? 
+ a) Management User (mgmt-users.properties) 
+ b) Application User (application-users.properties)
+(a): a
+------------------------------------------------------------------------------------------------------------
+
++--PROXY INVERSO--+
+:~$ sudo nano /etc/nginx/sites-available/wildfly
+
+	upstream wildfly {
+	    server 127.0.0.1:8080;
+	}
+
+	proxy_cache_path /tmp/nginx-cache levels=1:2 keys_zone=my_cache:10m max_size=10g
+		         inactive=60m use_temp_path=off;
+
+	server {
+	    listen      80;
+	    server_name 35.247.227.24;
+
+	    access_log  /var/log/nginx/wildfly.access.log;
+	    error_log   /var/log/nginx/wildfly.error.log;
+
+	    proxy_buffers 16 64k;
+	    proxy_buffer_size 128k;
+
+	    gzip on;
+	    gzip_types      text/plain application/xml;
+	    gzip_proxied    no-cache no-store private expired auth;
+	    gzip_min_length 1000;
+
+	location / {
+
+		proxy_cache my_cache;
+		proxy_cache_revalidate on;
+		proxy_cache_min_uses 3;
+		proxy_cache_use_stale error timeout updating http_500 http_502
+		                      http_503 http_504;
+		proxy_cache_lock on;
+
+		proxy_pass  http://127.0.0.1:8080;
+		proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+		proxy_redirect off;
+
+		proxy_set_header    Host            $host;
+		proxy_set_header    X-Real-IP       $remote_addr;
+		proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header    X-Forwarded-Proto https;
+
+	    }
+
+	}
+
+
+:~$ sudo ln -s /etc/nginx/sites-available/wildfly /etc/nginx/sites-enabled/
+
+:~$ sudo systemctl restart nginx.service
