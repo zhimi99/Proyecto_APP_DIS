@@ -99,7 +99,7 @@ public class CuentaDAO {
 	}
 	
 	public List<Cuenta> mostrarCuentasClienteID(int idCliente) {
-		String jpql = "SELECT l FROM Cuenta l where l.cliente_cuenta = :idCliente";
+		String jpql = "SELECT l FROM Cuenta l where l.cliente_cuenta = :idCliente ORDER BY DESC";
 		Query query = em.createQuery(jpql, Cuenta.class);
 		query.setParameter("idCliente", idCliente);
 		List<Cuenta> cuentas = query.getResultList();
@@ -125,7 +125,7 @@ public class CuentaDAO {
 		//String jpql = "SELECT c FROM Cuenta c where c.Cliente.id = :id";
 		//SELECT c FROM CuentaAhorro c JOIN FETCH c.listaTra where c.numeroCuenta = :numeroCuenta";
 		//"SELECT ph FROM Employee e JOIN e.phones ph WHERE ph LIKE '1%'", Phone.class);
-		String jpql = "SELECT cu FROM Cliente cl JOIN cl.cuentas cu WHERE cl.id= :id";
+		String jpql = "SELECT cu FROM Cliente cl JOIN cl.cuentas cu WHERE cl.id= :id ORDER BY cu.id DESC";
 		Query query = em.createQuery(jpql, Cuenta.class);
 		query.setParameter("id", id);
 		List<Cuenta> cuentas = query.getResultList();

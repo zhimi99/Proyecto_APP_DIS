@@ -115,6 +115,24 @@ public class ClienteServiceRest {
 		return r;
 	}
 	
+	@POST
+	@Path("/cambiopwd")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Respuesta cambioContrasena(Cliente cliente) {
+		Respuesta r = new Respuesta();
+		try {
+			r = clienteon.cambioContrasena(cliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+			r.setCodigo(99);
+			r.setMensaje(e.getMessage());
+		}
+		return r;
+	}
+	
+	
+	
 	/*public Cliente login(UsuarioSesion usuarioSesion) throws Exception {
 		return clientedao.clienteLogIn(usuarioSesion);
 	}*/

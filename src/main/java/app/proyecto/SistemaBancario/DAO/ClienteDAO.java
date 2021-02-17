@@ -138,41 +138,7 @@ public class ClienteDAO {
 	}
 	
 	
-	/*
-	public Cliente getUserbyEmailAndPassword(Sesion sesion) {
-		Cliente cl;
-		try {
-			String jpql = "SELECT c FROM Cliente c WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
-			System.out.println("jpqlllll"+jpql);
-			Query q = em.createQuery(jpql, Cliente.class);
-			q.setParameter("correo", sesion.getCorreo());
-			q.setParameter("clave", sesion.getPassword());
-			cl = (Cliente) q.getSingleResult();
-			System.out.println("Cliente ======>>>>>> "+cl.toString());
-			
-		} catch (Exception e) {
-			System.out.println("<========ERROR  ClienteDAO getUserbyEmailAndPassword  ======>>>>>>");
-			cl = null;
-		}
-		return cl;
-	}
-	public Cliente getUserbyEmailAndPassword2(UsuarioSesion sesion) {
-		Cliente cl;
-		try {
-			String jpql = "SELECT c FROM Cliente c WHERE c.correo LIKE :correo AND c.clave LIKE :clave";
-			System.out.println("jpqlllll"+jpql);
-			Query q = em.createQuery(jpql, Cliente.class);
-			q.setParameter("correo", sesion.getEmail());
-			q.setParameter("clave", sesion.getClave());
-			cl = (Cliente) q.getSingleResult();
-			System.out.println("Cliente >>>>>>"+cl.toString());
-			
-		} catch (Exception e) {
-			System.out.println("<========ERROR  ClienteDAO getUserbyEmailAndPassword  ======>>>>>>");
-			cl = null;
-		}
-		return cl;
-	}*/
+
 	
 	public Cliente cambioContrasena(UsuarioSesion sesion) {
 		Cliente cl;

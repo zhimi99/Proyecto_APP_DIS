@@ -23,4 +23,10 @@ public class TasaInteresON {
 	public List<TasaInteres>mostrarTasaInteres() {
 		return this.tasaInteresdao.mostrarTasaIntereses();
 	}
+	
+	public TasaInteres buscarTasaInteres(TasaInteres tasaInteres) {
+		return this.tasaInteresdao.buscarTasaInteresPlazo(tasaInteres.getId());
+		//this.cuentadao.crearCuenta(cuenta);
+	}
+	
 }

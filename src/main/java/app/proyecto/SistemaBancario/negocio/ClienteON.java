@@ -125,6 +125,24 @@ public class ClienteON {
 	public Cliente buscarClienteCorreo(Cliente cliente) {
 		return clientedao.buscarClienteCorreo(cliente.getCorreo());
 	}
+	
+	public Respuesta cambioContrasena(Cliente cliente) throws Exception {
+		Respuesta respuesta = new Respuesta();
+		Cliente cli=clientedao.buscarClienteCorreo(cliente.getCorreo());
+	    //uDAO.cambioContrasenia(sesion);
+		if (cliente.getCorreo().equals(cli.getCorreo())&&cliente.getClave().equals(cli.getClave())) {
+			cli.setClave(cliente.getNewclave());
+			this.clientedao.actualizarCliente(cli);
+			 respuesta.setCodigo(1);
+			    respuesta.setMensaje("Ok");
+			
+		}else {
+			System.out.println("erro de progrmacion");
+		}
+	   
+	   	
+	    return respuesta;
+	}
 
 
 }

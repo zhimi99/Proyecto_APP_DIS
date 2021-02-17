@@ -89,7 +89,7 @@ private Usuario usuarioLogin;
 
 	
 	public void uploadFile() {
-		if (fileCedula != null) {
+		if (this.fileCedula!= null) {
 			byte[] contenido = fileCedula.getContent();
 			String nombre = fileCedula.getFileName();
 			poliza.setCedulaImagen(contenido);
@@ -103,6 +103,7 @@ private Usuario usuarioLogin;
 			System.out.println("Imagen no entro");
 		}
 	}
+	
 
 	
 	

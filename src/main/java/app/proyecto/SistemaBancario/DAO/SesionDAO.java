@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import app.proyecto.SistemaBancario.Entidades.Cliente;
+import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.Entidades.Sesion;
 
 /**
@@ -86,12 +87,15 @@ public class SesionDAO {
 		return cli;
 
 	}
-	/*
-	 * public List<Sesion> getSesiones(String cedula){ String jpql =
-	 * "SELECT u FROM Sesion u WHERE cliente_cedula like:cedula";
-	 * System.out.println("sesionsssssssssss"+jpql); Query query =
-	 * em.createQuery(jpql,Sesion.class); List<Sesion> listado =
-	 * query.getResultList(); return listado; }
-	 */
+
+	public List<Sesion> getSesionesCorreo(String correo) {
+		String jpql = "SELECT c FROM Sesion c where c.correo = :correo";
+		
+		Query query = em.createQuery(jpql, Sesion.class);
+		query.setParameter("correo", correo);
+		List<Sesion> listado = query.getResultList();
+		return listado;
+	}
+	
 
 }

@@ -94,5 +94,18 @@ public class TasaInteresDAO {
 
 		return cli;
 	}
+	
+	public TasaInteres buscarTasaInteresPlazo(int id) {
+		TasaInteres cli = new TasaInteres();
+		try {
+			String jpql = "SELECT l FROM TasaInteres l where l.id = :id";
+			Query query = em.createQuery(jpql, TasaInteres.class);
+			cli = (TasaInteres) query.getSingleResult();
+		} catch (Exception e) {
+			cli = null;
+		}
+
+		return cli;
+	}
 
 }

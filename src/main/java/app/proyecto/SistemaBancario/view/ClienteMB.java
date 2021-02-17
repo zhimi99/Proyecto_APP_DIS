@@ -33,7 +33,6 @@ import app.proyecto.SistemaBancario.negocio.CuentaON;
 import app.proyecto.SistemaBancario.negocio.SesionON;
 
 @Named
-//@ConversationScoped
 @ViewScoped
 public class ClienteMB implements Serializable {
 
@@ -52,6 +51,8 @@ public class ClienteMB implements Serializable {
 	private CuentaON cuentaon;
 
 	private Cliente newcliente;
+	
+	private Cliente clienteLogin;
 	private Cuenta newcuenta;
 
 	//private boolean editing;
@@ -80,48 +81,13 @@ private Usuario usuarioLogin;
 	public void init() {
 		this.usuarioLogin=recuperarUsuarioLogin(); 
 		newcliente = new Cliente();
-		// newcliente.addCuenta(new Cuenta());
-
-	//	editing = false;
 
 		listarClientes();
 	}
 
-	/*public String updateCliente() {
-		editing = true;
-		return null;
-	}*/
-
-	/*
-	 * public String agregarCliente() { try { if (editing) {
-	 * clienteon.actualizarCliente(newcliente); listarClientes(); }
-	 * 
-	 * else { String contrasena = "" +
-	 * UUID.randomUUID().toString().toLowerCase().substring(0, 11);
-	 * newcliente.setClave(contrasena); clienteon.crearCliente(newcliente);
-	 * enviarConGMail( newcliente.getCorreo(), "Usuario Creado con exito",
-	 * "Usuario: "+newcliente.getCorreo()+"\nPassword: "+newcliente.getClave());
-	 * listarClientes(); }
-	 * 
-	 * } catch (Exception e) { System.out.println("Error al guardar");
-	 * e.printStackTrace(); FacesMessage m = new
-	 * FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), "Error");
-	 * facesContext.addMessage(null, m); } editing=false; return null;
-	 * 
-	 * }
-	 */
 	public String agregarCliente() throws Exception {
 		Cliente user = clienteon.buscarClienteCedula(newcliente.getCedula());
-		// usuarioon.buscarUsuarioCedula(usuario.getCedula());
-		/*if (user.getId()>0) {
-			try {
-				clienteon.actualizarCliente(newcliente);
-				// usuarioon.actualizarUsuario(usuario);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
 
-		} else {*/
 			String contrasena = "" + UUID.randomUUID().toString().toLowerCase().substring(0, 11);
 			newcliente.setClave(contrasena);
 			// usuario.setClave(contrasena);
@@ -210,7 +176,7 @@ private Usuario usuarioLogin;
 				setUsuarioOK(sesion, clienteLogeado);
 				intento = 1;
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cliente", clienteLogeado);
-				retorno = "Home?faces-redirect=true";
+				retorno = "cuentasCliente?faces-redirect=true";
 			} else {
 				sesion.setCorreo(this.newcliente.getCorreo());
 				sesion.setClave(this.newcliente.getClave());

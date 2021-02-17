@@ -39,6 +39,7 @@ private Usuario usuarioLogin;
 	public void init() {
 		this.usuarioLogin=recuperarUsuarioLogin(); 
 
+		this.newtasaInteres = new TasaInteres();
 		listarTasaInteres();
 	}
 

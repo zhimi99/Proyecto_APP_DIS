@@ -53,6 +53,7 @@ public class Cliente implements Serializable {
 	private String estado;
 	private String correo;
 	private String clave;
+	private String newclave;
 
 	@JsonIgnore
 	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
@@ -197,13 +198,23 @@ public class Cliente implements Serializable {
 		this.listaSesiones = listaSesiones;
 	}
 
+	public String getNewclave() {
+		return newclave;
+	}
+
+	public void setNewclave(String newclave) {
+		this.newclave = newclave;
+	}
+
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", cedula=" + cedula + ", apellidos=" + apellidos + ", nombres=" + nombres
 				+ ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", saldo=" + saldo + ", estado="
-				+ estado + ", correo=" + correo + ", clave=" + clave + ", cuentas=" + cuentas + ", listaSesiones="
-				+ listaSesiones + "]";
+				+ estado + ", correo=" + correo + ", clave=" + clave + ", newclave=" + newclave + ", cuentas=" + cuentas
+				+ ", listaSesiones=" + listaSesiones + "]";
 	}
+
+	
 
 	
 }

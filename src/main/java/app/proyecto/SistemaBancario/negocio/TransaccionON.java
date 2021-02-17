@@ -215,6 +215,40 @@ public class TransaccionON {
 		}
 		return respuesta;
 	}
+	public Respuesta acreditaPoliza(TransaccionFachada trx) throws Exception {
+
+		Respuesta respuesta = new Respuesta();
+		Cuenta destino = cuentaDao.buscarCuenta(trx.getCuentadestino());
+
+				if (destino.getSaldo() > trx.getMonto()) {
+					Double saldoDes = destino.getSaldo() - trx.getMonto();
+					destino.setSaldo(saldoDes);
+					Transaccion tDes = new Transaccion();
+
+					Cuenta cd = new Cuenta();
+					cd.setId(trx.getCuentadestino());
+					tDes.setCuenta(cd);
+
+					tDes.setFechaRegistro(new Date());
+					tDes.setTipo("dep-poliza");
+					tDes.setMonto(trx.getMonto());
+
+					destino.addTransaccion(tDes);
+					transacciondao.crearTransaccion(tDes);
+					cuentaDao.actualizarCuenta(destino);
+
+					respuesta = new Respuesta();
+					respuesta.setCodigo(1);
+					respuesta.setMensaje("Ok");
+
+				} else {
+					respuesta.setCodigo(90);
+					respuesta.setMensaje("Fondos Insuficientes");
+
+				}
+
+		return respuesta;
+	}
 	public List<Transaccion> listarTransaccionesCuenta(int id) {
 		System.out.println("En capa de negoscios >>>>>"+id);
 		return this.transacciondao.listaTransaccionesCuenta(id);

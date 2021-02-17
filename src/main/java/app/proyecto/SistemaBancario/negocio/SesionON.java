@@ -27,4 +27,7 @@ public class SesionON {
 	public List<Sesion>mostrarSesiones() {
 		return this.sesiondao.mostrarSesiones();
 	}
+	public List<Sesion>mostrarSesionesCorreo(String correo) {
+		return this.sesiondao.getSesionesCorreo(correo);
+	}
 }

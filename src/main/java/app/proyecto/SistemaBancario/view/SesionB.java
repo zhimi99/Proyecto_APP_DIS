@@ -29,7 +29,7 @@ public class SesionB implements Serializable {
 	public void init() {
 		this.sesion= new Sesion();
 		
-		listarSesiones();
+		//listarSesiones();
 	}
 
 	public String agregarSesion() {
@@ -38,10 +38,10 @@ public class SesionB implements Serializable {
 		return null;
 	}
 	
-	public void listarSesiones() {
-		this.sesiones =this.sesionon.mostrarSesiones();
+	/*public void listarSesiones() {
+		this.sesiones =this.sesionon.mostrarSesionesCorreo(correo);
 	}
-
+*/
 	public void verificarSesion() {
 		
 		

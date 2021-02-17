@@ -39,7 +39,7 @@ public class Poliza implements Serializable {
 	
 	private Double porcentajePoliza;
 	private Double estadoVigencia;
-	private boolean isSolicitud;
+	private String estado;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -114,12 +114,14 @@ public class Poliza implements Serializable {
 		this.estadoVigencia = estadoVigencia;
 	}
 
-	public boolean isSolicitud() {
-		return isSolicitud;
+	
+
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setSolicitud(boolean isSolicitud) {
-		this.isSolicitud = isSolicitud;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public TasaInteres getTasaItnteres() {
