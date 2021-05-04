@@ -3,7 +3,6 @@ package app.proyecto.SistemaBancario.SERVICES;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-
 import app.proyecto.SistemaBancario.Utils.TransaccionFachada;
 import app.proyecto.SistemaBancario.negocio.TransaccionON;
 
@@ -28,6 +27,7 @@ public class ClienteServiceSoap {
 	@WebMethod
 	public Respuesta deposito(TransaccionFachada trx) {
 		Respuesta r = new Respuesta();
+		System.out.print("entraaa a  depositooo");
 		try {
 			r = on.deposito(trx);
 		} catch (Exception e) {

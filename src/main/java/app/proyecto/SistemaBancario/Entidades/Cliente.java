@@ -1,7 +1,6 @@
 package app.proyecto.SistemaBancario.Entidades;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -36,7 +34,7 @@ public class Cliente implements Serializable {
 	 * Implementación de la variable Id, este atributo será el encargado de ser la
 	 * primary key en nuestra base de datos
 	 */
-
+ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

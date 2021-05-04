@@ -3,13 +3,11 @@ package app.proyecto.SistemaBancario.view;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import app.proyecto.SistemaBancario.Entidades.Cliente;
 import app.proyecto.SistemaBancario.Entidades.Cuenta;
 import app.proyecto.SistemaBancario.Entidades.Poliza;
@@ -96,7 +94,7 @@ public class ClienteInB implements Serializable {
 		System.out.println("parametro de entrada "+newcuenta.getId());
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ctatr", newcuenta.getId());	
 		return "transaccionesCuenta?faces-redirect=true";
-		return null;
+		
 	}
 	public String simularPoliza() {
 		Poliza p= new Poliza();
